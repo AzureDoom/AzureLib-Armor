@@ -17,10 +17,10 @@ repositories {
 
 dependencies {
     //Fabric or Quilt
-    modImplementation "mod.azuredoom.azurelibarmor:azurelib-armor-fabric-MCVERSION:MODVERSION"
+    modImplementation "mod.azure.azurelibarmor:azurelibarmor-fabric-MCVERSION:MODVERSION"
 		
     //NeoForge or Forge
-    implementation fg.deobf("mod.azuredoom.azurelibarmor:azurelib-armor-neoforge-MCVERSION:MODVERSION")
+    implementation fg.deobf("mod.azure.azurelibarmor:azurelibarmor-neo-MCVERSION:MODVERSION")
 }
 ```
 
