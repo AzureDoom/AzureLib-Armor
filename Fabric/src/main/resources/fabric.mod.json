@@ -14,8 +14,8 @@
   "icon" : "azurelib.png",
   "environment" : "*",
   "entrypoints" : {
-    "main" : [ "mod.azure.azurelib.AzureLibArmorMod" ],
-    "client" : [ "mod.azure.azurelib.AzureLibArmorModClient" ]
+    "main" : [ "mod.azure.azurelibarmor.AzureLibArmorMod" ],
+    "client" : [ "mod.azure.azurelibarmor.AzureLibArmorModClient" ]
   },
   "mixins" : [ "azurelibarmor.mixins.json" ],
   "accessWidener" : "azurelibarmor.aw",
