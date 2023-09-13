@@ -57,7 +57,7 @@ processResources {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/azurelib.aw")
+	accessWidenerPath = file("src/main/resources/azurelibarmor.aw")
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -132,12 +132,13 @@ if (file('key.properties').exists()) {
 
     project {
         apiKey = curseProp.getProperty('curseKey')
-        id = project.curseforgeID
+        id = project.curseID
         releaseType = "release"
         changelogType = 'text'
         changelog = file('changelog.txt')
 		addGameVersion("${project.minecraftVersion}")
         addGameVersion("Fabric")
+		addGameVersion("Quilt")
         addGameVersion("Java 17")
 
         relations {

@@ -6,9 +6,9 @@
   "description" : "A striped down Azurelib just for Armor!",
   "authors" : [ "AzureDoom, Gecko, Eliot, Hydos, DerToaster, Tslat, KyoSleep" ],
   "contact" : {
-    "homepage" : "https://www.curseforge.com/minecraft/mc-mods/azurelib",
-    "issues" : "https://github.com/AzureDoom/AzureLib/issues",
-    "sources" : "https://github.com/AzureDoom/AzureLib"
+    "homepage" : "https://modrinth.com/mod/azurelib-armor",
+    "issues" : "https://github.com/AzureDoom/AzureLib-Armor/issues",
+    "sources" : "https://github.com/AzureDoom/AzureLib-Armor"
   },
   "license" : "MIT",
   "icon" : "azurelib.png",
@@ -17,8 +17,8 @@
     "main" : [ "mod.azure.azurelib.AzureLibArmorMod" ],
     "client" : [ "mod.azure.azurelib.AzureLibArmorModClient" ]
   },
-  "mixins" : [ "azurelib.mixins.json" ],
-  "accessWidener" : "azurelib.aw",
+  "mixins" : [ "azurelibarmor.mixins.json" ],
+  "accessWidener" : "azurelibarmor.aw",
   "depends" : {
     "fabricloader" : ">=0.14.22",
     "fabric" : "*",
