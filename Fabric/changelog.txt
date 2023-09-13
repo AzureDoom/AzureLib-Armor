@@ -1,5 +1,3 @@
-v1.0.28
+v1.0.0
 
-- Fixes Config screen not focusing.
-- Fixes Config button textures.
-- Moves Item and OBJ GeoRender renderBuffers to LevelRender
+- First Release
