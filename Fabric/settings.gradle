@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        maven { "https://maven.fabricmc.net/" }
+        gradlePluginPortal()
+        mavenCentral()
+    	maven { "https://plugins.gradle.org/m2/" }
+    }
+}
+rootProject.name = 'azurelib-armor-fabric-1.20'

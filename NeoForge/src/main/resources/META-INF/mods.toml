@@ -1,0 +1,24 @@
+modLoader="javafml" 
+loaderVersion="${neoVersionRange}" 
+license="${modLicense}"
+[[mods]] 
+modId="${modID}" 
+version="${modVersion}" 
+displayName="${modName}" 
+displayURL="https://www.curseforge.com/minecraft/mc-mods/azurelib"
+logoFile="azurelib.png" 
+credits="AzureDoom, Gecko, Eliot, Chappie, DerToaster, Tslat"
+authors="AzureDoom, Gecko, Eliot, Chappie, DerToaster, Tslat"
+description='''${modDescription}'''
+[[dependencies.${modID}]] 
+    modId="forge" 
+    mandatory=true 
+    versionRange="${neoVersionRange}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${modID}]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraftVersionRange}"
+    ordering="NONE"
+    side="BOTH"

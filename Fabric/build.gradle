@@ -1,0 +1,176 @@
+plugins {
+    id 'fabric-loom' version '1.3-SNAPSHOT'
+    id 'maven-publish'
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id "com.modrinth.minotaur" version "2.+"
+}
+
+import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
+import com.modrinth.minotaur.dependencies.ModDependency
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+base {
+    archivesName = project.modName
+}
+version = project.modVersion
+group = project.mavenGroup
+
+repositories {
+    mavenCentral()
+    maven { url 'https://api.modrinth.com/maven' } // modrinth maven
+	maven { url "https://cfa2.cursemaven.com" } // curseforge maven
+	maven { url "https://maven.terraformersmc.com/" } // modmenu
+	maven { url "https://maven.terraformersmc.com/releases" } // modmenu
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraftVersion}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loaderVersion}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabricVersion}"
+	modCompileOnly "com.terraformersmc:modmenu:7.2.2"
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : project.modName,
+                "Specification-Vendor"    : "AzureDoom",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.modName,
+                "Implementation-Version"  : project.modVersion,
+                "Implementation-Vendor"   : "AzureDoom",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+processResources {
+    inputs.property "version", project.version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/azurelib.aw")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 17
+}
+
+java {
+	withSourcesJar()
+}
+
+jar {
+    from "LICENSE"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+			from components.java
+            artifactId = project.modName
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+publishing {
+  repositories {
+    maven {
+      name = "azurelib"
+      url = "https://libs.azuredoom.com:4443/mods"
+      credentials(PasswordCredentials)
+      authentication {
+        basic(BasicAuthentication)
+      }
+    }
+  }
+  publications {
+    maven(MavenPublication) {
+      groupId = project.mavenGroup
+      artifactId = project.modVersion
+      version = project.modName
+      from components.java
+    }
+  }
+}
+
+processResources {
+	doLast {
+        def jsonMinifyStart = System.currentTimeMillis()
+        def jsonMinified = 0
+        def jsonBytesSaved = 0
+        fileTree(dir: outputs.files.asPath, include: '**/*.json').each { 
+            File file = it
+            jsonMinified++
+            def oldLength = file.length()
+            file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+            jsonBytesSaved += oldLength - file.length()
+        }
+        println('Minified ' + jsonMinified + ' json files. Saved ' + jsonBytesSaved + ' bytes. Took ' + (System.currentTimeMillis() - jsonMinifyStart) + 'ms.')
+    }
+}
+
+if (file('key.properties').exists()) {
+    curseforge {
+
+    def curseProp = new Properties()
+    File secretPropsFile = file("key.properties")
+    curseProp.load(secretPropsFile.newInputStream())
+
+    project {
+        apiKey = curseProp.getProperty('curseKey')
+        id = project.curseforgeID
+        releaseType = "release"
+        changelogType = 'text'
+        changelog = file('changelog.txt')
+		addGameVersion("${project.minecraftVersion}")
+        addGameVersion("Fabric")
+        addGameVersion("Java 17")
+
+        relations {
+            requiredDependency 'fabric-api'      
+        }
+        mainArtifact(remapJar)
+
+        afterEvaluate {
+            uploadTask.dependsOn("remapJar")
+        }
+    }
+    options {
+        forgeGradleIntegration = false
+    }
+   }
+}
+
+if (file('key.properties').exists()) {
+	modrinth {
+		def modrinthProp = new Properties()
+		File secretPropsFile = file("key.properties")
+		modrinthProp.load(secretPropsFile.newInputStream())
+		
+		token = modrinthProp.getProperty('modrinthKey')
+		projectId = project.modrinthID
+		versionNumber = project.modVersion 
+		uploadFile = remapJar 
+		changelog = rootProject.file("changelog.txt").text
+		gameVersions = [project.minecraftVersion]
+		versionType = "release"
+		loaders = ['fabric', 'quilt']
+		dependencies { 
+        	required.project "fabric-api"
+   		}
+	}
+}
