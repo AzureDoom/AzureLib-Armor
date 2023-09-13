@@ -5,5 +5,5 @@
   "injectors" : {
     "defaultRequire" : 1
   },
-  "client" : [ "fabric.ItemRendererAccessor", "fabric.MixinItemRenderer", "fabric.MixinHumanoidArmorLayer", "fabric.MinecraftMixin", "fabric.TextureManagerMixin" ]
+  "client" : [ "fabric.ItemRendererAccessor", "fabric.MixinItemRenderer", "fabric.MixinHumanoidArmorLayer", "fabric.TextureManagerMixin" ]
 }
