@@ -1,10 +1,8 @@
 <center>
 <img src="https://wsrv.nl/?url=https%3A%2F%2Fwww.bisecthosting.com%2Fimages%2FCF%2FAzureLib%2FBH_AL_header.png&n=-1" alt="logo"/>
 
-<h3 align="center">AzureLib Armor is a striped-down version of <a href="https://modrinth.com/mod/azurelib">AzureLib</a> that is created just to provide its GeoArmor/GeoItem functions in a standalone library. All Armor creation steps are the same as AzureLibs armor creation as outlined <a href="https://wiki.azuredoom.com/how-to-create-animated-armor">here</a>
-<br>
-<br>
-Are you a developer and want to use this library in your mod? Add the following to your build.gradle
+<h3 align="center">AzureLib Armor is a striped-down version of <a href="https://modrinth.com/mod/azurelib">AzureLib</a> that is created just to provide its GeoArmor/GeoItem functions in a standalone library. All Armor creation steps are the same as AzureLibs armor creation as outlined <a href="https://wiki.azuredoom.com/how-to-create-animated-armor">here</a></h3>
+<h3 align="center">Are you a developer and want to use this library in your mod? Add the following to your build.gradle
 </h3>
 </center>
 
