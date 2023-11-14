@@ -1,0 +1,4 @@
+v2.0.0
+
+- Moves to Multiloader for ease of updating/maintaining.
+- Ported over fix for NeoForge/Forges armor mixin crash.
