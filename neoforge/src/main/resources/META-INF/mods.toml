@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+issueTrackerURL="https://github.com/AzureDoom/AzureLib-Armor/issues"
+license="${mod_license}"
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="AzureLib Armor"
+displayURL="ttps://modrinth.com/mod/azurelib-armor"
+logoFile="azurelib.png" 
+credits="AzureDoom, Gecko, Eliot, DerToaster, Tslat, Bvanseg"
+authors="AzureDoom, Gecko, Eliot, Chappie, DerToaster, Tslat, Bvanseg"
+description='''
+Based off Geckolib but now just for my own needs.
+'''
+[[dependencies.azurelibarmor]]
+    modId="neoforge"
+    mandatory=true 
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.azurelibarmor]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"

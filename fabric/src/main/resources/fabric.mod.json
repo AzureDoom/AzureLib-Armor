@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "azurelibarmor",
+  "version": "${version}",
+  "name": "AzureLib Armor",
+  "description": "A striped down Azurelib just for Armor!",
+  "authors": [
+    "AzureDoom, Gecko, Eliot, Hydos, DerToaster, Tslat, KyoSleep, Bvanseg"
+  ],
+  "contact": {
+    "homepage" : "https://modrinth.com/mod/azurelib-armor",
+    "issues" : "https://github.com/AzureDoom/AzureLib-Armor/issues",
+    "sources" : "https://github.com/AzureDoom/AzureLib-Armor"
+  },
+  "license": "MIT",
+  "icon": "azurelib.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "mod.azure.azurelibarmor.FabricAzureLibMod"
+    ],
+    "client": [
+      "mod.azure.azurelibarmor.ClientListener"
+    ]
+  },
+  "mixins": [
+    "azurelibarmor.mixins.json",
+    "azurelibarmor.fabric.mixins.json"
+  ],
+  "accessWidener": "azurelibarmor.aw",
+  "depends": {
+    "fabricloader": ">=0.14.10",
+    "fabric-api": "*",
+    "java": ">=17",
+    "minecraft": "1.20.2"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
+  }
+}
