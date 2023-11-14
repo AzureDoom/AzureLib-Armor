@@ -1,3 +1,0 @@
-v1.0.4
-
-- Updates Item Renders system to match changes done in main AzureLib to match the Fabric side.
