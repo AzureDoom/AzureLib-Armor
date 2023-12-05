@@ -54,7 +54,7 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
 	protected Matrix4f entityRenderTranslations = new Matrix4f();
 	protected Matrix4f modelRenderTranslations = new Matrix4f();
 
-	protected BakedGeoModel lastModel = null;
+	public BakedGeoModel lastModel = null;
 	protected GeoBone head = null;
 	protected GeoBone body = null;
 	protected GeoBone rightArm = null;
@@ -322,7 +322,7 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
 			Matrix4f localMatrix = RenderUtils.invertAndMultiplyMatrices(poseState, this.entityRenderTranslations);
 
 			bone.setModelSpaceMatrix(RenderUtils.invertAndMultiplyMatrices(poseState, this.modelRenderTranslations));
-			bone.setLocalSpaceMatrix(RenderUtils.translateMatrix(localMatrix, getRenderOffset(this.currentEntity, 1).toVector3f()));
+			bone.setLocalSpaceMatrix(RenderUtils.translateMatrix(localMatrix, Vec3.ZERO.toVector3f()));
 			bone.setWorldSpaceMatrix(RenderUtils.translateMatrix(new Matrix4f(localMatrix), this.currentEntity.position().toVector3f()));
 		}
 
