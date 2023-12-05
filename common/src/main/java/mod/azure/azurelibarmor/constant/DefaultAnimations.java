@@ -92,9 +92,6 @@ public final class DefaultAnimations {
 	 * For the {@code objectSupplier}, provide the relevant object for the animatable being animated.
 	 * Recommended:
 	 * <ul>
-	 *     <li>{@link mod.azure.azurelibarmor.animatable.GeoEntity GeoEntity}: state -> animatable</li>
-	 *     <li>{@link mod.azure.azurelibarmor.animatable.GeoBlockEntity GeoBlockEntity}: state -> animatable</li>
-	 *     <li>{@link mod.azure.azurelibarmor.animatable.GeoReplacedEntity GeoReplacedEntity}: state -> state.getData(DataTickets.ENTITY)</li>
 	 *     <li>{@link GeoItem GeoItem}: state -> state.getData(DataTickets.ITEMSTACK)</li>
 	 *     <li>{@code GeoArmor}: state -> state.getData(DataTickets.ENTITY)</li>
 	 * </ul>

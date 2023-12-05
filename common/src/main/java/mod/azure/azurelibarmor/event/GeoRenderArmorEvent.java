@@ -111,7 +111,6 @@ public abstract class GeoRenderArmorEvent implements GeoRenderEvent {
 		}
 
 		/**
-		 * Post-render event for armor pieces being rendered by {@link GeoEntityRenderer}.<br>
 		 * This event is called after {@link GeoRenderer#postRender}
 		 */
 		public static class Post extends GeoRenderArmorEvent {

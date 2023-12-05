@@ -94,7 +94,7 @@ public interface GeoRenderer<T extends GeoAnimatable> {
 	 * The default value and usage for this varies depending on the renderer.<br>
 	 * <ul>
 	 * <li>For entities, it represents the averaged lateral velocity of the object.</li>
-	 * <li>For {@link mod.azure.azurelibarmor.animatable.GeoBlockEntity Tile Entities} and {@link GeoItem Items}, it's currently unused</li>
+	 * <li>For {@link GeoItem Items}, it's currently unused</li>
 	 * </ul>
 	 * The lower the value, the more sensitive the {@link AnimationState#isMoving()} check will be.<br>
 	 * Particularly low values may have adverse effects however
