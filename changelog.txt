@@ -1,4 +1,4 @@
-v2.0.2
+v2.1.0
 
-- Port ItemArmorGeoLayer tweak.
-- Port DyeableGeoArmorRenderer.
+- Internal Refactoring Completed. Please update your imports.
+- Updated to 1.20.3!
