@@ -1,6 +1,6 @@
 package mod.azure.azurelibarmor.platform.services;
 
-import mod.azure.azurelibarmor.event.GeoRenderEvent;
+import mod.azure.azurelibarmor.common.api.common.event.GeoRenderEvent;
 
 public interface GeoRenderPhaseEventFactory {
 

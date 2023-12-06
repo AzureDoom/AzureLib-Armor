@@ -1,6 +1,6 @@
 package mod.azure.azurelibarmor.platform;
 
-import mod.azure.azurelibarmor.AzureLib;
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.platform.services.AzureLibInitializer;
 import mod.azure.azurelibarmor.platform.services.AzureLibNetwork;
 import mod.azure.azurelibarmor.platform.services.GeoRenderPhaseEventFactory;

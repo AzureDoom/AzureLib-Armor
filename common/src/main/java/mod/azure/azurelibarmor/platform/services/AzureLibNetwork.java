@@ -1,15 +1,13 @@
 package mod.azure.azurelibarmor.platform.services;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import mod.azure.azurelibarmor.AzureLib;
-import mod.azure.azurelibarmor.animatable.SingletonGeoAnimatable;
-import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
-import mod.azure.azurelibarmor.network.AbstractPacket;
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.api.common.animatable.SingletonGeoAnimatable;
+import mod.azure.azurelibarmor.common.internal.common.core.animatable.GeoAnimatable;
+import mod.azure.azurelibarmor.common.internal.common.network.AbstractPacket;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 
