@@ -102,12 +102,12 @@ if (file('key.properties').exists()) {
             projectId = "912767"
             projectSlug = "azurelib-armor"
             accessToken = releaseProp.getProperty("curseKey")
-            minecraftVersions.add("1.20.3")
+            minecraftVersions.add("1.20.4")
         }
         modrinth {
             projectId = "pduQXSbl"
             accessToken = releaseProp.getProperty('modrinthKey')
-            minecraftVersions.add("1.20.3")
+            minecraftVersions.add("1.20.4")
         }
     }
 }
