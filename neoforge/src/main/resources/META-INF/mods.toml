@@ -15,13 +15,13 @@ Based off Geckolib but now just for my own needs.
 '''
 [[dependencies.azurelibarmor]]
     modId="neoforge"
-    mandatory=true 
+    mandatory="required"
     versionRange="${neo_version_range}"
     ordering="NONE"
     side="BOTH"
 [[dependencies.azurelibarmor]]
     modId="minecraft"
-    mandatory=true
+    mandatory="required"
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
