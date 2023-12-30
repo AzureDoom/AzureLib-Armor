@@ -1,3 +1,4 @@
-v2.1.1
+v2.1.2
 
-- Updated for change with NeoForge requires in TOMl
+- Updates to latest changes by Neo/Fabric
+- Fixes Fabric not reading 1.20.4 properly.
