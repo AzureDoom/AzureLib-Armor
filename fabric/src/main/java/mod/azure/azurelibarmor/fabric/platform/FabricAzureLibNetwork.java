@@ -1,30 +1,36 @@
 package mod.azure.azurelibarmor.fabric.platform;
 
 import mod.azure.azurelibarmor.common.internal.common.network.AbstractPacket;
-import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimDataSyncPacket;
-import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimTriggerPacket;
-import mod.azure.azurelibarmor.platform.services.AzureLibNetwork;
+import mod.azure.azurelibarmor.common.platform.Services;
+import mod.azure.azurelibarmor.common.platform.services.AzureLibNetwork;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 
 public class FabricAzureLibNetwork implements AzureLibNetwork {
 
-    private void handlePacket(Minecraft client, AbstractPacket packet) {
-        client.execute(packet::handle);
+    public static <B extends FriendlyByteBuf, P extends AbstractPacket> void registerPacket(CustomPacketPayload.Type<P> packetType, StreamCodec<B, P> codec) {
+        PayloadTypeRegistry.playS2C().register(packetType, (StreamCodec<FriendlyByteBuf, P>) codec);
+        ClientPlayNetworking.registerGlobalReceiver(packetType, (packet, context) -> packet.handle());
     }
 
     @Override
-    public void registerClientReceiverPackets() {
-        ClientPlayNetworking.registerGlobalReceiver(ANIM_DATA_SYNC_PACKET_ID, (client, $2, buf, $4) -> this.handlePacket(client, AnimDataSyncPacket.receive(buf)));
-        ClientPlayNetworking.registerGlobalReceiver(ANIM_TRIGGER_SYNC_PACKET_ID, (client, $2, buf, $4) -> this.handlePacket(client, AnimTriggerPacket.receive(buf)));
+    public <B extends FriendlyByteBuf, P extends AbstractPacket> void registerPacketInternal(CustomPacketPayload.Type<P> payloadType, StreamCodec<B, P> codec, boolean isClientBound) {
+        if (isClientBound) {
+            if (Services.PLATFORM.isEnvironmentClient()) FabricAzureLibNetwork.registerPacket(payloadType, codec);
+        } else {
+            PayloadTypeRegistry.playC2S().register(payloadType, (StreamCodec<FriendlyByteBuf, P>) codec);
+            ServerPlayNetworking.registerGlobalReceiver(payloadType, (packet, context) -> packet.handle());
+        }
     }
 
     public FriendlyByteBuf createFriendlyByteBuf() {
@@ -33,25 +39,22 @@ public class FabricAzureLibNetwork implements AzureLibNetwork {
 
     @Override
     public void sendToTrackingEntityAndSelf(AbstractPacket packet, Entity entityToTrack) {
-        for (ServerPlayer trackingPlayer : PlayerLookup.tracking(entityToTrack)) {
-            FriendlyByteBuf buf = createFriendlyByteBuf();
-            packet.encode(buf);
-            ServerPlayNetworking.send(trackingPlayer, packet.getPacketID(), buf);
-        }
+        if (entityToTrack instanceof ServerPlayer pl) sendToPlayer(packet, pl);
 
-        if (entityToTrack instanceof ServerPlayer serverPlayer) {
-            FriendlyByteBuf buf = createFriendlyByteBuf();
-            packet.encode(buf);
-            ServerPlayNetworking.send(serverPlayer, packet.getPacketID(), buf);
+        for (ServerPlayer player : PlayerLookup.tracking(entityToTrack)) {
+            sendToPlayer(packet, player);
         }
     }
 
     @Override
     public void sendToEntitiesTrackingChunk(AbstractPacket packet, ServerLevel level, BlockPos blockPos) {
-        for (ServerPlayer trackingPlayer : PlayerLookup.tracking(level, blockPos)) {
-            FriendlyByteBuf buf = createFriendlyByteBuf();
-            packet.encode(buf);
-            ServerPlayNetworking.send(trackingPlayer, packet.getPacketID(), buf);
+        for (ServerPlayer player : PlayerLookup.tracking(level, blockPos)) {
+            sendToPlayer(packet, player);
         }
+    }
+
+    @Override
+    public void sendToPlayer(AbstractPacket packet, ServerPlayer player) {
+        ServerPlayNetworking.send(player, packet);
     }
 }

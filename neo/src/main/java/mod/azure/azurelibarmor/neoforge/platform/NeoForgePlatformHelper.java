@@ -1,0 +1,47 @@
+package mod.azure.azurelibarmor.neoforge.platform;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.platform.services.IPlatformHelper;
+import mod.azure.azurelibarmor.neoforge.NeoForgeAzureLibMod;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
+
+import java.nio.file.Path;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
+public class NeoForgePlatformHelper implements IPlatformHelper {
+
+    @Override
+    public String getPlatformName() {
+        return "Forge";
+    }
+
+    @Override
+    public boolean isDevelopmentEnvironment() {
+        return !FMLLoader.isProduction();
+    }
+
+    @Override
+    public Path getGameDir() {
+        return FMLLoader.getGamePath();
+    }
+
+    @Override
+    public boolean isServerEnvironment() {
+        return FMLEnvironment.dist.isDedicatedServer();
+    }
+
+    @Override
+    public boolean isEnvironmentClient() {
+        return FMLEnvironment.dist.isClient();
+    }
+
+    @Override
+    public <T> Supplier<DataComponentType<T>> registerDataComponent(String id, UnaryOperator<DataComponentType.Builder<T>> builder) {
+        return NeoForgeAzureLibMod.DATA_COMPONENTS_REGISTER.registerComponentType(id, builder);
+    }
+}

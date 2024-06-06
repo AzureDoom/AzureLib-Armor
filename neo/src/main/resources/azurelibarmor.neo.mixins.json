@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "mod.azure.azurelibarmor.common.internal.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "ItemRendererAccessor",
+    "MixinHumanoidArmorLayer",
+    "MixinItemRenderer",
+    "TextureManagerMixin"
+  ]
+}

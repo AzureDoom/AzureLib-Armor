@@ -1,4 +1,0 @@
-v2.1.2
-
-- Updates to latest changes by Neo/Fabric
-- Fixes Fabric not reading 1.20.4 properly.

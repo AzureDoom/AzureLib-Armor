@@ -5,14 +5,14 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.AzureLibException;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
-import mod.azure.azurelibarmor.common.internal.common.core.animatable.model.CoreGeoModel;
 import mod.azure.azurelibarmor.common.internal.common.loading.FileLoader;
 import mod.azure.azurelibarmor.common.internal.common.loading.json.FormatVersion;
-import mod.azure.azurelibarmor.common.internal.common.core.animation.Animation;
 import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Model;
 import mod.azure.azurelibarmor.common.internal.common.loading.object.BakedAnimations;
 import mod.azure.azurelibarmor.common.internal.common.loading.object.BakedModelFactory;
 import mod.azure.azurelibarmor.common.internal.common.loading.object.GeometryTree;
+import mod.azure.azurelibarmor.core.animatable.model.CoreGeoModel;
+import mod.azure.azurelibarmor.core.animation.Animation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier;
@@ -31,26 +31,34 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
- * Cache class for holding loaded
- * {@link Animation Animations} and
- * {@link CoreGeoModel Models}
+ * Cache class for holding loaded {@link Animation Animations} and {@link CoreGeoModel Models}
  */
 public final class AzureLibCache {
-    private static final Set<String> EXCLUDED_NAMESPACES = ObjectOpenHashSet.of("moreplayermodels", "customnpcs", "gunsrpg");
+
+    private static final Set<String> EXCLUDED_NAMESPACES = ObjectOpenHashSet.of(
+            "moreplayermodels",
+            "customnpcs",
+            "gunsrpg"
+    );
 
     private static Map<ResourceLocation, BakedAnimations> ANIMATIONS = Collections.emptyMap();
+
     private static Map<ResourceLocation, BakedGeoModel> MODELS = Collections.emptyMap();
+
+    private AzureLibCache() {
+        throw new UnsupportedOperationException();
+    }
 
     public static Map<ResourceLocation, BakedAnimations> getBakedAnimations() {
         if (!AzureLib.hasInitialized)
-            throw new AzureLibException("AzureLib was never initialized! Please read the documentation!");
+            throw new AzureLibException("azurelibarmor was never initialized! Please read the documentation!");
 
         return ANIMATIONS;
     }
 
     public static Map<ResourceLocation, BakedGeoModel> getBakedModels() {
         if (!AzureLib.hasInitialized)
-            throw new AzureLibException("AzureLib was never initialized! Please read the documentation!");
+            throw new AzureLibException("azurelibarmor was never initialized! Please read the documentation!");
 
         return MODELS;
     }
@@ -63,34 +71,53 @@ public final class AzureLibCache {
         }
 
         if (!(mc.getResourceManager() instanceof ReloadableResourceManager resourceManager))
-            throw new AzureLibException("AzureLib was initialized too early!");
+            throw new AzureLibException("azurelibarmor was initialized too early!");
 
         resourceManager.registerReloadListener(AzureLibCache::reload);
     }
 
-    public static CompletableFuture<Void> reload(PreparationBarrier stage, ResourceManager resourceManager,
-                                                 ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor,
-                                                 Executor gameExecutor) {
+    public static CompletableFuture<Void> reload(
+            PreparationBarrier stage,
+            ResourceManager resourceManager,
+            ProfilerFiller preparationsProfiler,
+            ProfilerFiller reloadProfiler,
+            Executor backgroundExecutor,
+            Executor gameExecutor
+    ) {
         Map<ResourceLocation, BakedAnimations> animations = new Object2ObjectOpenHashMap<>();
         Map<ResourceLocation, BakedGeoModel> models = new Object2ObjectOpenHashMap<>();
 
         return CompletableFuture
-                .allOf(loadAnimations(backgroundExecutor, resourceManager, animations::put),
-                        loadModels(backgroundExecutor, resourceManager, models::put))
-                .thenCompose(stage::wait).thenAcceptAsync(empty -> {
+                .allOf(
+                        loadAnimations(backgroundExecutor, resourceManager, animations::put),
+                        loadModels(backgroundExecutor, resourceManager, models::put)
+                )
+                .thenCompose(stage::wait)
+                .thenAcceptAsync(empty -> {
                     AzureLibCache.ANIMATIONS = animations;
                     AzureLibCache.MODELS = models;
                 }, gameExecutor);
     }
 
-    private static CompletableFuture<Void> loadAnimations(Executor backgroundExecutor, ResourceManager resourceManager,
-                                                          BiConsumer<ResourceLocation, BakedAnimations> elementConsumer) {
-        return loadResources(backgroundExecutor, resourceManager, "animations",
-                resource -> FileLoader.loadAnimationsFile(resource, resourceManager), elementConsumer);
+    private static CompletableFuture<Void> loadAnimations(
+            Executor backgroundExecutor,
+            ResourceManager resourceManager,
+            BiConsumer<ResourceLocation, BakedAnimations> elementConsumer
+    ) {
+        return loadResources(
+                backgroundExecutor,
+                resourceManager,
+                "animations",
+                resource -> FileLoader.loadAnimationsFile(resource, resourceManager),
+                elementConsumer
+        );
     }
 
-    private static CompletableFuture<Void> loadModels(Executor backgroundExecutor, ResourceManager resourceManager,
-                                                      BiConsumer<ResourceLocation, BakedGeoModel> elementConsumer) {
+    private static CompletableFuture<Void> loadModels(
+            Executor backgroundExecutor,
+            ResourceManager resourceManager,
+            BiConsumer<ResourceLocation, BakedGeoModel> elementConsumer
+    ) {
         return loadResources(backgroundExecutor, resourceManager, "geo", resource -> {
             Model model = FileLoader.loadModelFile(resource, resourceManager);
 
@@ -102,10 +129,17 @@ public final class AzureLibCache {
         }, elementConsumer);
     }
 
-    private static <T> CompletableFuture<Void> loadResources(Executor executor, ResourceManager resourceManager,
-                                                             String type, Function<ResourceLocation, T> loader, BiConsumer<ResourceLocation, T> map) {
+    private static <T> CompletableFuture<Void> loadResources(
+            Executor executor,
+            ResourceManager resourceManager,
+            String type,
+            Function<ResourceLocation, T> loader,
+            BiConsumer<ResourceLocation, T> map
+    ) {
         return CompletableFuture.supplyAsync(
-                        () -> resourceManager.listResources(type, fileName -> fileName.toString().endsWith(".json")), executor)
+                        () -> resourceManager.listResources(type, fileName -> fileName.toString().endsWith(".json")),
+                        executor
+                )
                 .thenApplyAsync(resources -> {
                     Map<ResourceLocation, CompletableFuture<T>> tasks = new Object2ObjectOpenHashMap<>();
 
@@ -114,7 +148,8 @@ public final class AzureLibCache {
                     }
 
                     return tasks;
-                }, executor).thenAcceptAsync(tasks -> {
+                }, executor)
+                .thenAcceptAsync(tasks -> {
                     for (Entry<ResourceLocation, CompletableFuture<T>> entry : tasks.entrySet()) {
                         if (!EXCLUDED_NAMESPACES.contains(entry.getKey().getNamespace().toLowerCase(Locale.ROOT)))
                             map.accept(entry.getKey(), entry.getValue().join());

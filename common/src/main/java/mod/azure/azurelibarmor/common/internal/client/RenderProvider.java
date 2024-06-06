@@ -16,27 +16,38 @@ import net.minecraft.world.item.ItemStack;
  * This can be safely instantiated as a new anonymous class inside your {@link Item} class
  */
 public interface RenderProvider {
-    RenderProvider DEFAULT = new RenderProvider() {};
+
+    RenderProvider DEFAULT = new RenderProvider() {
+    };
 
     static RenderProvider of(ItemStack itemStack) {
         return of(itemStack.getItem());
     }
 
     static RenderProvider of(Item item) {
-        if(item instanceof GeoItem geoItem){
-            return (RenderProvider)geoItem.getRenderProvider().get();
+        if (item instanceof GeoItem geoItem) {
+            return geoItem.getRenderProvider().get();
         }
 
         return DEFAULT;
     }
 
-    default BlockEntityWithoutLevelRenderer getCustomRenderer(){
-        return ((ItemRendererAccessor)Minecraft.getInstance().getItemRenderer()).getBlockEntityRenderer();
+    default BlockEntityWithoutLevelRenderer getCustomRenderer() {
+        return ((ItemRendererAccessor) Minecraft.getInstance().getItemRenderer()).getBlockEntityRenderer();
     }
 
-
-    default Model getGenericArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<LivingEntity> original) {
-        HumanoidModel<LivingEntity> replacement = getHumanoidArmorModel(livingEntity, itemStack, equipmentSlot, original);
+    default Model getGenericArmorModel(
+            LivingEntity livingEntity,
+            ItemStack itemStack,
+            EquipmentSlot equipmentSlot,
+            HumanoidModel<LivingEntity> original
+    ) {
+        HumanoidModel<LivingEntity> replacement = getHumanoidArmorModel(
+                livingEntity,
+                itemStack,
+                equipmentSlot,
+                original
+        );
 
         if (replacement != original) {
             original.copyPropertiesTo(replacement);
@@ -46,7 +57,12 @@ public interface RenderProvider {
         return original;
     }
 
-    default HumanoidModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<LivingEntity> original) {
+    default HumanoidModel<LivingEntity> getHumanoidArmorModel(
+            LivingEntity livingEntity,
+            ItemStack itemStack,
+            EquipmentSlot equipmentSlot,
+            HumanoidModel<LivingEntity> original
+    ) {
         return original;
     }
 }

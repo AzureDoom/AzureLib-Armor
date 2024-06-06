@@ -1,13 +1,8 @@
 package mod.azure.azurelibarmor.common.internal.common.network;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public abstract class AbstractPacket {
+public interface AbstractPacket extends CustomPacketPayload {
 
-    public abstract void encode(FriendlyByteBuf buf);
-
-    public abstract void handle();
-
-    public abstract ResourceLocation getPacketID();
+    void handle();
 }

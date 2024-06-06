@@ -1,10 +1,16 @@
 package mod.azure.azurelibarmor.fabric.platform;
 
-import mod.azure.azurelibarmor.platform.services.IPlatformHelper;
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.platform.services.IPlatformHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.nio.file.Path;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 
@@ -14,14 +20,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public boolean isModLoaded(String modId) {
-
-        return FabricLoader.getInstance().isModLoaded(modId);
-    }
-
-    @Override
     public boolean isDevelopmentEnvironment() {
-
         return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 
@@ -33,5 +32,18 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public boolean isServerEnvironment() {
         return FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER;
+    }
+
+    @Override
+    public boolean isEnvironmentClient() {
+        return FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT;
+    }
+
+    @Override
+    public <T> Supplier<DataComponentType<T>> registerDataComponent(String id, UnaryOperator<DataComponentType.Builder<T>> builder) {
+        final DataComponentType<T> componentType = Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE,
+                AzureLib.modResource(id).toString(), builder.apply(DataComponentType.builder()).build());
+
+        return () -> componentType;
     }
 }
