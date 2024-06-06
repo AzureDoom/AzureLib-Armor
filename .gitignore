@@ -5,32 +5,20 @@ bin
 .metadata
 .classpath
 .project
-mcmodsrepo
-repo
 
 # idea
 out
 *.ipr
 *.iws
 *.iml
-.idea
-caches
-daemon
-wrapper
-native
+.idea/*
+!.idea/scopes
 
-# allow gradlew
-!gradle/wrapper
 # gradle
 build
 .gradle
-logs
+
 # other
 eclipse
 run
 runs
-
-# Files from Forge MDK
-forge*changelog.txt
-build.bat
-*.bat

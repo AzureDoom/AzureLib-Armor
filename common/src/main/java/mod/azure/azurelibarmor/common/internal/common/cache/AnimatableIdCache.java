@@ -1,30 +1,36 @@
 package mod.azure.azurelibarmor.common.internal.common.cache;
 
-import mod.azure.azurelibarmor.common.internal.common.core.animatable.instance.SingletonAnimatableInstanceCache;
+import mod.azure.azurelibarmor.core.animatable.instance.SingletonAnimatableInstanceCache;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.saveddata.SavedData;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Storage class that keeps track of the last animatable id used, and provides new ones on request.<br>
- * Generally only used for {@link net.minecraft.world.item.Item Items}, but any
- * {@link SingletonAnimatableInstanceCache singleton} will likely use this.
+ * Generally only used for {@link net.minecraft.world.item.Item Items}, but any {@link SingletonAnimatableInstanceCache
+ * singleton} will likely use this.
  */
 public final class AnimatableIdCache extends SavedData {
-    private static final String DATA_KEY = "AzureLib_id_cache";
+
+    private static final String DATA_KEY = "azurelibarmor_id_cache";
+
     private long lastId;
 
     private AnimatableIdCache() {
-        this(new CompoundTag());
     }
 
-    private AnimatableIdCache(CompoundTag tag) {
+    private AnimatableIdCache(CompoundTag tag, HolderLookup.Provider registryLookup) {
         this.lastId = tag.getLong("last_id");
     }
 
     public static SavedData.Factory<AnimatableIdCache> factory() {
-        return new SavedData.Factory<AnimatableIdCache>(AnimatableIdCache::new, AnimatableIdCache::new, DataFixTypes.SAVED_DATA_MAP_DATA);
+        return new SavedData.Factory<>(
+                AnimatableIdCache::new,
+                AnimatableIdCache::new,
+                null
+        );
     }
 
     /**
@@ -37,18 +43,18 @@ public final class AnimatableIdCache extends SavedData {
         return getCache(level).getNextId();
     }
 
+    private static AnimatableIdCache getCache(ServerLevel level) {
+        return level.getServer().overworld().getDataStorage().computeIfAbsent(AnimatableIdCache.factory(), DATA_KEY);
+    }
+
     private long getNextId() {
         setDirty();
         return ++this.lastId;
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public @NotNull CompoundTag save(CompoundTag tag, HolderLookup.@NotNull Provider var2) {
         tag.putLong("last_id", this.lastId);
         return tag;
-    }
-
-    private static AnimatableIdCache getCache(ServerLevel level) {
-        return level.getServer().overworld().getDataStorage().computeIfAbsent(AnimatableIdCache.factory(), DATA_KEY);
     }
 }

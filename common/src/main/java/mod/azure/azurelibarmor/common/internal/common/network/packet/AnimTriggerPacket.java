@@ -1,45 +1,26 @@
 package mod.azure.azurelibarmor.common.internal.common.network.packet;
 
-import mod.azure.azurelibarmor.common.internal.common.core.animatable.GeoAnimatable;
-import mod.azure.azurelibarmor.common.internal.common.core.animation.AnimatableManager;
 import mod.azure.azurelibarmor.common.internal.common.network.AbstractPacket;
-import mod.azure.azurelibarmor.platform.services.AzureLibNetwork;
+import mod.azure.azurelibarmor.common.platform.services.AzureLibNetwork;
+import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
+import mod.azure.azurelibarmor.core.animation.AnimatableManager;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Packet for syncing user-definable animations that can be triggered from the
- * server
+ * Packet for syncing user-definable animations that can be triggered from the server
  */
-public class AnimTriggerPacket extends AbstractPacket {
-    private final String syncableId;
-    private final long instanceId;
-    private final String controllerName;
-    private final String animName;
-
-    public AnimTriggerPacket(String syncableId, long instanceId, @Nullable String controllerName, String animName) {
-        this.syncableId = syncableId;
-        this.instanceId = instanceId;
-        this.controllerName = controllerName == null ? "" : controllerName;
-        this.animName = animName;
-    }
-
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(this.syncableId);
-        buf.writeVarLong(this.instanceId);
-        buf.writeUtf(this.controllerName);
-        buf.writeUtf(this.animName);
-    }
-
-    @Override
-    public ResourceLocation getPacketID() {
-        return AzureLibNetwork.ANIM_TRIGGER_SYNC_PACKET_ID;
-    }
-
-    public static AnimTriggerPacket receive(FriendlyByteBuf buf) {
-        return new AnimTriggerPacket(buf.readUtf(), buf.readVarLong(), buf.readUtf(), buf.readUtf());
-    }
+public record AnimTriggerPacket(String syncableId, long instanceId, String controllerName,
+                                String animName) implements AbstractPacket {
+    public static final CustomPacketPayload.Type<AnimTriggerPacket> TYPE = new Type<>(
+            AzureLibNetwork.ANIM_TRIGGER_SYNC_PACKET_ID);
+    public static final StreamCodec<FriendlyByteBuf, AnimTriggerPacket> CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, AnimTriggerPacket::syncableId, ByteBufCodecs.VAR_LONG,
+            AnimTriggerPacket::instanceId, ByteBufCodecs.STRING_UTF8, AnimTriggerPacket::controllerName,
+            ByteBufCodecs.STRING_UTF8, AnimTriggerPacket::animName, AnimTriggerPacket::new);
 
     @Override
     public void handle() {
@@ -50,5 +31,10 @@ public class AnimTriggerPacket extends AbstractPacket {
 
             manager.tryTriggerAnimation(controllerName, animName);
         }
+    }
+
+    @Override
+    public @NotNull Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

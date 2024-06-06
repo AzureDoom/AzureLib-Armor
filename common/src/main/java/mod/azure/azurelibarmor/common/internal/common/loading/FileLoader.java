@@ -4,10 +4,10 @@ import com.google.gson.JsonObject;
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.AzureLibException;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
-import mod.azure.azurelibarmor.common.internal.common.core.animation.Animation;
 import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Model;
 import mod.azure.azurelibarmor.common.internal.common.loading.object.BakedAnimations;
 import mod.azure.azurelibarmor.common.internal.common.util.JsonUtil;
+import mod.azure.azurelibarmor.core.animation.Animation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.GsonHelper;
@@ -20,6 +20,11 @@ import java.nio.charset.Charset;
  * Extracts raw information from given files, and other similar functions
  */
 public final class FileLoader {
+
+    private FileLoader() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Load up and deserialize an animation json file to its respective {@link Animation} components
      *
@@ -64,9 +69,5 @@ public final class FileLoader {
 
             throw new AzureLibException(location.toString());
         }
-    }
-
-    private FileLoader() {
-        throw new UnsupportedOperationException();
     }
 }
