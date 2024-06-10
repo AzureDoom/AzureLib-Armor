@@ -1,4 +1,4 @@
-v2.2.5
+v2.2.1
 
-- Make handleAnimations no longer final in GeoModel
-- Set up lighting before getting VertexConsumer on GeoItems
+- Fixes inverted firePreRenderEvent on NeoForge.
+- Port additional handling for weirdly formatted bedrock animation jsons.
