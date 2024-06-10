@@ -14,6 +14,9 @@ repositories {
 }
 
 dependencies {
+    //Common
+    compileOnly "mod.azure.azurelibarmor:azurelibarmor-common-MCVERSION:MODVERSION"
+       
     //Fabric or Quilt
     modImplementation "mod.azure.azurelibarmor:azurelibarmor-fabric-MCVERSION:MODVERSION"
 		
