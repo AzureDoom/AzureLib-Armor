@@ -18,3 +18,23 @@ dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "azurelib"
+            url = "https://libs.azuredoom.com:4443/mods"
+            credentials(PasswordCredentials)
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            artifactId base.archivesName.get()
+            artifact jar
+            artifact sourcesJar
+        }
+    }
+}
