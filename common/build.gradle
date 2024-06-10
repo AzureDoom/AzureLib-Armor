@@ -20,15 +20,20 @@ dependencies {
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId base.archivesName.get()
-            from components.java
-        }
-    }
     repositories {
         maven {
-            url "file://" + System.getenv("local_maven")
+            name = "azurelib"
+            url = "https://libs.azuredoom.com:4443/mods"
+            credentials(PasswordCredentials)
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            artifactId base.archivesName.get()
+            from components.java
         }
     }
 }
