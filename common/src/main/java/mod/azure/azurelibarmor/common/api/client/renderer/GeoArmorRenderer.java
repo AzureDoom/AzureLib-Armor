@@ -718,13 +718,9 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
             float partialTick,
             int packedLight
     ) {
-        /*
-         * TODO: Find why inverted.
-         */
-        var event = GeoRenderArmorEvent.Pre.EVENT.handle(
+        return GeoRenderArmorEvent.Pre.EVENT.handle(
                 new GeoRenderArmorEvent.Pre(this, poseStack, model, bufferSource, partialTick, packedLight)
         );
-        return Services.PLATFORM.getPlatformName().equalsIgnoreCase("forge") != event;
     }
 
     /**
