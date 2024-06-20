@@ -1,4 +1,3 @@
-v2.2.1
+v2.3.0
 
-- Fixes inverted firePreRenderEvent on NeoForge.
-- Port additional handling for weirdly formatted bedrock animation jsons.
+- Ported to 1.21! 
