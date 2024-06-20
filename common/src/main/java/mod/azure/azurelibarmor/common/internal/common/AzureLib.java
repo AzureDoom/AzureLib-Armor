@@ -44,6 +44,6 @@ public final class AzureLib {
     }
 
     public static ResourceLocation modResource(String name) {
-        return new ResourceLocation(MOD_ID, name);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
 }

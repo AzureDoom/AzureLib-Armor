@@ -667,14 +667,11 @@ public interface GeoRenderer<T extends GeoAnimatable> {
             Vector3f position = vertex.position();
             Vector4f vector4f = poseState.transform(new Vector4f(position.x(), position.y(), position.z(), 1.0f));
 
-            buffer.vertex(
+            buffer.addVertex(
                     vector4f.x(),
                     vector4f.y(),
                     vector4f.z(),
-                    red,
-                    green,
-                    blue,
-                    alpha,
+                    -1,
                     vertex.texU(),
                     vertex.texV(),
                     packedOverlay,

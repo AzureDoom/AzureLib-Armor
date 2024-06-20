@@ -80,7 +80,7 @@ public abstract class GeoModel<T extends GeoAnimatable> implements CoreGeoModel<
 
     @Override
     public final BakedGeoModel getBakedGeoModel(String location) {
-        return getBakedModel(new ResourceLocation(location));
+        return getBakedModel(ResourceLocation.parse(location));
     }
 
     /**
@@ -152,7 +152,7 @@ public abstract class GeoModel<T extends GeoAnimatable> implements CoreGeoModel<
                     : RenderUtils.getCurrentTick();
 
         if (animatableManager.getFirstTickTime() == -1)
-            animatableManager.startedAt(currentTick + mc.getFrameTime());
+            animatableManager.startedAt(currentTick + mc.getTimer().getGameTimeDeltaTicks());
 
         double currentFrameTime = currentTick - animatableManager.getFirstTickTime();
         boolean isReRender = !animatableManager.isFirstTick() && currentFrameTime == animatableManager

@@ -127,7 +127,7 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
             includes = new Object2ObjectOpenHashMap<>(includeListJSONObj.size());
             for (JsonElement entry : includeListJSONObj.asList()) {
                 JsonObject obj = entry.getAsJsonObject();
-                ResourceLocation fileId = new ResourceLocation(obj.get("file_id").getAsString());
+                ResourceLocation fileId = ResourceLocation.parse(obj.get("file_id").getAsString());
                 for (JsonElement animName : obj.getAsJsonArray("animations")) {
                     String ani = animName.getAsString();
                     if (includes.containsKey(ani)) {

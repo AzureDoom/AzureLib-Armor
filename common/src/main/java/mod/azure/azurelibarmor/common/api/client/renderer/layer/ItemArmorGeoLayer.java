@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
@@ -79,7 +80,7 @@ public class ItemArmorGeoLayer<T extends LivingEntity & GeoAnimatable> extends G
     @NotNull
     protected EquipmentSlot getEquipmentSlotForBone(GeoBone bone, ItemStack stack, T animatable) {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            if (slot.getType() == EquipmentSlot.Type.ARMOR) {
+            if (slot.getType() == EquipmentSlot.Type.HUMANOID_ARMOR) {
                 if (stack == animatable.getItemBySlot(slot))
                     return slot;
             }
@@ -184,7 +185,8 @@ public class ItemArmorGeoLayer<T extends LivingEntity & GeoAnimatable> extends G
                     prepModelPartForRender(poseStack, bone, modelPart);
                     geoArmorRenderer.prepForRender(animatable, armorStack, slot, model);
                     geoArmorRenderer.applyBoneVisibilityByPart(slot, modelPart, model);
-                    geoArmorRenderer.renderToBuffer(poseStack, null, packedLight, packedOverlay, 1, 1, 1, 1);
+                    geoArmorRenderer.renderToBuffer(poseStack, null, packedLight, packedOverlay, armorStack.is(
+                            ItemTags.DYEABLE) ? FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(armorStack, -6265536)) : -1);
                 } else if (armorStack.getItem() instanceof ArmorItem) {
                     prepModelPartForRender(poseStack, bone, modelPart);
                     renderVanillaArmorPiece(
@@ -230,8 +232,7 @@ public class ItemArmorGeoLayer<T extends LivingEntity & GeoAnimatable> extends G
             VertexConsumer buffer = getVanillaArmorBuffer(bufferSource, animatable, armorStack, slot, bone, layer,
                     packedLight, packedOverlay, false);
 
-            modelPart.render(poseStack, buffer, packedLight, packedOverlay, (color >> 16 & 255) / 255f,
-                    (color >> 8 & 255) / 255f, (color & 255) / 255f, 1);
+            modelPart.render(poseStack, buffer, packedLight, packedOverlay);
         }
 
         ArmorTrim trim = armorStack.get(DataComponents.TRIM);
@@ -248,7 +249,7 @@ public class ItemArmorGeoLayer<T extends LivingEntity & GeoAnimatable> extends G
         if (armorStack.hasFoil())
             modelPart.render(poseStack,
                     getVanillaArmorBuffer(bufferSource, animatable, armorStack, slot, bone, null, packedLight,
-                            packedOverlay, true), packedLight, packedOverlay, 1, 1, 1, 1);
+                            packedOverlay, true), packedLight, packedOverlay, 1);
     }
 
     protected VertexConsumer getVanillaArmorBuffer(MultiBufferSource bufferSource, T animatable, ItemStack stack, EquipmentSlot slot, GeoBone bone, @Nullable ArmorMaterial.Layer layer, int packedLight, int packedOverlay, boolean forGlint) {

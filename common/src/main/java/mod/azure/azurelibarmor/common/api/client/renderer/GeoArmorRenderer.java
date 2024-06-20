@@ -327,10 +327,7 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
             VertexConsumer buffer,
             int packedLight,
             int packedOverlay,
-            float red,
-            float green,
-            float blue,
-            float alpha
+            int var5
     ) {
         Minecraft mc = Minecraft.getInstance();
         MultiBufferSource bufferSource = Minecraft.getInstance().levelRenderer.renderBuffers.bufferSource();
@@ -342,14 +339,14 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
         )
             bufferSource = Minecraft.getInstance().levelRenderer.renderBuffers.outlineBufferSource();
 
-        float partialTick = mc.getFrameTime();
+        float partialTick = mc.getTimer().getGameTimeDeltaTicks();
         RenderType renderType = getRenderType(
                 this.animatable,
                 getTextureLocation(this.animatable),
                 bufferSource,
                 partialTick
         );
-        buffer = ItemRenderer.getArmorFoilBuffer(bufferSource, renderType, false, this.currentStack.hasFoil());
+        buffer = ItemRenderer.getArmorFoilBuffer(bufferSource, renderType, this.currentStack.hasFoil());
 
         defaultRender(poseStack, this.animatable, bufferSource, null, buffer, 0, partialTick, packedLight);
     }

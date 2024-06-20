@@ -38,6 +38,7 @@ public final class AzureLibCache {
     private static final Set<String> EXCLUDED_NAMESPACES = ObjectOpenHashSet.of(
             "moreplayermodels",
             "customnpcs",
+            "geckolib",
             "gunsrpg"
     );
 
