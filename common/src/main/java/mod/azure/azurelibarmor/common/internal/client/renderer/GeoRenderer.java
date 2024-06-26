@@ -1,5 +1,6 @@
 package mod.azure.azurelibarmor.common.internal.client.renderer;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
@@ -514,7 +515,7 @@ public interface GeoRenderer<T extends GeoAnimatable> {
         RenderUtils.prepMatrixForBone(poseStack, bone);
         renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 
-        if (!isReRender)
+        if (!isReRender) {
             applyRenderLayersForBone(
                     poseStack,
                     getAnimatable(),
@@ -526,6 +527,9 @@ public interface GeoRenderer<T extends GeoAnimatable> {
                     packedLight,
                     packedOverlay
             );
+            if (buffer instanceof BufferBuilder builder && !builder.building)
+                buffer = bufferSource.getBuffer(renderType);
+        }
 
         renderChildBones(
                 poseStack,

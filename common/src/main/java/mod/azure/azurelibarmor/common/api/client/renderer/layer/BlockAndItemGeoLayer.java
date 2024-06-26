@@ -123,8 +123,6 @@ public class BlockAndItemGeoLayer<T extends GeoAnimatable> extends GeoRenderLaye
                     packedOverlay
             );
 
-        buffer = bufferSource.getBuffer(renderType);
-
         poseStack.popPose();
     }
 
