@@ -1,3 +1,5 @@
-v2.3.0
+v2.3.1
 
-- Ported to 1.21! 
+- Port Easing Fix
+- Add a helper SingleteonGeoAnimatable#registerSyncedAnimatable
+- Fix stale buffer on Entities/Layers
