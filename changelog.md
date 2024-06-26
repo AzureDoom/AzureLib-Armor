@@ -1,4 +1,5 @@
-v2.2.1
+v2.2.2
 
-- Fixes inverted firePreRenderEvent on NeoForge.
-- Port additional handling for weirdly formatted bedrock animation jsons.
+- Port Easing Fix
+- Add a helper SingleteonGeoAnimatable#registerSyncedAnimatable
+- Fix stale buffer on Entities/Layers
