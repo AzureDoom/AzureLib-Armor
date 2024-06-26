@@ -2,6 +2,7 @@ package mod.azure.azurelibarmor.renderer;
 
 import java.util.List;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import mod.azure.azurelibarmor.animatable.GeoItem;
 import mod.azure.azurelibarmor.cache.texture.AnimatableTexture;
 import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
@@ -217,8 +218,11 @@ public interface GeoRenderer<T extends GeoAnimatable> {
 		RenderUtils.prepMatrixForBone(poseStack, bone);
 		renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 
-		if (!isReRender)
+		if (!isReRender) {
 			applyRenderLayersForBone(poseStack, getAnimatable(), bone, renderType, bufferSource, buffer, partialTick, packedLight, packedOverlay);
+			if (buffer instanceof BufferBuilder builder && !builder.building)
+				buffer = bufferSource.getBuffer(renderType);
+		}
 
 		renderChildBones(poseStack, animatable, bone, renderType, bufferSource, buffer, false, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 		poseStack.popPose();
