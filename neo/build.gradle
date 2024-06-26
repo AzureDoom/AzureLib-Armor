@@ -40,7 +40,6 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${neo_version}"
 }
 
 if (file('key.properties').exists()) {
