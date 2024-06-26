@@ -204,8 +204,6 @@ public class ItemArmorGeoLayer<T extends LivingEntity & GeoAnimatable> extends G
                 poseStack.popPose();
             }
         }
-
-        buffer = bufferSource.getBuffer(renderType);
     }
 
     /**
