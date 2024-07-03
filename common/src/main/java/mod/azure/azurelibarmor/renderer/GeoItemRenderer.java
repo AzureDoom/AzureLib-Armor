@@ -9,7 +9,6 @@ package mod.azure.azurelibarmor.renderer;
 
 import java.util.List;
 
-import mod.azure.azurelibarmor.event.GeoRenderItemEvent;
 import mod.azure.azurelibarmor.platform.Services;
 import mod.azure.azurelibarmor.animatable.GeoItem;
 import mod.azure.azurelibarmor.cache.object.BakedGeoModel;
@@ -253,17 +252,17 @@ public class GeoItemRenderer<T extends Item & GeoAnimatable> extends BlockEntity
 	 */
 	@Override
 	public void fireCompileRenderLayersEvent() {
-		GeoRenderItemEvent.CompileRenderLayers.EVENT.handle(new GeoRenderItemEvent.CompileRenderLayers(this));
+		Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireCompileItemRenderLayers(this);
 	}
 
 	/**
 	 * Create and fire the relevant {@code Pre-Render} event hook for this renderer.<br>
-	 * 
+	 *
 	 * @return Whether the renderer should proceed based on the cancellation state of the event
 	 */
 	@Override
 	public boolean firePreRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
-        return GeoRenderItemEvent.Pre.EVENT.handle(new GeoRenderItemEvent.Pre(this, poseStack, model, bufferSource, partialTick, packedLight));
+		return Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireItemPreRender(this, poseStack, model, bufferSource, partialTick, packedLight);
 	}
 
 	/**
@@ -271,6 +270,6 @@ public class GeoItemRenderer<T extends Item & GeoAnimatable> extends BlockEntity
 	 */
 	@Override
 	public void firePostRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
-		GeoRenderItemEvent.Post.EVENT.handle(new GeoRenderItemEvent.Post(this, poseStack, model, bufferSource, partialTick, packedLight));
+		Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireItemPostRender(this, poseStack, model, bufferSource, partialTick, packedLight);
 	}
 }
