@@ -13,7 +13,6 @@ import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
 import mod.azure.azurelibarmor.common.api.client.renderer.layer.GeoRenderLayer;
 import mod.azure.azurelibarmor.common.api.client.renderer.layer.GeoRenderLayersContainer;
 import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
-import mod.azure.azurelibarmor.common.api.common.event.GeoRenderArmorEvent;
 import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
 import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
@@ -709,7 +708,7 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
      */
     @Override
     public void fireCompileRenderLayersEvent() {
-        GeoRenderArmorEvent.CompileRenderLayers.EVENT.handle(new GeoRenderArmorEvent.CompileRenderLayers(this));
+        Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireCompileArmorRenderLayers(this);
     }
 
     /**
@@ -718,31 +717,15 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
      * @return Whether the renderer should proceed based on the cancellation state of the event
      */
     @Override
-    public boolean firePreRenderEvent(
-            PoseStack poseStack,
-            BakedGeoModel model,
-            MultiBufferSource bufferSource,
-            float partialTick,
-            int packedLight
-    ) {
-        return GeoRenderArmorEvent.Pre.EVENT.handle(
-                new GeoRenderArmorEvent.Pre(this, poseStack, model, bufferSource, partialTick, packedLight)
-        );
+    public boolean firePreRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
+        return Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireArmorPreRender(this, poseStack, model, bufferSource, partialTick, packedLight);
     }
 
     /**
      * Create and fire the relevant {@code Post-Render} event hook for this renderer
      */
     @Override
-    public void firePostRenderEvent(
-            PoseStack poseStack,
-            BakedGeoModel model,
-            MultiBufferSource bufferSource,
-            float partialTick,
-            int packedLight
-    ) {
-        GeoRenderArmorEvent.Post.EVENT.handle(
-                new GeoRenderArmorEvent.Post(this, poseStack, model, bufferSource, partialTick, packedLight)
-        );
+    public void firePostRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
+        Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireArmorPostRender(this, poseStack, model, bufferSource, partialTick, packedLight);
     }
 }
