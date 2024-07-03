@@ -11,7 +11,6 @@ import java.util.List;
 
 import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
 import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
-import mod.azure.azurelibarmor.common.api.common.event.GeoRenderArmorEvent;
 import mod.azure.azurelibarmor.platform.Services;
 import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
 import mod.azure.azurelibarmor.common.internal.common.constant.DataTickets;
@@ -568,17 +567,17 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
 	 */
 	@Override
 	public void fireCompileRenderLayersEvent() {
-		GeoRenderArmorEvent.CompileRenderLayers.EVENT.handle(new GeoRenderArmorEvent.CompileRenderLayers(this));
+		Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireCompileArmorRenderLayers(this);
 	}
 
 	/**
 	 * Create and fire the relevant {@code Pre-Render} event hook for this renderer.<br>
-	 * 
+	 *
 	 * @return Whether the renderer should proceed based on the cancellation state of the event
 	 */
 	@Override
 	public boolean firePreRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
-        return GeoRenderArmorEvent.Pre.EVENT.handle(new GeoRenderArmorEvent.Pre(this, poseStack, model, bufferSource, partialTick, packedLight));
+		return Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireArmorPreRender(this, poseStack, model, bufferSource, partialTick, packedLight);
 	}
 
 	/**
@@ -586,6 +585,6 @@ public class GeoArmorRenderer<T extends Item & GeoItem> extends HumanoidModel im
 	 */
 	@Override
 	public void firePostRenderEvent(PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
-		GeoRenderArmorEvent.Post.EVENT.handle(new GeoRenderArmorEvent.Post(this, poseStack, model, bufferSource, partialTick, packedLight));
+		Services.GEO_RENDER_PHASE_EVENT_FACTORY.fireArmorPostRender(this, poseStack, model, bufferSource, partialTick, packedLight);
 	}
 }
