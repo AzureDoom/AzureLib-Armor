@@ -1,5 +1,4 @@
-v2.3.1
+v2.3.2
 
-- Port Easing Fix
-- Add a helper SingleteonGeoAnimatable#registerSyncedAnimatable
-- Fix stale buffer on Entities/Layers
+- Adds headers to Geckolib forked classes
+- Fixes Events not working properly
