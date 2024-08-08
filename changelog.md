@@ -1,4 +1,3 @@
-v2.3.2
+v2.3.3
 
-- Adds headers to Geckolib forked classes
-- Fixes Events not working properly
+- Built aginst 1.21.1
