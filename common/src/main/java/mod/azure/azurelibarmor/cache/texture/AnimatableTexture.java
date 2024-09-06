@@ -38,6 +38,7 @@ import net.minecraft.util.Mth;
  */
 public class AnimatableTexture extends SimpleTexture {
 	private AnimationContents animationContents = null;
+	private boolean isAnimated = false;
 
 	public AnimatableTexture(final ResourceLocation location) {
 		super(location);
@@ -47,18 +48,14 @@ public class AnimatableTexture extends SimpleTexture {
 	public void load(ResourceManager manager) throws IOException {
 		Resource resource = manager.getResourceOrThrow(this.location);
 
-		NativeImage nativeImage;
-		TextureMetadataSection simpleTextureMeta = new TextureMetadataSection(false, false);
-
-		try (InputStream inputstream = resource.open()) {
-			nativeImage = NativeImage.read(inputstream);
-		}
-
 		try {
-			ResourceMetadata meta = resource.metadata();
+			NativeImage nativeImage;
 
-			simpleTextureMeta = meta.getSection(TextureMetadataSection.SERIALIZER).orElse(simpleTextureMeta);
-			this.animationContents = meta.getSection(AnimationMetadataSection.SERIALIZER).map(animMeta -> new AnimationContents(nativeImage, animMeta)).orElse(null);
+			try (InputStream inputstream = resource.open()) {
+				nativeImage = NativeImage.read(inputstream);
+			}
+
+			this.animationContents = resource.metadata().getSection(AnimationMetadataSection.SERIALIZER).map(animMeta -> new AnimationContents(nativeImage, animMeta)).orElse(null);
 
 			if (this.animationContents != null) {
 				if (!this.animationContents.isValid()) {
@@ -67,22 +64,26 @@ public class AnimatableTexture extends SimpleTexture {
 					return;
 				}
 
+				this.isAnimated = true;
+
 				onRenderThread(() -> {
 					TextureUtil.prepareImage(getId(), 0, this.animationContents.frameSize.width(), this.animationContents.frameSize.height());
 					nativeImage.upload(0, 0, 0, 0, 0, this.animationContents.frameSize.width(), this.animationContents.frameSize.height(), false, false);
 				});
-
-				return;
 			}
 		}
 		catch (RuntimeException exception) {
 			AzureLib.LOGGER.warn("Failed reading metadata of: {}", this.location, exception);
 		}
+	}
 
-		boolean blur = simpleTextureMeta.isBlur();
-		boolean clamp = simpleTextureMeta.isClamp();
-
-		onRenderThread(() -> GeoAbstractTexture.uploadSimple(getId(), nativeImage, blur, clamp));
+	/**
+	 * Returns whether the texture found any valid animation metadata when loading.
+	 * <p>
+	 * If false, then this is no different to a standard {@link SimpleTexture}
+	 */
+	public boolean isAnimated() {
+		return this.isAnimated;
 	}
 
 	public static void setAndUpdate(ResourceLocation texturePath, int frameTick) {
