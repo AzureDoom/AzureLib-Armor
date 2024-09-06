@@ -38,7 +38,8 @@ public final class AzureLibCache {
     private static final Set<String> EXCLUDED_NAMESPACES = ObjectOpenHashSet.of(
             "moreplayermodels",
             "customnpcs",
-            "gunsrpg"
+            "gunsrpg",
+            "born_in_chaos_v1"
     );
 
     private static Map<ResourceLocation, BakedAnimations> ANIMATIONS = Collections.emptyMap();
