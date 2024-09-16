@@ -28,36 +28,80 @@ import java.util.Set;
  */
 public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends GeoArmorRenderer<T> {
     protected final Set<GeoBone> dyeableBones = new ObjectArraySet<>();
+    protected BakedGeoModel lastModel = null;
 
     protected DyeableGeoArmorRenderer(GeoModel<T> model) {
         super(model);
     }
 
     @Override
-    public void preRender(PoseStack poseStack, T animatable, BakedGeoModel model, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+    public void preRender(
+            PoseStack poseStack,
+            T animatable,
+            BakedGeoModel model,
+            @Nullable MultiBufferSource bufferSource,
+            @Nullable VertexConsumer buffer,
+            boolean isReRender,
+            float partialTick,
+            int packedLight,
+            int packedOverlay,
+            float red,
+            float green,
+            float blue,
+            float alpha
+    ) {
+        super.preRender(
+                poseStack,
+                animatable,
+                model,
+                bufferSource,
+                buffer,
+                isReRender,
+                partialTick,
+                packedLight,
+                packedOverlay,
+                red,
+                green,
+                blue,
+                alpha
+        );
 
         if (!isReRender)
             checkBoneDyeCache(model);
     }
 
     @Override
-    public void renderCubesOfBone(PoseStack poseStack, GeoBone bone, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderCubesOfBone(
+            PoseStack poseStack,
+            GeoBone bone,
+            VertexConsumer buffer,
+            int packedLight,
+            int packedOverlay,
+            float red,
+            float green,
+            float blue,
+            float alpha
+    ) {
         if (this.dyeableBones.contains(bone)) {
-            final var color = getColorForBone(bone);
+            final Color color = getColorForBone(bone);
 
             red *= color.getRedFloat();
             green *= color.getGreenFloat();
             blue *= color.getBlueFloat();
             alpha *= color.getAlphaFloat();
         }
-
-        super.renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        super.renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red,
+                green,
+                blue,
+                alpha);
     }
 
     /**
      * Whether the given GeoBone should be considered dyeable or not.
-     * <p>Note that values returned from here are cached for the last rendered {@link BakedGeoModel} and require a manual reset if you intend to change these results.</p>
+     * <p>
+     * Note that values returned from here are cached for the last rendered {@link BakedGeoModel} and require a manual
+     * reset if you intend to change these results.
+     * </p>
      *
      * @return whether the bone should be dyed or not
      */
@@ -65,14 +109,19 @@ public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends 
 
     /**
      * What color the given GeoBone should be dyed as.
-     * <p>Only bones that were marked as 'dyeable' in {@link DyeableGeoArmorRenderer#isBoneDyeable(GeoBone)} are provided here</p>
+     * <p>
+     * Only bones that were marked as 'dyeable' in {@link DyeableGeoArmorRenderer#isBoneDyeable(GeoBone)} are provided
+     * here
+     * </p>
      */
     @NotNull
     protected abstract Color getColorForBone(GeoBone bone);
 
     /**
      * Check whether the dye cache should be considered dirty and recomputed.
-     * <p>The less this forces re-computation, the better for performance</p>
+     * <p>
+     * The less this forces re-computation, the better for performance
+     * </p>
      */
     protected void checkBoneDyeCache(BakedGeoModel model) {
         if (model != this.lastModel) {
