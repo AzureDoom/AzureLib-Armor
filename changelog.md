@@ -1,4 +1,3 @@
-v2.3.3
+v2.3.7
 
-- Tweaked DyeableGeoArmorRender to match on all MC versions
-- Added DynamicGeoRenders for Armor and Items
+- Fixes packets not firing correctly. 
