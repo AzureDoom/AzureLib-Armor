@@ -1,3 +1,4 @@
-v2.3.5
+v2.3.3
 
-- Update EXCLUDED_NAMESPACES to match that of upstream AzureLib.
+- Tweaked DyeableGeoArmorRender to match on all MC versions
+- Added DynamicGeoRenders for Armor and Items
