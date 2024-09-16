@@ -29,6 +29,7 @@ import java.util.Set;
 public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends GeoArmorRenderer<T> {
 
     protected final Set<GeoBone> dyeableBones = new ObjectArraySet<>();
+    protected BakedGeoModel lastModel = null;
 
     protected DyeableGeoArmorRenderer(GeoModel<T> model) {
         super(model);
@@ -83,15 +84,17 @@ public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends 
             float alpha
     ) {
         if (this.dyeableBones.contains(bone)) {
-            final var color = getColorForBone(bone);
+            final Color color = getColorForBone(bone);
 
             red *= color.getRedFloat();
             green *= color.getGreenFloat();
             blue *= color.getBlueFloat();
             alpha *= color.getAlphaFloat();
         }
-
-        super.renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        super.renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red,
+                green,
+                blue,
+                alpha);
     }
 
     /**
