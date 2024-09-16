@@ -1,11 +1,15 @@
 package mod.azure.azurelibarmor.neoforge;
 
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimDataSyncPacket;
+import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimTriggerPacket;
 import mod.azure.azurelibarmor.neoforge.platform.NeoForgeAzureLibNetwork;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 @Mod(AzureLib.MOD_ID)
@@ -21,5 +25,12 @@ public final class NeoForgeAzureLibMod {
         AzureLib.initialize();
         NeoForgeAzureLibNetwork.init(modEventBus);
         DATA_COMPONENTS_REGISTER.register(modEventBus);
+        modEventBus.addListener(this::registerMessages);
+    }
+
+    public void registerMessages(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(AzureLib.MOD_ID);
+        registrar.playBidirectional(AnimTriggerPacket.TYPE, AnimTriggerPacket.CODEC, (msg, ctx) -> msg.handle());
+        registrar.playBidirectional(AnimDataSyncPacket.TYPE, AnimDataSyncPacket.CODEC, (msg, ctx) -> msg.handle());
     }
 }
