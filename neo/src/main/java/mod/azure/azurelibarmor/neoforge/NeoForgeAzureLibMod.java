@@ -23,7 +23,6 @@ public final class NeoForgeAzureLibMod {
 
     public NeoForgeAzureLibMod(IEventBus modEventBus) {
         AzureLib.initialize();
-        NeoForgeAzureLibNetwork.init(modEventBus);
         DATA_COMPONENTS_REGISTER.register(modEventBus);
         modEventBus.addListener(this::registerMessages);
     }

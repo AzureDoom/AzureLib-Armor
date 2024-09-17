@@ -10,7 +10,6 @@ public final class ClientListener implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        AzureLibNetwork.init();
         ClientPlayNetworking.registerGlobalReceiver(AnimTriggerPacket.TYPE, (packet, context) -> packet.handle());
         ClientPlayNetworking.registerGlobalReceiver(AnimDataSyncPacket.TYPE, (packet, context) -> packet.handle());
     }

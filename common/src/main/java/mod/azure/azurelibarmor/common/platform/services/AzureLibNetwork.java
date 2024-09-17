@@ -4,9 +4,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.animatable.SingletonGeoAnimatable;
 import mod.azure.azurelibarmor.common.internal.common.network.AbstractPacket;
-import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimDataSyncPacket;
-import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimTriggerPacket;
-import mod.azure.azurelibarmor.common.platform.Services;
 import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,26 +23,7 @@ public interface AzureLibNetwork {
 
     ResourceLocation ANIM_TRIGGER_SYNC_PACKET_ID = AzureLib.modResource("anim_trigger_sync");
 
-    ResourceLocation ENTITY_ANIM_DATA_SYNC_PACKET_ID = AzureLib.modResource("entity_anim_data_sync");
-
-    ResourceLocation ENTITY_ANIM_TRIGGER_SYNC_PACKET_ID = AzureLib.modResource("entity_anim_trigger_sync");
-
-    ResourceLocation BLOCK_ENTITY_ANIM_DATA_SYNC_PACKET_ID = AzureLib.modResource("block_entity_anim_data_sync");
-
-    ResourceLocation BLOCK_ENTITY_ANIM_TRIGGER_SYNC_PACKET_ID = AzureLib.modResource("block_entity_anim_trigger_sync");
-
-    ResourceLocation CONFIG_PACKET_ID = AzureLib.modResource("config_packet");
-
     Map<String, GeoAnimatable> SYNCED_ANIMATABLES = new Object2ObjectOpenHashMap<>();
-
-    static void init() {
-        registerPacket(AnimTriggerPacket.TYPE, AnimTriggerPacket.CODEC);
-        registerPacket(AnimDataSyncPacket.TYPE, AnimDataSyncPacket.CODEC);
-    }
-
-    private static <B extends FriendlyByteBuf, P extends AbstractPacket> void registerPacket(CustomPacketPayload.Type<P> payloadType, StreamCodec<B, P> codec) {
-        Services.NETWORK.registerPacketInternal(payloadType, codec, true);
-    }
 
     static void sendWithCallback(AbstractPacket packet, IPacketCallback callback) {
         callback.onReadyToSend(packet);
