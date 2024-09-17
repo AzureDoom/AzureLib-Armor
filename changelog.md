@@ -1,3 +1,3 @@
-v2.3.7
+v2.3.8
 
-- Fixes packets not firing correctly. 
+- Cleans up networking for fixes. 
