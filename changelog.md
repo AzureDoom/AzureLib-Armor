@@ -1,3 +1,3 @@
-v2.3.8
+v2.3.9
 
-- Cleans up networking for fixes. 
+- Use root locale when converting strings - PlanetTeamSpeak
