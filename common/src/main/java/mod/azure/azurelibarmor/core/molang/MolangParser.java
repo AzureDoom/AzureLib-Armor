@@ -14,6 +14,7 @@ import mod.azure.azurelibarmor.core.molang.functions.CosDegrees;
 import mod.azure.azurelibarmor.core.molang.functions.SinDegrees;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.DoubleSupplier;
 
@@ -71,7 +72,7 @@ public class MolangParser extends MathBuilder {
     public static MolangValue parseExpression(String expression) throws MolangException {
         MolangCompoundValue result = null;
 
-        for (String split : expression.toLowerCase().trim().split(";")) {
+        for (String split : expression.toLowerCase(Locale.ROOT).trim().split(";")) {
             String trimmed = split.trim();
 
             if (!trimmed.isEmpty()) {
