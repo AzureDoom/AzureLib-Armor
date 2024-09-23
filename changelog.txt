@@ -1,4 +1,3 @@
-v2.0.8
+v2.0.9
 
-- Tweaked DyeableGeoArmorRender to match on all MC versions
-- Added DynamicGeoRenders for Armor and Items
+- Use root locale when converting strings - PlanetTeamSpeak
