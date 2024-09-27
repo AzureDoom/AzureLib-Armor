@@ -1,3 +1,4 @@
-v2.3.10
+v2.3.11
 
-- Adjust cache for BB exporting using weird version, which still works.
+- Port Avoid duplicating mc code to improve compat in mixins
+- Fixes crash with latest NeoForge
