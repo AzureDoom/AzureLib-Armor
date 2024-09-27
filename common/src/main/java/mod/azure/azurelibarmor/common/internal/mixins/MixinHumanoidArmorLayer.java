@@ -32,13 +32,13 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends 
                     target = "Lnet/minecraft/world/entity/LivingEntity;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
             )
     )
-    private ItemStack azurelib$captureItemBySlot(ItemStack original, @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef) {
+    private ItemStack azurelibArmor$captureItemBySlot(ItemStack original, @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef) {
         itemBySlotRef.set(original);
         return original;
     }
 
     @Inject(method = "renderArmorPiece", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;usesInnerModel(Lnet/minecraft/world/entity/EquipmentSlot;)Z"), cancellable = true)
-    public void azurelib$renderAzurelibModel(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot equipmentSlot, int packedLight, A baseModel, CallbackInfo ci, @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef) {
+    public void azurelibArmor$renderAzurelibModel(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot equipmentSlot, int packedLight, A baseModel, CallbackInfo ci, @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef) {
         final ItemStack stack = itemBySlotRef.get();
         final Model geckolibModel = RenderProvider.of(stack).getGenericArmorModel(entity, stack, equipmentSlot,
                 (HumanoidModel<LivingEntity>) baseModel);
