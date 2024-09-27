@@ -7,7 +7,6 @@
   },
   "client": [
     "ItemRendererAccessor",
-    "MixinHumanoidArmorLayer",
     "MixinItemRenderer",
     "TextureManagerMixin"
   ]
