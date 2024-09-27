@@ -1,5 +1,8 @@
 package mod.azure.azurelibarmor.common.internal.mixins;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mod.azure.azurelibarmor.common.api.client.renderer.GeoArmorRenderer;
 import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
@@ -22,9 +25,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HumanoidArmorLayer.class)
 public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends HumanoidModel<T>> {
+    @ModifyExpressionValue(
+            method = "renderArmorPiece",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/LivingEntity;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
+            )
+    )
+    private ItemStack azurelib$captureItemBySlot(ItemStack original, @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef) {
+        itemBySlotRef.set(original);
+        return original;
+    }
+
     @Inject(method = "renderArmorPiece", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;usesInnerModel(Lnet/minecraft/world/entity/EquipmentSlot;)Z"), cancellable = true)
-    public void geckolib$renderGeckoLibModel(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot equipmentSlot, int packedLight, A baseModel, CallbackInfo ci) {
-        final ItemStack stack = entity.getItemBySlot(equipmentSlot);
+    public void azurelib$renderAzurelibModel(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot equipmentSlot, int packedLight, A baseModel, CallbackInfo ci, @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef) {
+        final ItemStack stack = itemBySlotRef.get();
         final Model geckolibModel = RenderProvider.of(stack).getGenericArmorModel(entity, stack, equipmentSlot,
                 (HumanoidModel<LivingEntity>) baseModel);
 
