@@ -1,4 +1,3 @@
-v2.3.11
+v2.3.12
 
-- Port Avoid duplicating mc code to improve compat in mixins
-- Fixes crash with latest NeoForge
+- Only throw error if no format version
