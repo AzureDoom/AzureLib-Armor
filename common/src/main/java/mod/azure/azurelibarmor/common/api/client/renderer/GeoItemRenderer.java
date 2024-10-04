@@ -203,7 +203,7 @@ public class GeoItemRenderer<T extends Item & GeoAnimatable> extends BlockEntity
         );
 
         if (!isReRender)
-            poseStack.translate(0.5f, 0.51f, 0.5f);
+            poseStack.translate(0.5f, this.useNewOffset() ? 0.0f :0.51f, 0.5f);
     }
 
     @Override
@@ -420,6 +420,17 @@ public class GeoItemRenderer<T extends Item & GeoAnimatable> extends BlockEntity
                 getTextureLocation(animatable),
                 Item.getId(animatable) + (int) animatable.getTick(animatable)
         );
+    }
+
+    /**
+     * Determines whether to apply the y offset for a model due to the change in BlockBench 4.11.
+     *
+     * @return {@code false} by default, meaning the Y-offset will be {@code 0.51f}. Override this
+     * method or change the return value to {@code true} to use the new Y-offset of {@code 0.0f}
+     * for anything created in 4.11+ of Blockbench.
+     */
+    public boolean useNewOffset() {
+        return false;
     }
 
     /**
