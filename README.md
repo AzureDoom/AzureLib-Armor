@@ -13,7 +13,7 @@ Are you a developer and want to use this library in your mod? Add the following 
 ```
 repositories {
         // The Maven with the mods source
-        maven {url 'https://libs.azuredoom.com:4443/mods'}
+        maven {url 'https://maven.azuredoom.com/mods'}
 }
 
 dependencies {
