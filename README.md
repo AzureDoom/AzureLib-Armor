@@ -10,7 +10,7 @@
 ```
 repositories {
     // The Maven with the mods source
-    maven {url 'https://libs.azuredoom.com:4443/mods'}
+    maven {url 'https://maven.azuredoom.com/mods'}
 }
 
 dependencies {
