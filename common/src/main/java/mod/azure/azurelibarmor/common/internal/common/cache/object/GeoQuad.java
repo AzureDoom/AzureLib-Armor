@@ -7,8 +7,10 @@
  */
 package mod.azure.azurelibarmor.common.internal.common.cache.object;
 
-import net.minecraft.core.Direction;
+import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.FaceUV;
 import org.joml.Vector3f;
+
+import net.minecraft.core.Direction;
 
 /**
  * Quad data holder
@@ -23,6 +25,7 @@ public record GeoQuad(
             GeoVertex[] vertices,
             double[] uvCoords,
             double[] uvSize,
+            FaceUV.Rotation uvRotation,
             float texWidth,
             float texHeight,
             boolean mirror,
@@ -34,6 +37,7 @@ public record GeoQuad(
                 (float) uvCoords[1],
                 (float) uvSize[0],
                 (float) uvSize[1],
+                uvRotation,
                 texWidth,
                 texHeight,
                 mirror,
@@ -47,6 +51,7 @@ public record GeoQuad(
             float v,
             float uSize,
             float vSize,
+            FaceUV.Rotation uvRotation,
             float texWidth,
             float texHeight,
             boolean mirror,
@@ -62,15 +67,15 @@ public record GeoQuad(
             float tempWidth = uWidth;
             uWidth = u;
             u = tempWidth;
-        }
-        else {
+        } else {
             normal.mul(-1, 1, 1);
         }
 
-        vertices[0] = vertices[0].withUVs(u, v);
-        vertices[1] = vertices[1].withUVs(uWidth, v);
-        vertices[2] = vertices[2].withUVs(uWidth, vHeight);
-        vertices[3] = vertices[3].withUVs(u, vHeight);
+        float[] uvs = uvRotation.rotateUvs(u, v, uWidth, vHeight);
+        vertices[0] = vertices[0].withUVs(uvs[0], uvs[1]);
+        vertices[1] = vertices[1].withUVs(uvs[2], uvs[3]);
+        vertices[2] = vertices[2].withUVs(uvs[4], uvs[5]);
+        vertices[3] = vertices[3].withUVs(uvs[6], uvs[7]);
 
         return new GeoQuad(vertices, normal, direction);
     }
