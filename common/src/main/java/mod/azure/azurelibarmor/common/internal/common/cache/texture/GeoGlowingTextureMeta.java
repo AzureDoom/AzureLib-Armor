@@ -120,9 +120,9 @@ public class GeoGlowingTextureMeta {
             if (pixel.alpha > 0)
                 color = FastColor.ABGR32.color(
                         pixel.alpha,
-                        FastColor.ABGR32.red(color),
+                        FastColor.ABGR32.blue(color),
                         FastColor.ABGR32.green(color),
-                        FastColor.ABGR32.blue(color)
+                        FastColor.ABGR32.red(color)
                 );
 
             newImage.setPixelRGBA(pixel.x, pixel.y, color);
