@@ -1,5 +1,3 @@
-v2.0.13
+v2.0.14
 
-- Port color changes from a geckolib pr that was left to die
-- Port UV Face Rotation support
-- Port GeoGlowingTextureMeta using wrong colors
+- Revert GeoGlowingTextureMeta change.
