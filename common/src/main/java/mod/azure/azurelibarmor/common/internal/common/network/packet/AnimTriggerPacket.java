@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Packet for syncing user-definable animations that can be triggered from the server
  */
+@Deprecated(forRemoval = true)
 public record AnimTriggerPacket(String syncableId, long instanceId, String controllerName,
                                 String animName) implements AbstractPacket {
     public static final CustomPacketPayload.Type<AnimTriggerPacket> TYPE = new Type<>(

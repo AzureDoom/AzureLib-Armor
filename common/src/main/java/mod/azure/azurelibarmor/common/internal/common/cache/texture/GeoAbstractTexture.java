@@ -28,6 +28,7 @@ import java.util.function.Consumer;
  * Abstract texture wrapper for azurelibarmor textures.<br>
  * Mostly just handles boilerplate
  */
+@Deprecated(forRemoval = true)
 public abstract class GeoAbstractTexture extends AbstractTexture {
 
     /**

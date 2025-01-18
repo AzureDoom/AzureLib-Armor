@@ -24,6 +24,7 @@ import java.util.Map;
  * Base interface for a factory of {@link BakedGeoModel} objects. Handled by default by azurelibarmor, but custom
  * implementations may be added by other mods for special needs
  */
+@Deprecated(forRemoval = true)
 public interface BakedModelFactory {
 
     Map<String, BakedModelFactory> FACTORIES = new Object2ObjectOpenHashMap<>(1);

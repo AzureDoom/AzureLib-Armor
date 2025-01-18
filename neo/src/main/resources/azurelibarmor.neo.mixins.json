@@ -5,9 +5,13 @@
   "injectors": {
     "defaultRequire": 1
   },
+  "mixins": [
+    "ItemStackMixin_AzItemStackIdentityRegistry"
+  ],
   "client": [
     "ItemRendererAccessor",
     "MixinItemRenderer",
+    "ItemStackMixin_AzItemAnimatorCache",
     "TextureManagerMixin"
   ]
 }

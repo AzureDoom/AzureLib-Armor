@@ -33,6 +33,7 @@ import java.util.function.Function;
 /**
  * Cache class for holding loaded {@link Animation Animations} and {@link CoreGeoModel Models}
  */
+@Deprecated(forRemoval = true)
 public final class AzureLibCache {
 
     private static final Set<String> EXCLUDED_NAMESPACES = ObjectOpenHashSet.of(

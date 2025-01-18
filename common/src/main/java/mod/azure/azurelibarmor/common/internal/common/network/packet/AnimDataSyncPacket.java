@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Packet for syncing user-definable animation data for {@link SingletonGeoAnimatable} instances
  */
+@Deprecated(forRemoval = true)
 public record AnimDataSyncPacket<D>(String syncableId, long instanceId, SerializableDataTicket<D> dataTicket,
                                     D data) implements AbstractPacket {
 

@@ -45,6 +45,7 @@ import java.util.List;
  * Base {@link GeoRenderer} class for rendering {@link Item Items} specifically.<br>
  * All items added to be rendered by azurelibarmor should use an instance of this class.
  */
+@Deprecated(forRemoval = true)
 public class GeoItemRenderer<T extends Item & GeoAnimatable> extends BlockEntityWithoutLevelRenderer implements GeoRenderer<T> {
 
     protected final GeoRenderLayersContainer<T> renderLayers = new GeoRenderLayersContainer<>(this);

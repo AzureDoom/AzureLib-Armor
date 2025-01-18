@@ -230,6 +230,7 @@ public record RenderUtils() {
      * @return The GeoModel, or null if one isn't found
      */
     @Nullable
+    @Deprecated(forRemoval = true)
     public static GeoModel<?> getGeoModelForEntityType(EntityType<?> entityType) {
         EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().renderers.get(entityType);
 
@@ -246,6 +247,7 @@ public record RenderUtils() {
      * @return The GeoModel, or null if one isn't found
      */
     @Nullable
+    @Deprecated(forRemoval = true)
     public static GeoModel<?> getGeoModelForEntity(Entity entity) {
         EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
 
@@ -262,6 +264,7 @@ public record RenderUtils() {
      * @return The GeoModel, or null if one isn't found
      */
     @Nullable
+    @Deprecated(forRemoval = true)
     public static GeoModel<?> getGeoModelForItem(Item item) {
         if (RenderProvider.of(item).getCustomRenderer() instanceof GeoRenderer<?> geoRenderer)
             return geoRenderer.getGeoModel();
@@ -279,6 +282,7 @@ public record RenderUtils() {
      * @return The GeoModel, or null if one isn't found
      */
     @Nullable
+    @Deprecated(forRemoval = true)
     public static GeoModel<?> getGeoModelForBlock(BlockEntity blockEntity) {
         BlockEntityRenderer<?> renderer = Minecraft.getInstance()
                 .getBlockEntityRenderDispatcher()
@@ -297,6 +301,7 @@ public record RenderUtils() {
      * @return The GeoModel, or null if one isn't found
      */
     @Nullable
+    @Deprecated(forRemoval = true)
     public static GeoModel<?> getGeoModelForArmor(ItemStack stack) {
         if (
                 RenderProvider.of(stack)

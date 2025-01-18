@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ClientHooks.class)
+@Deprecated(forRemoval = true)
 public class ClientHooksMixin {
 
     @Inject(method = "getArmorModel", at = @At("RETURN"), remap = false, cancellable = true)

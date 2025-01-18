@@ -7,8 +7,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import mod.azure.azurelibarmor.common.api.client.renderer.GeoArmorRenderer;
 import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
 import mod.azure.azurelibarmor.common.internal.client.RenderProvider;
+import mod.azure.azurelibarmor.rewrite.render.armor.AzArmorRendererRegistry;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HumanoidArmorLayer.class)
+@Deprecated(forRemoval = true)
 public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends HumanoidModel<T>> {
     @ModifyExpressionValue(
             method = "renderArmorPiece",
@@ -39,17 +40,43 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends 
 
     @Inject(method = "renderArmorPiece", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;usesInnerModel(Lnet/minecraft/world/entity/EquipmentSlot;)Z"), cancellable = true)
     public void azurelibArmor$renderAzurelibModel(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot equipmentSlot, int packedLight, A baseModel, CallbackInfo ci, @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef) {
-        final ItemStack stack = itemBySlotRef.get();
-        final Model geckolibModel = RenderProvider.of(stack).getGenericArmorModel(entity, stack, equipmentSlot,
-                (HumanoidModel<LivingEntity>) baseModel);
+        var stack = itemBySlotRef.get();
+        var renderProvider = RenderProvider.of(stack);
+        @SuppressWarnings("unchecked")
+        var humanoidModel = (HumanoidModel<LivingEntity>) baseModel;
+        var azurelibModel = renderProvider
+                .getGenericArmorModel(entity, stack, equipmentSlot, humanoidModel);
+        var i2 = stack.is(
+                ItemTags.DYEABLE
+        ) ? FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1;
 
-        if (geckolibModel != null && stack.getItem() instanceof GeoItem) {
-            if (geckolibModel instanceof GeoArmorRenderer<?> geoArmorRenderer)
+        if (azurelibModel != null && stack.getItem() instanceof GeoItem) {
+            if (azurelibModel instanceof GeoArmorRenderer<?> geoArmorRenderer) {
                 geoArmorRenderer.prepForRender(entity, stack, equipmentSlot, baseModel);
+            }
 
-            baseModel.copyPropertiesTo((A) geckolibModel);
-            geckolibModel.renderToBuffer(poseStack, null, packedLight, OverlayTexture.NO_OVERLAY, stack.is(
-                    ItemTags.DYEABLE) ? FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1);
+            baseModel.copyPropertiesTo((A) azurelibModel);
+            azurelibModel.renderToBuffer(
+                    poseStack,
+                    null,
+                    packedLight,
+                    OverlayTexture.NO_OVERLAY,
+                    i2
+            );
+            ci.cancel();
+        }
+
+        var renderer = AzArmorRendererRegistry.getOrNull(stack.getItem());
+
+        if (renderer != null) {
+            var rendererPipeline = renderer.rendererPipeline();
+            var armorModel = rendererPipeline.armorModel();
+            @SuppressWarnings("unchecked")
+            var typedHumanoidModel = (HumanoidModel<T>) armorModel;
+
+            renderer.prepForRender(entity, stack, equipmentSlot, baseModel);
+            baseModel.copyPropertiesTo(typedHumanoidModel);
+            armorModel.renderToBuffer(poseStack, null, packedLight, OverlayTexture.NO_OVERLAY, i2);
             ci.cancel();
         }
     }

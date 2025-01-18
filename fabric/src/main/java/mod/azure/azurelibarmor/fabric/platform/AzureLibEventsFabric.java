@@ -8,6 +8,7 @@ import mod.azure.azurelibarmor.common.platform.services.AzureEvents;
 import mod.azure.azurelibarmor.fabric.event.GeoRenderEvent;
 import net.minecraft.client.renderer.MultiBufferSource;
 
+@Deprecated(forRemoval = true)
 public class AzureLibEventsFabric implements AzureEvents {
     /**
      * Fire the {@link GeoRenderEvent.Armor.CompileRenderLayers} event

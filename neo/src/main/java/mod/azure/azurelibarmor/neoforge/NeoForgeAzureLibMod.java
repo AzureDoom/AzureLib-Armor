@@ -3,6 +3,7 @@ package mod.azure.azurelibarmor.neoforge;
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimDataSyncPacket;
 import mod.azure.azurelibarmor.common.internal.common.network.packet.AnimTriggerPacket;
+import mod.azure.azurelibarmor.common.internal.common.network.packet.AzItemStackDispatchCommandPacket;
 import mod.azure.azurelibarmor.neoforge.platform.NeoForgeAzureLibNetwork;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -31,5 +32,10 @@ public final class NeoForgeAzureLibMod {
         PayloadRegistrar registrar = event.registrar(AzureLib.MOD_ID);
         registrar.playBidirectional(AnimTriggerPacket.TYPE, AnimTriggerPacket.CODEC, (msg, ctx) -> msg.handle());
         registrar.playBidirectional(AnimDataSyncPacket.TYPE, AnimDataSyncPacket.CODEC, (msg, ctx) -> msg.handle());
+        registrar.playBidirectional(
+                AzItemStackDispatchCommandPacket.TYPE,
+                AzItemStackDispatchCommandPacket.CODEC,
+                (msg, ctx) -> msg.handle()
+        );
     }
 }

@@ -48,6 +48,7 @@ import org.jetbrains.annotations.Nullable;
  * Supports both {@link GeoItem azurelibarmor} and {@link net.minecraft.world.item.ArmorItem Vanilla} armor models.<br>
  * Unlike a traditional armor renderer, this renderer renders per-bone, giving much more flexible armor rendering.
  */
+@Deprecated(forRemoval = true)
 public class ItemArmorGeoLayer<T extends LivingEntity & GeoAnimatable> extends GeoRenderLayer<T> {
 
     protected static final HumanoidModel<LivingEntity> INNER_ARMOR_MODEL = new HumanoidModel<>(

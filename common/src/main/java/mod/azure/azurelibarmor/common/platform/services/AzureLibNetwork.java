@@ -19,10 +19,17 @@ import java.util.Map;
 
 public interface AzureLibNetwork {
 
+    @Deprecated(forRemoval = true)
     ResourceLocation ANIM_DATA_SYNC_PACKET_ID = AzureLib.modResource("anim_data_sync");
 
+    @Deprecated(forRemoval = true)
     ResourceLocation ANIM_TRIGGER_SYNC_PACKET_ID = AzureLib.modResource("anim_trigger_sync");
 
+    ResourceLocation AZ_ITEM_STACK_DISPATCH_COMMAND_SYNC_PACKET_ID = AzureLib.modResource(
+            "az_item_stack_dispatch_command_sync"
+    );
+
+    @Deprecated(forRemoval = true)
     Map<String, GeoAnimatable> SYNCED_ANIMATABLES = new Object2ObjectOpenHashMap<>();
 
     static void sendWithCallback(AbstractPacket packet, IPacketCallback callback) {
@@ -35,6 +42,7 @@ public interface AzureLibNetwork {
      * @param className the className
      */
     @Nullable
+    @Deprecated(forRemoval = true)
     static GeoAnimatable getSyncedAnimatable(String className) {
         GeoAnimatable animatable = SYNCED_ANIMATABLES.get(className);
 
@@ -44,6 +52,7 @@ public interface AzureLibNetwork {
         return animatable;
     }
 
+    @Deprecated(forRemoval = true)
     <B extends FriendlyByteBuf, P extends AbstractPacket> void registerPacketInternal(CustomPacketPayload.Type<P> payloadType, StreamCodec<B, P> codec, boolean isClientBound);
 
     /**
@@ -51,6 +60,7 @@ public interface AzureLibNetwork {
      * It is recommended that you don't call this directly, instead implementing and calling
      * {@link SingletonGeoAnimatable#registerSyncedAnimatable}
      */
+    @Deprecated(forRemoval = true)
     default void registerSyncedAnimatable(GeoAnimatable animatable) {
         synchronized (this) {
             GeoAnimatable existing = SYNCED_ANIMATABLES.put(animatable.getClass().toString(), animatable);

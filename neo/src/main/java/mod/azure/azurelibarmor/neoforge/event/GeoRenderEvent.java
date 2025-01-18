@@ -14,6 +14,7 @@ import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
 import org.jetbrains.annotations.Nullable;
 
+@Deprecated(forRemoval = true)
 public interface GeoRenderEvent {
     /**
      * Returns the renderer for this event

@@ -9,6 +9,7 @@ import mod.azure.azurelibarmor.neoforge.event.GeoRenderEvent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.neoforged.neoforge.common.NeoForge;
 
+@Deprecated(forRemoval = true)
 public class AzureLibEventsNeoForge implements AzureEvents {
     /**
      * Fire the {@link GeoRenderEvent.Armor.CompileRenderLayers} event

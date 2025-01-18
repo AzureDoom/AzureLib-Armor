@@ -34,6 +34,7 @@ import java.util.List;
 /**
  * Base interface for all azurelibarmor renderers.<br>
  */
+@Deprecated(forRemoval = true)
 public interface GeoRenderer<T extends GeoAnimatable> {
 
     /**

@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * Generally only used for {@link net.minecraft.world.item.Item Items}, but any {@link SingletonAnimatableInstanceCache
  * singleton} will likely use this.
  */
+@Deprecated(forRemoval = true)
 public final class AnimatableIdCache extends SavedData {
 
     private static final String DATA_KEY = "azurelibarmor_id_cache";

@@ -36,6 +36,7 @@ import java.util.Map;
  * {@link com.google.gson.Gson} {@link JsonDeserializer} for {@link BakedAnimations}.<br>
  * Acts as the deserialization interface for {@code BakedAnimations}
  */
+@Deprecated(forRemoval = true)
 public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations> {
 
     private static List<Pair<String, JsonElement>> getTripletObj(JsonElement element) {

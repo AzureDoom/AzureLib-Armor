@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Stores the default (builtin) {@link DataTicket DataTickets} used in azurelibarmor.<br>
  * Additionally handles registration of {@link SerializableDataTicket SerializableDataTickets}
  */
+@Deprecated(forRemoval = true)
 public final class DataTickets {
 
     // Builtin tickets

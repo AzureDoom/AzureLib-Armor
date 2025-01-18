@@ -27,6 +27,7 @@ import java.util.function.Supplier;
 /**
  * The {@link GeoAnimatable} interface specific to singleton objects. This primarily applies to armor and items
  */
+@Deprecated(forRemoval = true)
 public interface SingletonGeoAnimatable extends GeoAnimatable {
 
     /**

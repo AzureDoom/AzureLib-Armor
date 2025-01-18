@@ -18,6 +18,7 @@ import java.util.Map;
  * Kept as a unique object so that it can be registered as a {@link com.google.gson.JsonDeserializer deserializer} for
  * {@link com.google.gson.Gson Gson}
  */
+@Deprecated(forRemoval = true)
 public record BakedAnimations(
         Map<String, Animation> animations,
         Map<String, ResourceLocation> includes
