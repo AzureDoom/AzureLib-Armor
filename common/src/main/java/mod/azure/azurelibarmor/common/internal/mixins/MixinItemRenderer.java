@@ -3,6 +3,7 @@ package mod.azure.azurelibarmor.common.internal.mixins;
 import com.mojang.blaze3d.vertex.PoseStack;
 import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
 import mod.azure.azurelibarmor.common.internal.client.RenderProvider;
+import mod.azure.azurelibarmor.rewrite.render.item.AzItemRendererRegistry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
@@ -36,9 +37,20 @@ public class MixinItemRenderer {
             BakedModel bakedModel,
             CallbackInfo ci
     ) {
-        if (itemStack.getItem() instanceof GeoItem)
+        if (itemStack.getItem() instanceof GeoItem) {
             RenderProvider.of(itemStack)
                     .getCustomRenderer()
                     .renderByItem(itemStack, transformType, poseStack, multiBufferSource, i, j);
+        }
+
+        var item = itemStack.getItem();
+        var renderer = AzItemRendererRegistry.getOrNull(item);
+
+        if (renderer != null) {
+            switch (transformType) {
+                case GUI -> renderer.renderByGui(itemStack, poseStack, multiBufferSource, i);
+                default -> renderer.renderByItem(itemStack, poseStack, multiBufferSource, i);
+            }
+        }
     }
 }
