@@ -1,3 +1,8 @@
+v3.0.1
+
+- Fixed a missing method update for AzureLibCache for the new model/animation loading system.
+- Fixed a missing mixin for item renders.
+
 v3.0.0
 
 - Rewrite Item animation system. See guide for converting here: https://moddedmc.wiki/en/project/azurelib/docs/updating/items
