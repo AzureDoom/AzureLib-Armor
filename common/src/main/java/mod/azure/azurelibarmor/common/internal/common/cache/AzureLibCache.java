@@ -13,6 +13,8 @@ import mod.azure.azurelibarmor.common.internal.common.loading.object.BakedModelF
 import mod.azure.azurelibarmor.common.internal.common.loading.object.GeometryTree;
 import mod.azure.azurelibarmor.core.animatable.model.CoreGeoModel;
 import mod.azure.azurelibarmor.core.animation.Animation;
+import mod.azure.azurelibarmor.rewrite.animation.cache.AzBakedAnimationCache;
+import mod.azure.azurelibarmor.rewrite.model.cache.AzBakedModelCache;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier;
@@ -33,7 +35,6 @@ import java.util.function.Function;
 /**
  * Cache class for holding loaded {@link Animation Animations} and {@link CoreGeoModel Models}
  */
-@Deprecated(forRemoval = true)
 public final class AzureLibCache {
 
     private static final Set<String> EXCLUDED_NAMESPACES = ObjectOpenHashSet.of(
@@ -92,8 +93,12 @@ public final class AzureLibCache {
 
         return CompletableFuture
                 .allOf(
+                        // TODO: Remove these.
                         loadAnimations(backgroundExecutor, resourceManager, animations::put),
-                        loadModels(backgroundExecutor, resourceManager, models::put)
+                        loadModels(backgroundExecutor, resourceManager, models::put),
+                        // Forward-support for new cache components
+                        AzBakedAnimationCache.getInstance().loadAnimations(backgroundExecutor, resourceManager),
+                        AzBakedModelCache.getInstance().loadModels(backgroundExecutor, resourceManager)
                 )
                 .thenCompose(stage::wait)
                 .thenAcceptAsync(empty -> {
