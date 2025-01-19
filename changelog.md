@@ -1,3 +1,7 @@
+v3.0.2
+
+- Fixes a packet issue with calling cancelAll on an AzCommand from the server.
+
 v3.0.1
 
 - Fixed a missing method update for AzureLibCache for the new model/animation loading system.
