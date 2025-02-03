@@ -1,3 +1,10 @@
+v3.0.3
+
+- Adds support for q.* Molang.
+- Fixes useNewOffset for items not working when used.
+- Implement preRenderEntry and postRenderEntry call backs to RenderConfigs, allowing you to inject code into the preRender and postRender stages.
+- Implement getRenderType to RenderConfigs, as to make changing the render type easier.
+
 v3.0.2
 
 - Fixes a packet issue with calling cancelAll on an AzCommand from the server.
