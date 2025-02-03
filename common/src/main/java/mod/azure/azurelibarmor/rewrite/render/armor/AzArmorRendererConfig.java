@@ -2,9 +2,11 @@ package mod.azure.azurelibarmor.rewrite.render.armor;
 
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
 import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneProvider;
 import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzDefaultArmorBoneProvider;
 import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -20,13 +22,16 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
     private AzArmorRendererConfig(
         Supplier<AzAnimator<ItemStack>> animatorProvider,
         AzArmorBoneProvider boneProvider,
+        Function<ItemStack, RenderType> renderTypeProvider,
         Function<ItemStack, ResourceLocation> modelLocationProvider,
         List<AzRenderLayer<ItemStack>> renderLayers,
+        Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry,
+        Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> postRenderEntry,
         Function<ItemStack, ResourceLocation> textureLocationProvider,
         float scaleHeight,
         float scaleWidth
     ) {
-        super(animatorProvider, modelLocationProvider, renderLayers, textureLocationProvider, scaleHeight, scaleWidth);
+        super(animatorProvider, modelLocationProvider, renderTypeProvider, renderLayers, preRenderEntry, postRenderEntry, textureLocationProvider, scaleHeight, scaleWidth);
         this.boneProvider = boneProvider;
     }
 
@@ -58,11 +63,36 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
         ) {
             super(modelLocationProvider, textureLocationProvider);
             this.boneProvider = new AzDefaultArmorBoneProvider();
+            this.renderTypeProvider = $ -> RenderType.armorCutoutNoCull(textureLocationProvider.apply($));
         }
 
         @Override
         public Builder addRenderLayer(AzRenderLayer<ItemStack> renderLayer) {
             return (Builder) super.addRenderLayer(renderLayer);
+        }
+
+        public Builder setRenderType(RenderType renderType) {
+            this.renderTypeProvider = $ -> renderType;
+            return this;
+        }
+
+        public Builder setRenderType(Function<ItemStack, RenderType> renderTypeProvider) {
+            this.renderTypeProvider = renderTypeProvider;
+            return this;
+        }
+
+        @Override
+        public Builder setPrerenderEntry(
+                Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
+        ) {
+            return (Builder) super.setPrerenderEntry(preRenderEntry);
+        }
+
+        @Override
+        public Builder setPostRenderEntry(
+                Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
+        ) {
+            return (Builder) super.setPostRenderEntry(preRenderEntry);
         }
 
         @Override
@@ -81,8 +111,11 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
             return new AzArmorRendererConfig(
                 baseConfig::createAnimator,
                 boneProvider,
+                renderTypeProvider,
                 baseConfig::modelLocation,
                 baseConfig.renderLayers(),
+                baseConfig::preRenderEntry,
+                baseConfig::postRenderEntry,
                 baseConfig::textureLocation,
                 baseConfig.scaleHeight(),
                 baseConfig.scaleWidth()

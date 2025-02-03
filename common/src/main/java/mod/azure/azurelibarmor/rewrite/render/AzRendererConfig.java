@@ -3,6 +3,7 @@ package mod.azure.azurelibarmor.rewrite.render;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,6 +25,12 @@ public class AzRendererConfig<T> {
 
     private final Function<T, ResourceLocation> modelLocationProvider;
 
+    private final Function<T, RenderType> renderTypeFunction;
+
+    private final Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> preRenderEntry;
+
+    private final Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> postRenderEntry;
+
     private final List<AzRenderLayer<T>> renderLayers;
 
     private final Function<T, ResourceLocation> textureLocationProvider;
@@ -35,14 +42,20 @@ public class AzRendererConfig<T> {
     public AzRendererConfig(
         Supplier<AzAnimator<T>> animatorProvider,
         Function<T, ResourceLocation> modelLocationProvider,
+        Function<T, RenderType> renderTypeFunction,
         List<AzRenderLayer<T>> renderLayers,
+        Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> preRenderEntry,
+        Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> postRenderEntry,
         Function<T, ResourceLocation> textureLocationProvider,
         float scaleHeight,
         float scaleWidth
     ) {
         this.animatorProvider = animatorProvider;
         this.modelLocationProvider = modelLocationProvider;
+        this.renderTypeFunction = renderTypeFunction;
         this.renderLayers = Collections.unmodifiableList(renderLayers);
+        this.preRenderEntry = preRenderEntry;
+        this.postRenderEntry = postRenderEntry;
         this.textureLocationProvider = textureLocationProvider;
         this.scaleHeight = scaleHeight;
         this.scaleWidth = scaleWidth;
@@ -60,8 +73,20 @@ public class AzRendererConfig<T> {
         return textureLocationProvider.apply(animatable);
     }
 
+    public RenderType getRenderType(T entity) {
+        return renderTypeFunction.apply(entity);
+    }
+
     public List<AzRenderLayer<T>> renderLayers() {
         return renderLayers;
+    }
+
+    public AzRendererPipelineContext<T> preRenderEntry(AzRendererPipelineContext<T> animatable) {
+        return preRenderEntry.apply(animatable);
+    }
+
+    public AzRendererPipelineContext<T> postRenderEntry(AzRendererPipelineContext<T> animatable) {
+        return postRenderEntry.apply(animatable);
     }
 
     public float scaleHeight() {
@@ -76,7 +101,13 @@ public class AzRendererConfig<T> {
 
         private final Function<T, ResourceLocation> modelLocationProvider;
 
+        protected Function<T, RenderType> renderTypeProvider;
+
         private final List<AzRenderLayer<T>> renderLayers;
+
+        protected Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> preRenderEntry;
+
+        protected Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> postRenderEntry;
 
         private final Function<T, ResourceLocation> textureLocationProvider;
 
@@ -92,10 +123,27 @@ public class AzRendererConfig<T> {
         ) {
             this.animatorProvider = () -> null;
             this.modelLocationProvider = modelLocationProvider;
+            this.renderTypeProvider = $ -> RenderType.entityCutoutNoCull(textureLocationProvider.apply($));
             this.renderLayers = new ObjectArrayList<>();
+            this.preRenderEntry = $ -> $;
+            this.postRenderEntry = $ -> $;
             this.textureLocationProvider = textureLocationProvider;
             this.scaleHeight = 1;
             this.scaleWidth = 1;
+        }
+
+        public Builder<T> setPrerenderEntry(
+                Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> preRenderEntry
+        ) {
+            this.preRenderEntry = preRenderEntry;
+            return this;
+        }
+
+        public Builder<T> setPostRenderEntry(
+                Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> postRenderEntry
+        ) {
+            this.postRenderEntry = postRenderEntry;
+            return this;
         }
 
         /**
@@ -153,7 +201,10 @@ public class AzRendererConfig<T> {
             return new AzRendererConfig<>(
                 animatorProvider,
                 modelLocationProvider,
+                renderTypeProvider,
                 renderLayers,
+                preRenderEntry,
+                postRenderEntry,
                 textureLocationProvider,
                 scaleHeight,
                 scaleWidth
