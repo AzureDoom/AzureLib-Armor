@@ -2,6 +2,7 @@ package mod.azure.azurelibarmor.neoforge.mixins;
 
 import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
 import mod.azure.azurelibarmor.common.internal.client.RenderProvider;
+import mod.azure.azurelibarmor.rewrite.render.armor.AzArmorRendererRegistry;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -30,5 +31,13 @@ public class ClientHooksMixin {
                     RenderProvider.of(itemStack)
                             .getGenericArmorModel(entityLiving, itemStack, slot, (HumanoidModel<LivingEntity>) _default)
             );
+
+        var renderer = AzArmorRendererRegistry.getOrNull(itemStack);
+
+        if (renderer != null) {
+            var rendererPipeline = renderer.rendererPipeline();
+            var armorModel = rendererPipeline.armorModel();
+            cir.setReturnValue(armorModel);
+        }
     }
 }
