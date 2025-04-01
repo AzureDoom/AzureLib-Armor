@@ -1,3 +1,8 @@
+v3.0.4
+
+- Add CustomModelData support to AzArmorRendererRegistry - RazorPlay01
+- Fixes missing NeoForge forge mixin update
+
 v3.0.3
 
 - Adds support for q.* Molang.
