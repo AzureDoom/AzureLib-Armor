@@ -1,3 +1,7 @@
+v3.0.5
+
+- Fixes https://github.com/Sinytra/ItemAssetExporterMod/issues/4
+
 v3.0.4
 
 - Add CustomModelData support to AzArmorRendererRegistry - RazorPlay01
