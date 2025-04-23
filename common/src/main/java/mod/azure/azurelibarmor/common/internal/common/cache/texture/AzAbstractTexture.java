@@ -29,52 +29,51 @@ import java.util.function.Consumer;
 public abstract class AzAbstractTexture extends SimpleTexture {
 
     protected static final RenderStateShard.ShaderStateShard SHADER_STATE = new RenderStateShard.ShaderStateShard(
-        GameRenderer::getRendertypeEntityTranslucentEmissiveShader
+            GameRenderer::getRendertypeEntityTranslucentEmissiveShader
     );
 
     protected static final RenderStateShard.TransparencyStateShard TRANSPARENCY_STATE =
-        new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
-            RenderSystem.enableBlend();
-            RenderSystem.blendFuncSeparate(
-                GlStateManager.SourceFactor.SRC_ALPHA,
-                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-                GlStateManager.SourceFactor.ONE,
-                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
-            );
-        }, () -> {
-            RenderSystem.disableBlend();
-            RenderSystem.defaultBlendFunc();
-        });
+            new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
+                RenderSystem.enableBlend();
+                RenderSystem.blendFuncSeparate(
+                        GlStateManager.SourceFactor.SRC_ALPHA,
+                        GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                        GlStateManager.SourceFactor.ONE,
+                        GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
+                );
+            }, () -> {
+                RenderSystem.disableBlend();
+                RenderSystem.defaultBlendFunc();
+            });
 
     protected static final RenderStateShard.WriteMaskStateShard WRITE_MASK = new RenderStateShard.WriteMaskStateShard(
-        true,
-        true
+            true,
+            true
     );
 
     protected static final BiFunction<ResourceLocation, Boolean, RenderType> GLOWING_RENDER_TYPE = Util.memoize(
-        (texture, isGlowing) -> {
-            RenderStateShard.TextureStateShard textureState = new RenderStateShard.TextureStateShard(
-                texture,
-                false,
-                false
-            );
+            (texture, isGlowing) -> {
+                RenderStateShard.TextureStateShard textureState = new RenderStateShard.TextureStateShard(
+                        texture,
+                        false,
+                        false
+                );
 
-            return RenderType.create(
-                "geo_glowing_layer",
-                DefaultVertexFormat.NEW_ENTITY,
-                VertexFormat.Mode.QUADS,
-                256,
-                false,
-                true,
-                RenderType.CompositeState.builder()
-                    .setShaderState(SHADER_STATE)
-                    .setTextureState(textureState)
-                    .setTransparencyState(TRANSPARENCY_STATE)
-                    .setOverlayState(new RenderStateShard.OverlayStateShard(true))
-                    .setWriteMaskState(WRITE_MASK)
-                    .createCompositeState(isGlowing)
-            );
-        }
+                return RenderType.create(
+                        "az_glowing_layer",
+                        DefaultVertexFormat.NEW_ENTITY,
+                        VertexFormat.Mode.QUADS,
+                        256,
+                        false,
+                        true,
+                        RenderType.CompositeState.builder()
+                                .setShaderState(SHADER_STATE)
+                                .setTextureState(textureState)
+                                .setTransparencyState(TRANSPARENCY_STATE)
+                                .setWriteMaskState(WRITE_MASK)
+                                .createCompositeState(isGlowing)
+                );
+            }
     );
 
     protected static final String APPENDIX = "_glowmask";
@@ -95,21 +94,21 @@ public abstract class AzAbstractTexture extends SimpleTexture {
      * Generates the texture instance for the given path with the given appendix if it hasn't already been generated
      */
     protected static void generateTexture(
-        ResourceLocation texturePath,
-        Consumer<TextureManager> textureManagerConsumer
+            ResourceLocation texturePath,
+            Consumer<TextureManager> textureManagerConsumer
     ) {
         if (!RenderSystem.isOnRenderThreadOrInit())
             throw new IllegalThreadStateException(
-                "Texture loading called outside of the render thread! This should DEFINITELY not be happening."
+                    "Texture loading called outside of the render thread! This should DEFINITELY not be happening."
             );
 
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();
 
         if (
-            !(textureManager.getTexture(
-                texturePath,
-                MissingTextureAtlasSprite.getTexture()
-            ) instanceof AzAbstractTexture)
+                !(textureManager.getTexture(
+                        texturePath,
+                        MissingTextureAtlasSprite.getTexture()
+                ) instanceof AzAbstractTexture)
         )
             textureManagerConsumer.accept(textureManager);
     }
@@ -127,8 +126,8 @@ public abstract class AzAbstractTexture extends SimpleTexture {
         int i = path.lastIndexOf('.');
 
         return ResourceLocation.fromNamespaceAndPath(
-            location.getNamespace(),
-            path.substring(0, i) + suffix + path.substring(i)
+                location.getNamespace(),
+                path.substring(0, i) + suffix + path.substring(i)
         );
     }
 
@@ -190,8 +189,8 @@ public abstract class AzAbstractTexture extends SimpleTexture {
         ResourceLocation path = appendToPath(baseResource, APPENDIX);
 
         generateTexture(
-            path,
-            textureManager -> textureManager.register(path, new AutoGlowingTexture(baseResource, path))
+                path,
+                textureManager -> textureManager.register(path, new AutoGlowingTexture(baseResource, path))
         );
 
         return path;

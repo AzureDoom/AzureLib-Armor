@@ -10,7 +10,6 @@ import com.mojang.blaze3d.platform.NativeImage;
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.platform.Services;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.metadata.texture.TextureMetadataSection;
@@ -39,42 +38,6 @@ public class AutoGlowingTexture extends AzAbstractTexture {
     }
 
     /**
-     * Get the emissive resource equivalent of the input resource path.<br>
-     * Additionally prepares the texture manager for the missing texture if the resource is not present
-     *
-     * @return The glowlayer resourcepath for the provided input path
-     */
-    protected static ResourceLocation getEmissiveResource(ResourceLocation baseResource) {
-        ResourceLocation path = appendToPath(baseResource, APPENDIX);
-
-        generateTexture(
-            path,
-            textureManager -> textureManager.register(path, new AutoGlowingTexture(baseResource, path))
-        );
-
-        return path;
-    }
-
-    /**
-     * Return a cached instance of the RenderType for the given texture for GeoGlowingLayer rendering.
-     *
-     * @param texture The texture of the resource to apply a glow layer to
-     */
-    public static RenderType getRenderType(ResourceLocation texture) {
-        return GLOWING_RENDER_TYPE.apply(getEmissiveResource(texture), false);
-    }
-
-    /**
-     * Return a cached instance of the RenderType for the given texture for AutoGlowingGeoLayer rendering, while the
-     * entity has an outline
-     *
-     * @param texture The texture of the resource to apply a glow layer to
-     */
-    public static RenderType getOutlineRenderType(ResourceLocation texture) {
-        return GLOWING_RENDER_TYPE.apply(getEmissiveResource(texture), true);
-    }
-
-    /**
      * Generates the glow layer {@link NativeImage} and appropriately modifies the base texture for use in glow render
      * layers
      */
@@ -91,11 +54,11 @@ public class AutoGlowingTexture extends AzAbstractTexture {
 
         Resource textureBaseResource = resourceManager.getResource(this.textureBase).get();
         NativeImage baseImage = originalTexture instanceof DynamicTexture dynamicTexture
-            ? dynamicTexture.getPixels()
-            : NativeImage.read(textureBaseResource.open());
+                ? dynamicTexture.getPixels()
+                : NativeImage.read(textureBaseResource.open());
         NativeImage glowImage = null;
         Optional<TextureMetadataSection> textureBaseMeta = textureBaseResource.metadata()
-            .getSection(TextureMetadataSection.SERIALIZER);
+                .getSection(TextureMetadataSection.SERIALIZER);
         boolean blur = textureBaseMeta.isPresent() && textureBaseMeta.get().isBlur();
         boolean clamp = textureBaseMeta.isPresent() && textureBaseMeta.get().isClamp();
 
@@ -108,7 +71,7 @@ public class AutoGlowingTexture extends AzAbstractTexture {
                 glowLayerMeta = GeoGlowingTextureMeta.fromExistingImage(glowImage);
             } else {
                 Optional<GeoGlowingTextureMeta> meta = textureBaseResource.metadata()
-                    .getSection(GeoGlowingTextureMeta.DESERIALIZER);
+                        .getSection(GeoGlowingTextureMeta.DESERIALIZER);
 
                 if (meta.isPresent()) {
                     glowLayerMeta = meta.get();
@@ -130,11 +93,29 @@ public class AutoGlowingTexture extends AzAbstractTexture {
 
         NativeImage mask = glowImage;
 
-        if (mask == null)
+        if (mask == null) {
+            String expectedGlowmask = this.textureBase.toString().replace(".png", "_glowmask.png");
+            AzureLib.LOGGER.warn(
+                    "Missing glowmask texture. Base texture: {}, Expected glowmask: {}",
+                    this.textureBase,
+                    expectedGlowmask
+            );
             return null;
+        }
+
+        boolean animated = originalTexture instanceof AnimatableTexture animatableTexture && animatableTexture
+                .isAnimated();
+
+        if (animated)
+            ((AnimatableTexture) originalTexture).animationContents.animatedTexture.setGlowMaskTexture(
+                    this,
+                    baseImage,
+                    mask
+            );
 
         return () -> {
-            uploadSimple(getId(), mask, blur, clamp);
+            if (!animated)
+                uploadSimple(getId(), mask, blur, clamp);
 
             if (originalTexture instanceof DynamicTexture dynamicTexture) {
                 dynamicTexture.upload();

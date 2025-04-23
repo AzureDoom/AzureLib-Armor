@@ -85,6 +85,7 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
                 Function<ItemStack, ResourceLocation> textureLocationProvider
         ) {
             super(modelLocationProvider, textureLocationProvider);
+            this.renderTypeProvider = $ -> RenderType.itemEntityTranslucentCull(textureLocationProvider.apply($));
             this.useEntityGuiLighting = false;
             this.useNewOffset = false;
         }
