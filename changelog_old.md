@@ -1,3 +1,7 @@
+v3.0.7
+
+- Fixed AzID being copied to a new stack on menu creation, now ensures each item stack has it's own Az_ID.
+
 v3.0.6
 
 - Added support for AzAutoGlowlayer to support the glowing effect.

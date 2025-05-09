@@ -1,3 +1,3 @@
-v3.0.7
+v3.0.8
 
-- Fixed AzID being copied to a new stack on menu creation, now ensures each item stack has it's own Az_ID.
+- Now properly hide player outlayers on equipping armor.
