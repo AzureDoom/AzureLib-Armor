@@ -63,6 +63,13 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
         this.currentSlot = slot;
     }
 
+    /**
+     * Sets whether the rendering pipeline should render with a translucent effect or not.
+     *
+     * @param translucent A boolean value indicating whether to enable or disable translucency. If true, the rendering
+     *                    pipeline will apply a translucent effect to rendered elements. If false, it will render with
+     *                    an opaque effect.
+     */
     public void setTranslucent(boolean translucent) {
         this.translucent = translucent;
     }
