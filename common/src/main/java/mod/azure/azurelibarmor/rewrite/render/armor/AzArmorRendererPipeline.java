@@ -1,7 +1,9 @@
 package mod.azure.azurelibarmor.rewrite.render.armor;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelibarmor.rewrite.render.*;
+import mod.azure.azurelibarmor.rewrite.render.armor.compat.ShoulderSurfingCompat;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
@@ -70,10 +72,20 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<ItemStack> {
 
         boneContext.applyBoneVisibilityBySlot(currentSlot);
         config.preRenderEntry(context);
+        if (ShoulderSurfingCompat.isLoaded()) {
+            var color = RenderSystem.getShaderColor();
+            armorContext.setRenderSystemShaderColor(color);
+            RenderSystem.setShaderColor(color[0], color[1], color[2], ShoulderSurfingCompat.getAlpha());
+        }
     }
 
     @Override
     public void postRender(AzRendererPipelineContext<ItemStack> context, boolean isReRender) {
+        if (ShoulderSurfingCompat.isLoaded()) {
+            var armorContext = (AzArmorRendererPipelineContext) context;
+            var originalColor = armorContext.renderSystemShaderColor();
+            RenderSystem.setShaderColor(originalColor[0], originalColor[1], originalColor[2], originalColor[3]);
+        }
         config.postRenderEntry(context);
     }
 

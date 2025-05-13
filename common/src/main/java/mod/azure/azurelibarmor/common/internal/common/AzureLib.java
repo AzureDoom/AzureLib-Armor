@@ -3,6 +3,7 @@ package mod.azure.azurelibarmor.common.internal.common;
 import com.mojang.serialization.Codec;
 import mod.azure.azurelibarmor.common.internal.common.util.AzureLibUtil;
 import mod.azure.azurelibarmor.common.platform.Services;
+import mod.azure.azurelibarmor.rewrite.render.armor.compat.ShoulderSurfingCompat;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -53,6 +54,7 @@ public final class AzureLib {
             Services.INITIALIZER.initialize();
         }
         hasInitialized = true;
+        ShoulderSurfingCompat.init();
     }
 
     public static ResourceLocation modResource(String name) {

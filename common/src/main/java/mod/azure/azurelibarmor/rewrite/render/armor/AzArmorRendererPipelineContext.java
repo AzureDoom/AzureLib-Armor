@@ -28,6 +28,9 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
 
     private ItemStack currentStack;
 
+    private static final float[] DEFAULT_COLOR = new float[]{ 1F, 1F, 1F, 1F };
+    private float[] renderSystemShaderColor = DEFAULT_COLOR;
+
     public AzArmorRendererPipelineContext(AzRendererPipeline<ItemStack> rendererPipeline) {
         super(rendererPipeline);
         this.baseModel = null;
@@ -57,6 +60,10 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
         this.currentEntity = entity;
         this.currentStack = stack;
         this.currentSlot = slot;
+    }
+
+    public void setRenderSystemShaderColor(float[] color) {
+        this.renderSystemShaderColor = color;
     }
 
     /**
@@ -91,5 +98,9 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
 
     public ItemStack currentStack() {
         return currentStack;
+    }
+
+    public float[] renderSystemShaderColor() {
+        return renderSystemShaderColor;
     }
 }
