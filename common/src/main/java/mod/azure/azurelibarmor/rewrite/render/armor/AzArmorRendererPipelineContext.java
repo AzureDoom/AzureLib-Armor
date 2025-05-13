@@ -28,8 +28,7 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
 
     private ItemStack currentStack;
 
-    private static final float[] DEFAULT_COLOR = new float[]{ 1F, 1F, 1F, 1F };
-    private float[] renderSystemShaderColor = DEFAULT_COLOR;
+    private boolean translucent = false;
 
     public AzArmorRendererPipelineContext(AzRendererPipeline<ItemStack> rendererPipeline) {
         super(rendererPipeline);
@@ -47,7 +46,9 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
         @Nullable MultiBufferSource bufferSource,
         float partialTick
     ) {
-        return RenderType.armorCutoutNoCull(texture);
+        return translucent
+            ? RenderType.itemEntityTranslucentCull(texture)
+            : RenderType.armorCutoutNoCull(texture);
     }
 
     public void prepare(
@@ -62,8 +63,8 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
         this.currentSlot = slot;
     }
 
-    public void setRenderSystemShaderColor(float[] color) {
-        this.renderSystemShaderColor = color;
+    public void setTranslucent(boolean translucent) {
+        this.translucent = translucent;
     }
 
     /**
@@ -98,9 +99,5 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
 
     public ItemStack currentStack() {
         return currentStack;
-    }
-
-    public float[] renderSystemShaderColor() {
-        return renderSystemShaderColor;
     }
 }

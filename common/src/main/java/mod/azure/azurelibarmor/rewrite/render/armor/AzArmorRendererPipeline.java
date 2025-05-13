@@ -71,21 +71,17 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<ItemStack> {
         scaleModelForRender(context, scaleWidth, scaleHeight, isReRender);
 
         boneContext.applyBoneVisibilityBySlot(currentSlot);
-        config.preRenderEntry(context);
-        if (ShoulderSurfingCompat.isLoaded()) {
-            var color = RenderSystem.getShaderColor();
-            armorContext.setRenderSystemShaderColor(color);
-            RenderSystem.setShaderColor(color[0], color[1], color[2], ShoulderSurfingCompat.getAlpha());
+        if (ShoulderSurfingCompat.isLoaded() && ShoulderSurfingCompat.getAlpha() < 1) {
+            int alpha = (int)(ShoulderSurfingCompat.getAlpha() * 0xFF) << 24;
+            int color = 0xFFFFFF | alpha;
+            armorContext.setRenderColor(color);
+            armorContext.setTranslucent(true);
         }
+        config.preRenderEntry(context);
     }
 
     @Override
     public void postRender(AzRendererPipelineContext<ItemStack> context, boolean isReRender) {
-        if (ShoulderSurfingCompat.isLoaded()) {
-            var armorContext = (AzArmorRendererPipelineContext) context;
-            var originalColor = armorContext.renderSystemShaderColor();
-            RenderSystem.setShaderColor(originalColor[0], originalColor[1], originalColor[2], originalColor[3]);
-        }
         config.postRenderEntry(context);
     }
 
