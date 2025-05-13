@@ -54,10 +54,6 @@ public class AzArmorRenderer {
 
         rendererPipeline.context().prepare(entity, stack, slot, baseModel);
 
-        if (Services.PLATFORM.isModLoaded("shouldersurfing") && !Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
-            ShoulderSurfingCompat.setAlpha();
-        }
-
         var model = provider.provideBakedModel(stack);
         prepareAnimator(stack, model);
     }

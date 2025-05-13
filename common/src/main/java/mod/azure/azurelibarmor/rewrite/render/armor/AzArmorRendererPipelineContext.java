@@ -28,6 +28,8 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
 
     private ItemStack currentStack;
 
+    private boolean translucent = false;
+
     public AzArmorRendererPipelineContext(AzRendererPipeline<ItemStack> rendererPipeline) {
         super(rendererPipeline);
         this.baseModel = null;
@@ -44,7 +46,9 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
         @Nullable MultiBufferSource bufferSource,
         float partialTick
     ) {
-        return RenderType.armorCutoutNoCull(texture);
+        return translucent
+            ? RenderType.itemEntityTranslucentCull(texture)
+            : RenderType.armorCutoutNoCull(texture);
     }
 
     public void prepare(
@@ -57,6 +61,10 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
         this.currentEntity = entity;
         this.currentStack = stack;
         this.currentSlot = slot;
+    }
+
+    public void setTranslucent(boolean translucent) {
+        this.translucent = translucent;
     }
 
     /**

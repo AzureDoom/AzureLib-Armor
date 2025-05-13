@@ -1,11 +1,26 @@
 package mod.azure.azurelibarmor.rewrite.render.armor.compat;
 
 import com.github.exopandora.shouldersurfing.api.client.ShoulderSurfing;
-import com.mojang.blaze3d.systems.RenderSystem;
+import mod.azure.azurelibarmor.common.platform.Services;
+
+import java.util.function.Supplier;
 
 public class ShoulderSurfingCompat {
-	public static void setAlpha() {
-		float alpha = ShoulderSurfing.getInstance().getCameraEntityRenderer().getCameraEntityAlpha();
-		RenderSystem.setShaderColor(1, 1, 1, alpha);
+	private static Supplier<Float> alphaSupplier = () -> 1.0F;
+	private static boolean isLoaded = false;
+
+	public static void init() {
+		if (Services.PLATFORM.isModLoaded("shouldersurfing")) {
+			isLoaded = true;
+			alphaSupplier = () -> ShoulderSurfing.getInstance().getCameraEntityRenderer().getCameraEntityAlpha();
+		}
+	}
+
+	public static boolean isLoaded() {
+		return isLoaded;
+	}
+
+	public static float getAlpha() {
+		return alphaSupplier.get();
 	}
 }
