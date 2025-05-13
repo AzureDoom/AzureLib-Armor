@@ -73,7 +73,7 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<ItemStack> {
         boneContext.applyBoneVisibilityBySlot(currentSlot);
         if (ShoulderSurfingCompat.isLoaded() && ShoulderSurfingCompat.getAlpha() < 1) {
             int alpha = (int)(ShoulderSurfingCompat.getAlpha() * 0xFF) << 24;
-            int color = 0xFFFFFF | alpha;
+            int color = (armorContext.renderColor() & 0xFFFFFF) | alpha;
             armorContext.setRenderColor(color);
             armorContext.setTranslucent(true);
         }
