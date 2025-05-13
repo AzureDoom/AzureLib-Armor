@@ -1,3 +1,3 @@
-v3.0.8
+v3.0.9
 
-- Now properly hide player outlayers on equipping armor.
+- Adds Shoulder Surfing support for armor.
