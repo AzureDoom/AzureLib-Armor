@@ -1,14 +1,12 @@
 package mod.azure.azurelibarmor.rewrite.render.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelibarmor.rewrite.render.AzLayerRenderer;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipeline;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 
@@ -52,17 +50,24 @@ public class AzItemRendererPipeline extends AzRendererPipeline<ItemStack> {
      */
     @Override
     public void preRender(AzRendererPipelineContext<ItemStack> context, boolean isReRender) {
-        var poseStack = context.poseStack();
+        var itemContext = (AzItemRendererPipelineContext) context;
+        var poseStack = itemContext.poseStack();
         this.itemRenderTranslations = new Matrix4f(poseStack.last().pose());
 
         var config = itemRenderer.config();
-        var scaleWidth = config.scaleWidth();
-        var scaleHeight = config.scaleHeight();
-        scaleModelForRender(context, scaleWidth, scaleHeight, isReRender);
+        var scaleWidth = config.scaleWidth(context.animatable());
+        var scaleHeight = config.scaleHeight(context.animatable());
+        scaleModelForRender(itemContext, scaleWidth, scaleHeight, isReRender);
 
         if (!isReRender) {
             var useNewOffset = config.useNewOffset();
             poseStack.translate(0.5f, useNewOffset ? 0.0f : 0.51f, 0.5f);
+        }
+        if (config.alpha(context.animatable()) < 1) {
+            var alpha = (int) (config.alpha(context.animatable()) * 0xFF) << 24;
+            var color = (itemContext.renderColor() & 0xFFFFFF) | alpha;
+            itemContext.setRenderColor(color);
+            itemContext.setTranslucent(true);
         }
         config.preRenderEntry(context);
     }

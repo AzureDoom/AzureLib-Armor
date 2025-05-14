@@ -1,6 +1,5 @@
 package mod.azure.azurelibarmor.rewrite.render.armor;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelibarmor.rewrite.render.*;
 import mod.azure.azurelibarmor.rewrite.render.armor.compat.ShoulderSurfingCompat;
@@ -55,8 +54,8 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<ItemStack> {
         var boneContext = armorContext.boneContext();
         var config = config();
         var currentSlot = armorContext.currentSlot();
-        var scaleWidth = config.scaleWidth();
-        var scaleHeight = config.scaleHeight();
+        var scaleWidth = config.scaleWidth(context.animatable());
+        var scaleHeight = config.scaleHeight(context.animatable());
 
         var animatable = armorContext.animatable();
         var model = armorRenderer.provider().provideBakedModel(animatable);
@@ -73,6 +72,11 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<ItemStack> {
         boneContext.applyBoneVisibilityBySlot(currentSlot);
         if (ShoulderSurfingCompat.isLoaded() && ShoulderSurfingCompat.getAlpha() < 1) {
             var alpha = (int) (ShoulderSurfingCompat.getAlpha() * 0xFF) << 24;
+            var color = (armorContext.renderColor() & 0xFFFFFF) | alpha;
+            armorContext.setRenderColor(color);
+            armorContext.setTranslucent(true);
+        } else if (config.alpha(context.animatable()) < 1) {
+            var alpha = (int) (config.alpha(context.animatable()) * 0xFF) << 24;
             var color = (armorContext.renderColor() & 0xFFFFFF) | alpha;
             armorContext.setRenderColor(color);
             armorContext.setTranslucent(true);
