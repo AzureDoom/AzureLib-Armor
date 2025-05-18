@@ -1,3 +1,4 @@
-v3.0.11
+v3.0.12
 
-- Fixes ShoulderSurfing compat causing other instances of the armor to also go transparent
+- Ports missing animations including feature to 3.x.
+    - See wiki here for documentation on this feature: https://moddedmc.wiki/en/project/azurelib/docs/misc/animation_includes
