@@ -1,7 +1,5 @@
 package mod.azure.azurelibarmor.fabric.platform;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.platform.services.IPlatformHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
@@ -11,6 +9,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import java.nio.file.Path;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.platform.services.IPlatformHelper;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 
@@ -45,9 +46,15 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public <T> Supplier<DataComponentType<T>> registerDataComponent(String id, UnaryOperator<DataComponentType.Builder<T>> builder) {
-        final DataComponentType<T> componentType = Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE,
-                AzureLib.modResource(id).toString(), builder.apply(DataComponentType.builder()).build());
+    public <T> Supplier<DataComponentType<T>> registerDataComponent(
+        String id,
+        UnaryOperator<DataComponentType.Builder<T>> builder
+    ) {
+        final DataComponentType<T> componentType = Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
+            AzureLib.modResource(id).toString(),
+            builder.apply(DataComponentType.builder()).build()
+        );
 
         return () -> componentType;
     }

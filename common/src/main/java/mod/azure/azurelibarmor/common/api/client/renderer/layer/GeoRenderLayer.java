@@ -1,22 +1,21 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.api.client.renderer.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
+
 import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
 import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoBone;
 import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Render layer base class for rendering additional layers of effects or textures over an existing model at runtime.<br>
@@ -66,34 +65,32 @@ public abstract class GeoRenderLayer<T extends GeoAnimatable> {
      * This allows for RenderLayers to perform pre-render manipulations such as hiding or showing bones
      */
     public void preRender(
-            PoseStack poseStack,
-            T animatable,
-            BakedGeoModel bakedModel,
-            RenderType renderType,
-            MultiBufferSource bufferSource,
-            VertexConsumer buffer,
-            float partialTick,
-            int packedLight,
-            int packedOverlay
-    ) {
-    }
+        PoseStack poseStack,
+        T animatable,
+        BakedGeoModel bakedModel,
+        RenderType renderType,
+        MultiBufferSource bufferSource,
+        VertexConsumer buffer,
+        float partialTick,
+        int packedLight,
+        int packedOverlay
+    ) {}
 
     /**
      * This is the method that is actually called by the render for your render layer to function.<br>
      * This is called <i>after</i> the animatable has been rendered, but before supplementary rendering like nametags.
      */
     public void render(
-            PoseStack poseStack,
-            T animatable,
-            BakedGeoModel bakedModel,
-            RenderType renderType,
-            MultiBufferSource bufferSource,
-            VertexConsumer buffer,
-            float partialTick,
-            int packedLight,
-            int packedOverlay
-    ) {
-    }
+        PoseStack poseStack,
+        T animatable,
+        BakedGeoModel bakedModel,
+        RenderType renderType,
+        MultiBufferSource bufferSource,
+        VertexConsumer buffer,
+        float partialTick,
+        int packedLight,
+        int packedOverlay
+    ) {}
 
     /**
      * This method is called by the {@link GeoRenderer} for each bone being rendered.<br>
@@ -108,15 +105,14 @@ public abstract class GeoRenderLayer<T extends GeoAnimatable> {
      * reset it back to the previous buffer using {@link MultiBufferSource#getBuffer} before ending the method
      */
     public void renderForBone(
-            PoseStack poseStack,
-            T animatable,
-            GeoBone bone,
-            RenderType renderType,
-            MultiBufferSource bufferSource,
-            VertexConsumer buffer,
-            float partialTick,
-            int packedLight,
-            int packedOverlay
-    ) {
-    }
+        PoseStack poseStack,
+        T animatable,
+        GeoBone bone,
+        RenderType renderType,
+        MultiBufferSource bufferSource,
+        VertexConsumer buffer,
+        float partialTick,
+        int packedLight,
+        int packedOverlay
+    ) {}
 }

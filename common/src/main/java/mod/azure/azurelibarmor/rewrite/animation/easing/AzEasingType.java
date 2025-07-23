@@ -1,12 +1,13 @@
 package mod.azure.azurelibarmor.rewrite.animation.easing;
 
 import it.unimi.dsi.fastutil.doubles.Double2DoubleFunction;
-import mod.azure.azurelibarmor.core.utils.Interpolations;
-import mod.azure.azurelibarmor.rewrite.animation.controller.keyframe.AzAnimationPoint;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
 import java.util.Objects;
+
+import mod.azure.azurelibarmor.core.utils.Interpolations;
+import mod.azure.azurelibarmor.rewrite.animation.controller.keyframe.AzAnimationPoint;
 
 public interface AzEasingType {
 

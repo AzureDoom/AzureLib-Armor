@@ -2,13 +2,14 @@ package mod.azure.azurelibarmor.common.internal.mixins;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.rewrite.animation.cache.AzIdentityRegistry;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.rewrite.animation.cache.AzIdentityRegistry;
 
 /**
  * A Mixin extension for the `AbstractContainerMenu` class that introduces support for AzureLib-specific ItemStack
@@ -35,7 +36,11 @@ public class AbstractContainerMenuMixin_AzItemIDFix {
             ordinal = 1
         )
     )
-    public ItemStack azurelibArmor$syncAzureIDWithRemote(ItemStack itemStack, int count, Operation<ItemStack> original) {
+    public ItemStack azurelibArmor$syncAzureIDWithRemote(
+        ItemStack itemStack,
+        int count,
+        Operation<ItemStack> original
+    ) {
         var copyStack = original.call(itemStack, count);
 
         if (AzIdentityRegistry.hasIdentity(itemStack.getItem()) && copyStack.has(AzureLib.AZ_ID.get())) {

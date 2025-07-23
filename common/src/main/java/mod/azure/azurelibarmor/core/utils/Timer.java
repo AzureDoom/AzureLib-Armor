@@ -3,7 +3,9 @@ package mod.azure.azurelibarmor.core.utils;
 public class Timer {
 
     private final long duration;
+
     private boolean enabled;
+
     private long time;
 
     public Timer(long duration) {

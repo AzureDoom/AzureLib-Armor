@@ -1,6 +1,8 @@
 package mod.azure.azurelibarmor.rewrite.model.factory.impl;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.world.phys.Vec3;
+
 import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoCube;
 import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Cube;
@@ -12,7 +14,6 @@ import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.model.AzBoneMetadata;
 import mod.azure.azurelibarmor.rewrite.model.factory.AzBakedModelFactory;
 import mod.azure.azurelibarmor.rewrite.model.factory.primitive.VertexSet;
-import net.minecraft.world.phys.Vec3;
 
 /**
  * A concrete implementation of the {@link AzBakedModelFactory} that constructs baked models, bones, and cubes from raw

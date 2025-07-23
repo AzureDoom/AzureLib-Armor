@@ -1,12 +1,13 @@
 package mod.azure.azurelibarmor.rewrite.animation.property;
 
-import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
-import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypes;
-import mod.azure.azurelibarmor.rewrite.animation.property.codec.AzAnimationPropertiesCodec;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+
+import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
+import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypes;
+import mod.azure.azurelibarmor.rewrite.animation.property.codec.AzAnimationPropertiesCodec;
 
 public class AzAnimationProperties {
 

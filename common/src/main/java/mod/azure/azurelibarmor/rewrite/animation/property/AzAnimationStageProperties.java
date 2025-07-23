@@ -1,14 +1,15 @@
 package mod.azure.azurelibarmor.rewrite.animation.property;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+
 import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
 import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypes;
 import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehavior;
 import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehaviors;
 import mod.azure.azurelibarmor.rewrite.animation.property.codec.AzAnimationStagePropertiesCodec;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class AzAnimationStageProperties extends AzAnimationProperties {
 

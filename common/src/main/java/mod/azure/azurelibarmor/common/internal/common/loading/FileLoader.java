@@ -1,13 +1,19 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.internal.common.loading;
 
 import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.AzureLibException;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
@@ -17,13 +23,6 @@ import mod.azure.azurelibarmor.common.internal.common.util.JsonUtil;
 import mod.azure.azurelibarmor.core.animation.Animation;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzBakedAnimation;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzBakedAnimations;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.GsonHelper;
-import org.apache.commons.io.IOUtils;
-
-import java.io.InputStream;
-import java.nio.charset.Charset;
 
 /**
  * Extracts raw information from given files, and other similar functions

@@ -1,8 +1,6 @@
 package mod.azure.azurelibarmor.rewrite.render;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
-import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -11,6 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
+import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
 
 /**
  * The {@code AzRendererConfig} class is a configuration class used for defining rendering configurations for generic
@@ -144,14 +145,14 @@ public class AzRendererConfig<T> {
         }
 
         public Builder<T> setPrerenderEntry(
-                Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> preRenderEntry
+            Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> preRenderEntry
         ) {
             this.preRenderEntry = preRenderEntry;
             return this;
         }
 
         public Builder<T> setPostRenderEntry(
-                Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> postRenderEntry
+            Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> postRenderEntry
         ) {
             this.postRenderEntry = postRenderEntry;
             return this;
@@ -179,11 +180,12 @@ public class AzRendererConfig<T> {
         }
 
         /**
-         * Sets the alpha value provider for the builder. The alpha value determines the opacity level
-         * of the rendered object and is calculated dynamically based on the specified function.
+         * Sets the alpha value provider for the builder. The alpha value determines the opacity level of the rendered
+         * object and is calculated dynamically based on the specified function.
          *
-         * @param alphaFunction a {@link Function} that takes an object of type {@code T} and returns a {@code Float} value
-         *              representing the alpha (opacity) level, where 0.0 is fully transparent and 1.0 is fully opaque
+         * @param alphaFunction a {@link Function} that takes an object of type {@code T} and returns a {@code Float}
+         *                      value representing the alpha (opacity) level, where 0.0 is fully transparent and 1.0 is
+         *                      fully opaque
          * @return the updated {@code Builder} instance for chaining configuration methods
          */
         public Builder<T> setAlpha(Function<T, Float> alphaFunction) {
@@ -194,8 +196,8 @@ public class AzRendererConfig<T> {
         /**
          * Sets the alpha transparency level for the builder, which determines the level of transparency to be applied.
          *
-         * @param alpha the alpha transparency value to set, where 0.0 represents fully transparent
-         *              and 1.0 represents fully opaque
+         * @param alpha the alpha transparency value to set, where 0.0 represents fully transparent and 1.0 represents
+         *              fully opaque
          * @return the updated {@code Builder} instance for chaining configuration methods
          */
         public Builder<T> setAlpha(float alpha) {

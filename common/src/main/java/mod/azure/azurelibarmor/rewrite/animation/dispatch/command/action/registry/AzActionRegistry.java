@@ -1,8 +1,6 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.registry;
 
 import it.unimi.dsi.fastutil.objects.Object2ShortArrayMap;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.impl.root.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -10,6 +8,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.impl.root.*;
 
 /**
  * The AzActionRegistry class serves as a centralized registry for mapping {@link AzAction} implementations to their

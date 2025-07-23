@@ -1,19 +1,18 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.core.animation;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
-import mod.azure.azurelibarmor.core.object.DataTicket;
-import mod.azure.azurelibarmor.core.object.PlayState;
 
 import java.util.Map;
 import java.util.Objects;
+
+import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
+import mod.azure.azurelibarmor.core.object.DataTicket;
+import mod.azure.azurelibarmor.core.object.PlayState;
 
 /**
  * Animation state handler for end-users.<br>
@@ -33,7 +32,9 @@ public class AnimationState<T extends GeoAnimatable> {
     private final boolean isMoving;
 
     private final Map<DataTicket<?>, Object> extraData = new Object2ObjectOpenHashMap<>();
+
     public double animationTick;
+
     protected AnimationController<T> controller;
 
     public AnimationState(T animatable, float limbSwing, float limbSwingAmount, float partialTick, boolean isMoving) {
@@ -174,9 +175,9 @@ public class AnimationState<T extends GeoAnimatable> {
      */
     public boolean isCurrentAnimationStage(String name) {
         return getController().getCurrentAnimation() != null && getController().getCurrentAnimation()
-                .animation()
-                .name()
-                .equals(name);
+            .animation()
+            .name()
+            .equals(name);
     }
 
     /**

@@ -5,12 +5,12 @@
  */
 package mod.azure.azurelibarmor.rewrite.animation.controller.keyframe;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import mod.azure.azurelibarmor.rewrite.animation.controller.AzAnimationController;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.model.AzBoneSnapshot;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * A bone pseudo-stack for bone animation positions, scales, and rotations. Animation points are calculated then pushed

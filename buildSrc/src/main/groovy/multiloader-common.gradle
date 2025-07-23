@@ -1,6 +1,8 @@
 plugins {
+    id 'com.diffplug.spotless'
     id 'java-library'
     id 'maven-publish'
+    id 'idea'
 }
 
 base {
@@ -130,4 +132,33 @@ publishing {
             from components.java
         }
     }
+}
+
+// Disables Gradle's custom module metadata from being published to maven. The
+// metadata includes mapped dependencies which are not reasonably consumable by
+// other mod developers.
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+spotless {
+    java {
+        eclipse().configFile("$rootDir/eclipse-formatter.xml")
+        endWithNewline()
+        importOrder("", "java", group.toString(), "\\#")
+        indentWithSpaces(4)
+        removeUnusedImports()
+        trimTrailingWhitespace()
+    }
+}
+
+tasks.build {
+    dependsOn("spotlessApply")
 }

@@ -1,8 +1,6 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.internal.common.loading.json.typeadapter;
@@ -11,6 +9,14 @@ import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import org.apache.commons.lang3.math.NumberUtils;
+
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
+
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.loading.object.BakedAnimations;
 import mod.azure.azurelibarmor.common.internal.common.util.JsonUtil;
@@ -24,13 +30,6 @@ import mod.azure.azurelibarmor.core.math.IValue;
 import mod.azure.azurelibarmor.core.molang.MolangException;
 import mod.azure.azurelibarmor.core.molang.MolangParser;
 import mod.azure.azurelibarmor.core.molang.expressions.MolangValue;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import org.apache.commons.lang3.math.NumberUtils;
-
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
 
 /**
  * {@link com.google.gson.Gson} {@link JsonDeserializer} for {@link BakedAnimations}.<br>
@@ -80,11 +79,14 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
 
         if (keyframe.has("pre")) {
             JsonElement pre = keyframe.get("pre");
-            keyframeValues = pre.isJsonArray() ? pre.getAsJsonArray() : GsonHelper.getAsJsonArray(pre.getAsJsonObject(), "vector");
-        }
-        else if (keyframe.has("post")) {
+            keyframeValues = pre.isJsonArray()
+                ? pre.getAsJsonArray()
+                : GsonHelper.getAsJsonArray(pre.getAsJsonObject(), "vector");
+        } else if (keyframe.has("post")) {
             JsonElement post = keyframe.get("post");
-            keyframeValues = post.isJsonArray() ? post.getAsJsonArray() : GsonHelper.getAsJsonArray(post.getAsJsonObject(), "vector");
+            keyframeValues = post.isJsonArray()
+                ? post.getAsJsonArray()
+                : GsonHelper.getAsJsonArray(post.getAsJsonObject(), "vector");
         }
 
         if (keyframeValues != null)
@@ -107,9 +109,9 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
 
     @Override
     public BakedAnimations deserialize(
-            JsonElement json,
-            Type type,
-            JsonDeserializationContext context
+        JsonElement json,
+        Type type,
+        JsonDeserializationContext context
     ) throws JsonParseException {
         JsonObject jsonObj = json.getAsJsonObject();
 
@@ -125,10 +127,10 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
                     String ani = animName.getAsString();
                     if (includes.containsKey(ani)) {
                         AzureLib.LOGGER.warn(
-                                "Animation {} is already included! File already including: {}  File trying to include from again: {}",
-                                ani,
-                                includes.get(ani),
-                                fileId
+                            "Animation {} is already included! File already including: {}  File trying to include from again: {}",
+                            ani,
+                            includes.get(ani),
+                            fileId
                         );
                     } else {
                         includes.put(ani, fileId);
@@ -142,8 +144,8 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
         for (Map.Entry<String, JsonElement> entry : animationJsonList.entrySet()) {
             try {
                 animations.put(
-                        entry.getKey(),
-                        bakeAnimation(entry.getKey(), entry.getValue().getAsJsonObject(), context)
+                    entry.getKey(),
+                    bakeAnimation(entry.getKey(), entry.getValue().getAsJsonObject(), context)
                 );
             } catch (MolangException ex) {
                 AzureLib.LOGGER.error("Unable to parse animation: {}", entry.getKey());
@@ -155,16 +157,16 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
     }
 
     private Animation bakeAnimation(
-            String name,
-            JsonObject animationObj,
-            JsonDeserializationContext context
+        String name,
+        JsonObject animationObj,
+        JsonDeserializationContext context
     ) throws MolangException {
         double length = animationObj.has("animation_length")
-                ? GsonHelper.getAsDouble(animationObj, "animation_length") * 20d
-                : -1;
+            ? GsonHelper.getAsDouble(animationObj, "animation_length") * 20d
+            : -1;
         Animation.LoopType loopType = Animation.LoopType.fromJson(animationObj.get("loop"));
         BoneAnimation[] boneAnimations = bakeBoneAnimations(
-                GsonHelper.getAsJsonObject(animationObj, "bones", new JsonObject())
+            GsonHelper.getAsJsonObject(animationObj, "bones", new JsonObject())
         );
         Animation.Keyframes keyframes = context.deserialize(animationObj, Animation.Keyframes.class);
 
@@ -181,16 +183,16 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
         for (Map.Entry<String, JsonElement> entry : bonesObj.entrySet()) {
             JsonObject entryObj = entry.getValue().getAsJsonObject();
             KeyframeStack<Keyframe<IValue>> scaleFrames = buildKeyframeStack(
-                    getTripletObj(entryObj.get("scale")),
-                    false
+                getTripletObj(entryObj.get("scale")),
+                false
             );
             KeyframeStack<Keyframe<IValue>> positionFrames = buildKeyframeStack(
-                    getTripletObj(entryObj.get("position")),
-                    false
+                getTripletObj(entryObj.get("position")),
+                false
             );
             KeyframeStack<Keyframe<IValue>> rotationFrames = buildKeyframeStack(
-                    getTripletObj(entryObj.get("rotation")),
-                    true
+                getTripletObj(entryObj.get("rotation")),
+                true
             );
 
             animations[index] = new BoneAnimation(entry.getKey(), rotationFrames, positionFrames, scaleFrames);
@@ -201,8 +203,8 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
     }
 
     private KeyframeStack<Keyframe<IValue>> buildKeyframeStack(
-            List<Pair<String, JsonElement>> entries,
-            boolean isForRotation
+        List<Pair<String, JsonElement>> entries,
+        boolean isForRotation
     ) throws MolangException {
         if (entries.isEmpty())
             return new KeyframeStack<>();
@@ -228,40 +230,40 @@ public class BakedAnimationsAdapter implements JsonDeserializer<BakedAnimations>
             double timeDelta = curTime - prevTime;
 
             JsonArray keyFrameVector = element instanceof JsonArray array
-                    ? array
-                    : GsonHelper.getAsJsonArray(element.getAsJsonObject(), "vector");
+                ? array
+                : GsonHelper.getAsJsonArray(element.getAsJsonObject(), "vector");
             MolangValue rawXValue = MolangParser.parseJson(keyFrameVector.get(0));
             MolangValue rawYValue = MolangParser.parseJson(keyFrameVector.get(1));
             MolangValue rawZValue = MolangParser.parseJson(keyFrameVector.get(2));
             IValue xValue = isForRotation && rawXValue.isConstant()
-                    ? new Constant(Math.toRadians(-rawXValue.get()))
-                    : rawXValue;
+                ? new Constant(Math.toRadians(-rawXValue.get()))
+                : rawXValue;
             IValue yValue = isForRotation && rawYValue.isConstant()
-                    ? new Constant(Math.toRadians(-rawYValue.get()))
-                    : rawYValue;
+                ? new Constant(Math.toRadians(-rawYValue.get()))
+                : rawYValue;
             IValue zValue = isForRotation && rawZValue.isConstant()
-                    ? new Constant(Math.toRadians(rawZValue.get()))
-                    : rawZValue;
+                ? new Constant(Math.toRadians(rawZValue.get()))
+                : rawZValue;
 
             JsonObject entryObj = element instanceof JsonObject obj ? obj : null;
             EasingType easingType = entryObj != null && entryObj.has("easing")
-                    ? EasingType.fromJson(entryObj.get("easing"))
-                    : EasingType.LINEAR;
+                ? EasingType.fromJson(entryObj.get("easing"))
+                : EasingType.LINEAR;
             List<IValue> easingArgs = entryObj != null && entryObj.has("easingArgs")
-                    ? JsonUtil.jsonArrayToList(
+                ? JsonUtil.jsonArrayToList(
                     GsonHelper.getAsJsonArray(entryObj, "easingArgs"),
                     ele -> new Constant(ele.getAsDouble())
-            )
-                    : new ObjectArrayList<>();
+                )
+                : new ObjectArrayList<>();
 
             xFrames.add(
-                    new Keyframe<>(timeDelta * 20, prevEntry == null ? xValue : xPrev, xValue, easingType, easingArgs)
+                new Keyframe<>(timeDelta * 20, prevEntry == null ? xValue : xPrev, xValue, easingType, easingArgs)
             );
             yFrames.add(
-                    new Keyframe<>(timeDelta * 20, prevEntry == null ? yValue : yPrev, yValue, easingType, easingArgs)
+                new Keyframe<>(timeDelta * 20, prevEntry == null ? yValue : yPrev, yValue, easingType, easingArgs)
             );
             zFrames.add(
-                    new Keyframe<>(timeDelta * 20, prevEntry == null ? zValue : zPrev, zValue, easingType, easingArgs)
+                new Keyframe<>(timeDelta * 20, prevEntry == null ? zValue : zPrev, zValue, easingType, easingArgs)
             );
 
             xPrev = xValue;

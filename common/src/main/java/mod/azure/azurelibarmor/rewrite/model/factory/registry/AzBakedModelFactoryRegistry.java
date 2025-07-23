@@ -1,11 +1,12 @@
 package mod.azure.azurelibarmor.rewrite.model.factory.registry;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+
+import java.util.Map;
+
 import mod.azure.azurelibarmor.common.internal.common.util.AzureLibUtil;
 import mod.azure.azurelibarmor.rewrite.model.factory.AzBakedModelFactory;
 import mod.azure.azurelibarmor.rewrite.model.factory.impl.AzBuiltinBakedModelFactory;
-
-import java.util.Map;
 
 /**
  * A registry for managing instances of {@link AzBakedModelFactory} that are used to handle the creation of baked models

@@ -1,11 +1,11 @@
 package mod.azure.azurelibarmor.common.platform;
 
+import java.util.ServiceLoader;
+
 import mod.azure.azurelibarmor.common.platform.services.AzureEvents;
 import mod.azure.azurelibarmor.common.platform.services.AzureLibInitializer;
 import mod.azure.azurelibarmor.common.platform.services.AzureLibNetwork;
 import mod.azure.azurelibarmor.common.platform.services.IPlatformHelper;
-
-import java.util.ServiceLoader;
 
 public final class Services {
 
@@ -23,7 +23,7 @@ public final class Services {
 
     public static <T> T load(Class<T> clazz) {
         return ServiceLoader.load(clazz)
-                .findFirst()
-                .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
+            .findFirst()
+            .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
     }
 }

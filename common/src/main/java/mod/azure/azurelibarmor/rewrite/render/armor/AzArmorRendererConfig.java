@@ -1,11 +1,5 @@
 package mod.azure.azurelibarmor.rewrite.render.armor;
 
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
-import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneProvider;
-import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzDefaultArmorBoneProvider;
-import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +8,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
+import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneProvider;
+import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzDefaultArmorBoneProvider;
+import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
 
 public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
 
@@ -32,7 +33,18 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
         Function<ItemStack, Float> scaleHeight,
         Function<ItemStack, Float> scaleWidth
     ) {
-        super(animatorProvider, modelLocationProvider, renderTypeProvider, renderLayers, preRenderEntry, postRenderEntry, textureLocationProvider, alphaFunction, scaleHeight, scaleWidth);
+        super(
+            animatorProvider,
+            modelLocationProvider,
+            renderTypeProvider,
+            renderLayers,
+            preRenderEntry,
+            postRenderEntry,
+            textureLocationProvider,
+            alphaFunction,
+            scaleHeight,
+            scaleWidth
+        );
         this.boneProvider = boneProvider;
     }
 
@@ -84,14 +96,14 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
 
         @Override
         public Builder setPrerenderEntry(
-                Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
+            Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
         ) {
             return (Builder) super.setPrerenderEntry(preRenderEntry);
         }
 
         @Override
         public Builder setPostRenderEntry(
-                Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
+            Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
         ) {
             return (Builder) super.setPostRenderEntry(preRenderEntry);
         }
@@ -122,7 +134,10 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
         }
 
         @Override
-        public Builder setScale(Function<ItemStack, Float> scaleHeightFunction, Function<ItemStack, Float> scaleWidthFunction) {
+        public Builder setScale(
+            Function<ItemStack, Float> scaleHeightFunction,
+            Function<ItemStack, Float> scaleWidthFunction
+        ) {
             return (AzArmorRendererConfig.Builder) super.setScale(scaleHeightFunction, scaleWidthFunction);
         }
 

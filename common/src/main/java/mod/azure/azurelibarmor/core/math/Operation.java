@@ -11,24 +11,28 @@ import java.util.Set;
 public enum Operation {
 
     ADD("+", 1) {
+
         @Override
         public double calculate(double a, double b) {
             return a + b;
         }
     },
     SUB("-", 1) {
+
         @Override
         public double calculate(double a, double b) {
             return a - b;
         }
     },
     MUL("*", 2) {
+
         @Override
         public double calculate(double a, double b) {
             return a * b;
         }
     },
     DIV("/", 2) {
+
         @Override
         public double calculate(double a, double b) {
             /* To avoid any exceptions */
@@ -36,60 +40,70 @@ public enum Operation {
         }
     },
     MOD("%", 2) {
+
         @Override
         public double calculate(double a, double b) {
             return a % b;
         }
     },
     POW("^", 3) {
+
         @Override
         public double calculate(double a, double b) {
             return Math.pow(a, b);
         }
     },
     AND("&&", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return a != 0 && b != 0 ? 1 : 0;
         }
     },
     OR("||", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return a != 0 || b != 0 ? 1 : 0;
         }
     },
     LESS("<", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return a < b ? 1 : 0;
         }
     },
     LESS_THAN("<=", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return a <= b ? 1 : 0;
         }
     },
     GREATER_THAN(">=", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return a >= b ? 1 : 0;
         }
     },
     GREATER(">", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return a > b ? 1 : 0;
         }
     },
     EQUALS("==", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return equals(a, b) ? 1 : 0;
         }
     },
     NOT_EQUALS("!=", 5) {
+
         @Override
         public double calculate(double a, double b) {
             return !equals(a, b) ? 1 : 0;
@@ -108,6 +122,7 @@ public enum Operation {
      * String-ified name of this operation
      */
     public final String sign;
+
     /**
      * Value of this operation in relation to other operations (i.e precedence importance)
      */

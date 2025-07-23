@@ -1,5 +1,8 @@
 package mod.azure.azurelibarmor.common.internal.common.util;
 
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
 import mod.azure.azurelibarmor.common.internal.common.constant.DataTickets;
 import mod.azure.azurelibarmor.common.internal.common.loading.object.BakedModelFactory;
 import mod.azure.azurelibarmor.common.internal.common.network.SerializableDataTicket;
@@ -10,8 +13,6 @@ import mod.azure.azurelibarmor.core.animatable.instance.SingletonAnimatableInsta
 import mod.azure.azurelibarmor.core.animation.Animation;
 import mod.azure.azurelibarmor.core.animation.EasingType;
 import mod.azure.azurelibarmor.core.object.DataTicket;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
  * Helper class for various azurelibarmor-specific functions.
@@ -31,11 +32,11 @@ public record AzureLibUtil() {
         AnimatableInstanceCache cache = animatable.animatableCacheOverride();
 
         return cache != null
-                ? cache
-                : createInstanceCache(
+            ? cache
+            : createInstanceCache(
                 animatable,
                 !(animatable instanceof Entity) && !(animatable instanceof BlockEntity)
-        );
+            );
     }
 
     /**
@@ -53,10 +54,10 @@ public record AzureLibUtil() {
             return cache;
 
         return singletonObject
-                ? new SingletonAnimatableInstanceCache(
+            ? new SingletonAnimatableInstanceCache(
                 animatable
-        )
-                : new InstancedAnimatableInstanceCache(animatable);
+            )
+            : new InstancedAnimatableInstanceCache(animatable);
     }
 
     /**
@@ -72,8 +73,8 @@ public record AzureLibUtil() {
     }
 
     /**
-     * Register a custom {@link EasingType} with azurelibarmor, allowing for dynamic handling of animation transitions and
-     * curves.<br>
+     * Register a custom {@link EasingType} with azurelibarmor, allowing for dynamic handling of animation transitions
+     * and curves.<br>
      * <b><u>MUST be called during mod construct</u></b><br>
      *
      * @param name       The name of the {@code EasingType} handler

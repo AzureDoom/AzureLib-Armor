@@ -1,8 +1,6 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 /*
@@ -23,9 +21,8 @@ import mod.azure.azurelibarmor.core.math.IValue;
  * @param scaleKeyFrames    The deserialized scale {@code Keyframe} stack
  */
 public record BoneAnimation(
-        String boneName,
-        KeyframeStack<Keyframe<IValue>> rotationKeyFrames,
-        KeyframeStack<Keyframe<IValue>> positionKeyFrames,
-        KeyframeStack<Keyframe<IValue>> scaleKeyFrames
-) {
-}
+    String boneName,
+    KeyframeStack<Keyframe<IValue>> rotationKeyFrames,
+    KeyframeStack<Keyframe<IValue>> positionKeyFrames,
+    KeyframeStack<Keyframe<IValue>> scaleKeyFrames
+) {}

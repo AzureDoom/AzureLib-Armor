@@ -1,9 +1,5 @@
 package mod.azure.azurelibarmor.rewrite.render.armor;
 
-import mod.azure.azurelibarmor.core.object.Color;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererPipeline;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
-import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneContext;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -15,6 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import mod.azure.azurelibarmor.core.object.Color;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererPipeline;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
+import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneContext;
 
 public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<ItemStack> {
 

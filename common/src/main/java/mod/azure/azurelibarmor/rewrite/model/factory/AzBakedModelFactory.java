@@ -1,5 +1,9 @@
 package mod.azure.azurelibarmor.rewrite.model.factory;
 
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoCube;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
 import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Cube;
@@ -11,9 +15,6 @@ import mod.azure.azurelibarmor.common.internal.common.loading.object.GeometryTre
 import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.model.factory.primitive.VertexSet;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Abstract factory class for constructing baked models, bones, and cubes from raw input data such as geometry trees or

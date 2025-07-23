@@ -1,13 +1,14 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.impl.root;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
 
 /**
  * The {@code AzRootSetTransitionSpeedAction} class implements the {@link AzAction} interface and represents an action

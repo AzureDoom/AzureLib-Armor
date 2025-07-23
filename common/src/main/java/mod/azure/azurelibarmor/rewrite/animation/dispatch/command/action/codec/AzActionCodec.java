@@ -1,10 +1,11 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.codec;
 
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.registry.AzActionRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import org.jetbrains.annotations.NotNull;
+
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.registry.AzActionRegistry;
 
 /**
  * The AzActionCodec class serves as an implementation of the {@link StreamCodec} interface specifically designed for

@@ -1,10 +1,12 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command.sequence;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.stage.AzAnimationStage;
-import mod.azure.azurelibarmor.rewrite.util.codec.AzListStreamCodec;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
 import java.util.List;
+
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.stage.AzAnimationStage;
+import mod.azure.azurelibarmor.rewrite.util.codec.AzListStreamCodec;
 
 public record AzAnimationSequence(
     List<AzAnimationStage> stages

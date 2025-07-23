@@ -3,6 +3,12 @@ package mod.azure.azurelibarmor.core.molang;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.function.DoubleSupplier;
+
 import mod.azure.azurelibarmor.core.math.Constant;
 import mod.azure.azurelibarmor.core.math.IValue;
 import mod.azure.azurelibarmor.core.math.MathBuilder;
@@ -12,11 +18,6 @@ import mod.azure.azurelibarmor.core.molang.expressions.MolangValue;
 import mod.azure.azurelibarmor.core.molang.expressions.MolangVariableHolder;
 import mod.azure.azurelibarmor.core.molang.functions.CosDegrees;
 import mod.azure.azurelibarmor.core.molang.functions.SinDegrees;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.function.DoubleSupplier;
 
 /**
  * Utility class for parsing and utilising MoLang functions and expressions
@@ -96,8 +97,8 @@ public class MolangParser extends MathBuilder {
      * Parse a single Molang statement
      */
     protected static MolangValue parseOneLine(
-            String expression,
-            MolangCompoundValue currentStatement
+        String expression,
+        MolangCompoundValue currentStatement
     ) throws MolangException {
         if (expression.startsWith(RETURN)) {
             try {
@@ -111,8 +112,8 @@ public class MolangParser extends MathBuilder {
             List<Object> symbols = INSTANCE.breakdownChars(INSTANCE.breakdown(expression));
 
             if (
-                    symbols.size() >= 3 && symbols.get(0) instanceof String name && INSTANCE.isVariable(symbols.get(0))
-                            && symbols.get(1).equals("=")
+                symbols.size() >= 3 && symbols.get(0) instanceof String name && INSTANCE.isVariable(symbols.get(0))
+                    && symbols.get(1).equals("=")
             ) {
                 symbols = symbols.subList(2, symbols.size());
                 LazyVariable variable;
@@ -242,7 +243,7 @@ public class MolangParser extends MathBuilder {
      *
      * @param name The name of the variable to get
      * @return The registered {@code LazyVariable} instance, or a newly registered instance if one wasn't registered
-     * previously
+     *         previously
      */
     @Override
     public LazyVariable getVariable(String name) {

@@ -1,17 +1,16 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.internal.common.loading.object;
 
-import mod.azure.azurelibarmor.core.animation.Animation;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+
+import mod.azure.azurelibarmor.core.animation.Animation;
 
 /**
  * Container object that holds a deserialized map of {@link Animation Animations}.<br>
@@ -20,8 +19,8 @@ import java.util.Map;
  */
 @Deprecated(forRemoval = true)
 public record BakedAnimations(
-        Map<String, Animation> animations,
-        Map<String, ResourceLocation> includes
+    Map<String, Animation> animations,
+    Map<String, ResourceLocation> includes
 ) {
 
     /**

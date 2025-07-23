@@ -1,9 +1,6 @@
 package mod.azure.azurelibarmor.common.internal.common;
 
 import com.mojang.serialization.Codec;
-import mod.azure.azurelibarmor.common.internal.common.util.AzureLibUtil;
-import mod.azure.azurelibarmor.common.platform.Services;
-import mod.azure.azurelibarmor.rewrite.render.armor.compat.ShoulderSurfingCompat;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -15,6 +12,10 @@ import org.apache.logging.log4j.MarkerManager;
 
 import java.util.UUID;
 import java.util.function.Supplier;
+
+import mod.azure.azurelibarmor.common.internal.common.util.AzureLibUtil;
+import mod.azure.azurelibarmor.common.platform.Services;
+import mod.azure.azurelibarmor.rewrite.render.armor.compat.ShoulderSurfingCompat;
 
 /**
  * Base class for azurelibarmor!<br>
@@ -32,16 +33,21 @@ public final class AzureLib {
     public static final Marker MAIN_MARKER = MarkerManager.getMarker("main");
 
     @Deprecated(forRemoval = true)
-    public static final Supplier<DataComponentType<Long>> STACK_ANIMATABLE_ID_COMPONENT = Services.PLATFORM.registerDataComponent(
-            "stack_animatable_id", builder -> builder.persistent(Codec.LONG).networkSynchronized(
-                    ByteBufCodecs.VAR_LONG));
+    public static final Supplier<DataComponentType<Long>> STACK_ANIMATABLE_ID_COMPONENT = Services.PLATFORM
+        .registerDataComponent(
+            "stack_animatable_id",
+            builder -> builder.persistent(Codec.LONG)
+                .networkSynchronized(
+                    ByteBufCodecs.VAR_LONG
+                )
+        );
 
     public static final Supplier<DataComponentType<UUID>> AZ_ID = Services.PLATFORM
-            .registerDataComponent(
-                    "az_id",
-                    builder -> builder.persistent(UUIDUtil.CODEC)
-                            .networkSynchronized(UUIDUtil.STREAM_CODEC)
-            );
+        .registerDataComponent(
+            "az_id",
+            builder -> builder.persistent(UUIDUtil.CODEC)
+                .networkSynchronized(UUIDUtil.STREAM_CODEC)
+        );
 
     public static boolean hasInitialized;
 

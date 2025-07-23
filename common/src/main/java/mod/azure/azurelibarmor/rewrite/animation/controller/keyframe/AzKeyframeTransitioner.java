@@ -1,5 +1,8 @@
 package mod.azure.azurelibarmor.rewrite.animation.controller.keyframe;
 
+import java.util.Map;
+import java.util.NoSuchElementException;
+
 import mod.azure.azurelibarmor.core.math.IValue;
 import mod.azure.azurelibarmor.core.molang.MolangParser;
 import mod.azure.azurelibarmor.core.molang.MolangQueries;
@@ -9,9 +12,6 @@ import mod.azure.azurelibarmor.rewrite.animation.controller.AzBoneAnimationQueue
 import mod.azure.azurelibarmor.rewrite.animation.controller.AzBoneSnapshotCache;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.model.AzBoneSnapshot;
-
-import java.util.Map;
-import java.util.NoSuchElementException;
 
 /**
  * AzKeyframeTransitioner is a specialized class for executing smooth animations and transitions between keyframes for

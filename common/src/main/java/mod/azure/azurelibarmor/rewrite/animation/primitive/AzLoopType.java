@@ -1,11 +1,12 @@
 package mod.azure.azurelibarmor.rewrite.animation.primitive;
 
 import com.google.gson.JsonElement;
-import mod.azure.azurelibarmor.rewrite.animation.controller.AzAnimationController;
 import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import mod.azure.azurelibarmor.rewrite.animation.controller.AzAnimationController;
 
 /**
  * Loop type functional interface to define post-play handling for a given animation. <br>

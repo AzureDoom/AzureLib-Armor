@@ -11,13 +11,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.platform.NativeImage;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import mod.azure.azurelibarmor.common.api.client.renderer.layer.AutoGlowingGeoLayer;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.GsonHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
+import mod.azure.azurelibarmor.common.api.client.renderer.layer.AutoGlowingGeoLayer;
 
 /**
  * Metadata class that stores the data for AzureLib's {@link AutoGlowingGeoLayer emissive texture feature} for a given

@@ -1,8 +1,10 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command.stage;
-import mod.azure.azurelibarmor.rewrite.animation.property.AzAnimationStageProperties;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+
+import mod.azure.azurelibarmor.rewrite.animation.property.AzAnimationStageProperties;
 
 public record AzAnimationStage(
     String name,

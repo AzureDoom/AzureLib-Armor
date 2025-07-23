@@ -1,17 +1,16 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.api.client.renderer.layer;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
-import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
 
 import java.util.List;
+
+import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
+import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
 
 /**
  * Base interface for a container for {@link GeoRenderLayer GeoRenderLayers}<br>

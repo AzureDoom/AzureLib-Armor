@@ -7,8 +7,6 @@ package mod.azure.azurelibarmor.common.internal.common.cache.texture;
 
 import com.mojang.blaze3d.pipeline.RenderCall;
 import com.mojang.blaze3d.platform.NativeImage;
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -21,6 +19,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.platform.Services;
 
 /**
  * Texture object type responsible for AzureLib's emissive render textures
@@ -54,11 +55,11 @@ public class AutoGlowingTexture extends AzAbstractTexture {
 
         Resource textureBaseResource = resourceManager.getResource(this.textureBase).get();
         NativeImage baseImage = originalTexture instanceof DynamicTexture dynamicTexture
-                ? dynamicTexture.getPixels()
-                : NativeImage.read(textureBaseResource.open());
+            ? dynamicTexture.getPixels()
+            : NativeImage.read(textureBaseResource.open());
         NativeImage glowImage = null;
         Optional<TextureMetadataSection> textureBaseMeta = textureBaseResource.metadata()
-                .getSection(TextureMetadataSection.SERIALIZER);
+            .getSection(TextureMetadataSection.SERIALIZER);
         boolean blur = textureBaseMeta.isPresent() && textureBaseMeta.get().isBlur();
         boolean clamp = textureBaseMeta.isPresent() && textureBaseMeta.get().isClamp();
 
@@ -71,7 +72,7 @@ public class AutoGlowingTexture extends AzAbstractTexture {
                 glowLayerMeta = GeoGlowingTextureMeta.fromExistingImage(glowImage);
             } else {
                 Optional<GeoGlowingTextureMeta> meta = textureBaseResource.metadata()
-                        .getSection(GeoGlowingTextureMeta.DESERIALIZER);
+                    .getSection(GeoGlowingTextureMeta.DESERIALIZER);
 
                 if (meta.isPresent()) {
                     glowLayerMeta = meta.get();
@@ -96,21 +97,21 @@ public class AutoGlowingTexture extends AzAbstractTexture {
         if (mask == null) {
             String expectedGlowmask = this.textureBase.toString().replace(".png", "_glowmask.png");
             AzureLib.LOGGER.warn(
-                    "Missing glowmask texture. Base texture: {}, Expected glowmask: {}",
-                    this.textureBase,
-                    expectedGlowmask
+                "Missing glowmask texture. Base texture: {}, Expected glowmask: {}",
+                this.textureBase,
+                expectedGlowmask
             );
             return null;
         }
 
         boolean animated = originalTexture instanceof AnimatableTexture animatableTexture && animatableTexture
-                .isAnimated();
+            .isAnimated();
 
         if (animated)
             ((AnimatableTexture) originalTexture).animationContents.animatedTexture.setGlowMaskTexture(
-                    this,
-                    baseImage,
-                    mask
+                this,
+                baseImage,
+                mask
             );
 
         return () -> {

@@ -1,29 +1,30 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.internal.common.network;
 
-import mod.azure.azurelibarmor.common.internal.common.constant.DataTickets;
-import mod.azure.azurelibarmor.core.object.DataTicket;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import mod.azure.azurelibarmor.common.internal.common.constant.DataTickets;
+import mod.azure.azurelibarmor.core.object.DataTicket;
+
 /**
  * Network-compatible {@link DataTicket} implementation. Used for sending data from server -> client in an easy manner
  */
 public abstract class SerializableDataTicket<D> extends DataTicket<D> {
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, SerializableDataTicket<?>> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, SerializableDataTicket<?>> STREAM_CODEC = StreamCodec
+        .composite(
             ByteBufCodecs.STRING_UTF8,
             SerializableDataTicket::id,
-            DataTickets::byName);
+            DataTickets::byName
+        );
 
     protected SerializableDataTicket(String id, Class<? extends D> objectType) {
         super(id, objectType);
@@ -36,6 +37,7 @@ public abstract class SerializableDataTicket<D> extends DataTicket<D> {
      */
     public static SerializableDataTicket<Double> ofDouble(ResourceLocation id) {
         return new SerializableDataTicket<>(id.toString(), Double.class) {
+
             @Override
             public StreamCodec<? super RegistryFriendlyByteBuf, Double> streamCodec() {
                 return ByteBufCodecs.DOUBLE;
@@ -52,6 +54,7 @@ public abstract class SerializableDataTicket<D> extends DataTicket<D> {
      */
     public static SerializableDataTicket<Float> ofFloat(ResourceLocation id) {
         return new SerializableDataTicket<>(id.toString(), Float.class) {
+
             @Override
             public StreamCodec<? super RegistryFriendlyByteBuf, Float> streamCodec() {
                 return ByteBufCodecs.FLOAT;
@@ -66,6 +69,7 @@ public abstract class SerializableDataTicket<D> extends DataTicket<D> {
      */
     public static SerializableDataTicket<Boolean> ofBoolean(ResourceLocation id) {
         return new SerializableDataTicket<>(id.toString(), Boolean.class) {
+
             @Override
             public StreamCodec<? super RegistryFriendlyByteBuf, Boolean> streamCodec() {
                 return ByteBufCodecs.BOOL;
@@ -80,6 +84,7 @@ public abstract class SerializableDataTicket<D> extends DataTicket<D> {
      */
     public static SerializableDataTicket<Integer> ofInt(ResourceLocation id) {
         return new SerializableDataTicket<>(id.toString(), Integer.class) {
+
             @Override
             public StreamCodec<? super RegistryFriendlyByteBuf, Integer> streamCodec() {
                 return ByteBufCodecs.VAR_INT;
@@ -94,6 +99,7 @@ public abstract class SerializableDataTicket<D> extends DataTicket<D> {
      */
     public static SerializableDataTicket<String> ofString(ResourceLocation id) {
         return new SerializableDataTicket<>(id.toString(), String.class) {
+
             @Override
             public StreamCodec<? super RegistryFriendlyByteBuf, String> streamCodec() {
                 return ByteBufCodecs.STRING_UTF8;
@@ -108,8 +114,10 @@ public abstract class SerializableDataTicket<D> extends DataTicket<D> {
      */
     public static <E extends Enum<E>> SerializableDataTicket<E> ofEnum(ResourceLocation id, Class<E> enumClass) {
         return new SerializableDataTicket<>(id.toString(), enumClass) {
+
             public StreamCodec<? super RegistryFriendlyByteBuf, E> streamCodec() {
                 return new StreamCodec<>() {
+
                     @Override
                     public @NotNull E decode(@NotNull RegistryFriendlyByteBuf buf) {
                         return Enum.valueOf(enumClass, buf.readUtf());

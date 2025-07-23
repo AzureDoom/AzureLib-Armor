@@ -20,5 +20,8 @@ public interface IPlatformHelper {
 
     boolean isEnvironmentClient();
 
-    <T> Supplier<DataComponentType<T>> registerDataComponent(String id, UnaryOperator<DataComponentType.Builder<T>> builder);
+    <T> Supplier<DataComponentType<T>> registerDataComponent(
+        String id,
+        UnaryOperator<DataComponentType.Builder<T>> builder
+    );
 }

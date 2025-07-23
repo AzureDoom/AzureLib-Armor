@@ -1,9 +1,10 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action;
 
+import net.minecraft.resources.ResourceLocation;
+
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.codec.AzActionCodec;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * The AzAction interface serves as a base contract for defining actions that can be dispatched within the animation

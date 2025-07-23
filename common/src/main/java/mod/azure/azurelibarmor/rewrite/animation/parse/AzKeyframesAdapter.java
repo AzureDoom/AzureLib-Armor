@@ -7,15 +7,16 @@ package mod.azure.azurelibarmor.rewrite.animation.parse;
 
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.util.GsonHelper;
+
+import java.lang.reflect.Type;
+import java.util.Map;
+
 import mod.azure.azurelibarmor.common.internal.common.util.JsonUtil;
 import mod.azure.azurelibarmor.core.keyframe.event.data.CustomInstructionKeyframeData;
 import mod.azure.azurelibarmor.core.keyframe.event.data.ParticleKeyframeData;
 import mod.azure.azurelibarmor.core.keyframe.event.data.SoundKeyframeData;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzKeyframes;
-import net.minecraft.util.GsonHelper;
-
-import java.lang.reflect.Type;
-import java.util.Map;
 
 /**
  * {@link Gson} {@link JsonDeserializer} for {@link AzKeyframes}.<br>

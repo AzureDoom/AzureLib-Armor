@@ -1,12 +1,6 @@
 package mod.azure.azurelibarmor.rewrite.model.cache;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import mod.azure.azurelibarmor.common.internal.common.loading.FileLoader;
-import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Model;
-import mod.azure.azurelibarmor.common.internal.common.loading.object.GeometryTree;
-import mod.azure.azurelibarmor.rewrite.AzResourceCache;
-import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
-import mod.azure.azurelibarmor.rewrite.model.factory.registry.AzBakedModelFactoryRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.jetbrains.annotations.Nullable;
@@ -14,6 +8,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+
+import mod.azure.azurelibarmor.common.internal.common.loading.FileLoader;
+import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Model;
+import mod.azure.azurelibarmor.common.internal.common.loading.object.GeometryTree;
+import mod.azure.azurelibarmor.rewrite.AzResourceCache;
+import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
+import mod.azure.azurelibarmor.rewrite.model.factory.registry.AzBakedModelFactoryRegistry;
 
 /**
  * AzBakedModelCache is a singleton class that extends {@link AzResourceCache} and is designed to manage and cache baked

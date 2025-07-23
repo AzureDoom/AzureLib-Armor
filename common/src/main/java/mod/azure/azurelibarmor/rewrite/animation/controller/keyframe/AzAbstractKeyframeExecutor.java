@@ -1,13 +1,13 @@
 package mod.azure.azurelibarmor.rewrite.animation.controller.keyframe;
 
+import java.util.List;
+
 import mod.azure.azurelibarmor.core.keyframe.AnimationPoint;
 import mod.azure.azurelibarmor.core.keyframe.Keyframe;
 import mod.azure.azurelibarmor.core.keyframe.KeyframeLocation;
 import mod.azure.azurelibarmor.core.math.Constant;
 import mod.azure.azurelibarmor.core.math.IValue;
 import mod.azure.azurelibarmor.core.object.Axis;
-
-import java.util.List;
 
 /**
  * AzAbstractKeyframeExecutor is a base class designed to handle animations and transitions between keyframes in a

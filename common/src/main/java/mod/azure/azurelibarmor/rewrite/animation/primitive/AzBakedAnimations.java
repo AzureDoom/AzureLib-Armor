@@ -1,11 +1,12 @@
 package mod.azure.azurelibarmor.rewrite.animation.primitive;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLibException;
-import mod.azure.azurelibarmor.rewrite.animation.cache.AzBakedAnimationCache;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLibException;
+import mod.azure.azurelibarmor.rewrite.animation.cache.AzBakedAnimationCache;
 
 /**
  * Represents a container for baked animations in the AzureLib framework. This record holds mappings for precompiled

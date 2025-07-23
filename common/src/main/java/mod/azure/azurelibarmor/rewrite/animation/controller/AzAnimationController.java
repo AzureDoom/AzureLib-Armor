@@ -1,5 +1,13 @@
 package mod.azure.azurelibarmor.rewrite.animation.controller;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.animation.controller.keyframe.AzKeyframeCallbacks;
 import mod.azure.azurelibarmor.rewrite.animation.controller.keyframe.AzKeyframeManager;
@@ -12,13 +20,6 @@ import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.sequence.AzAnimationSequence;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzQueuedAnimation;
 import mod.azure.azurelibarmor.rewrite.animation.property.AzAnimationProperties;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The actual controller that handles the playing and usage of animations, including their various keyframes and

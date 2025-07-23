@@ -1,14 +1,15 @@
 package mod.azure.azurelibarmor.rewrite.render.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix4f;
+
 import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelibarmor.rewrite.render.AzLayerRenderer;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipeline;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import org.joml.Matrix4f;
 
 /**
  * Extends the {@link AzRendererPipeline} to provide a specific implementation for rendering {@link ItemStack} objects.

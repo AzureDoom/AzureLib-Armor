@@ -1,15 +1,16 @@
 package mod.azure.azurelibarmor.rewrite.render;
 
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
-import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
-import mod.azure.azurelibarmor.rewrite.model.cache.AzBakedModelCache;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
+import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
+import mod.azure.azurelibarmor.rewrite.model.cache.AzBakedModelCache;
 
 /**
  * The {@code AzProvider} class serves as a utility for providing animation-related resources, such as baked models and

@@ -1,18 +1,17 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.internal.common.cache;
 
-import mod.azure.azurelibarmor.core.animatable.instance.SingletonAnimatableInstanceCache;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
+
+import mod.azure.azurelibarmor.core.animatable.instance.SingletonAnimatableInstanceCache;
 
 /**
  * Storage class that keeps track of the last animatable id used, and provides new ones on request.<br>
@@ -26,8 +25,7 @@ public final class AnimatableIdCache extends SavedData {
 
     private long lastId;
 
-    private AnimatableIdCache() {
-    }
+    private AnimatableIdCache() {}
 
     private AnimatableIdCache(CompoundTag tag, HolderLookup.Provider registryLookup) {
         this.lastId = tag.getLong("last_id");
@@ -35,9 +33,9 @@ public final class AnimatableIdCache extends SavedData {
 
     public static SavedData.Factory<AnimatableIdCache> factory() {
         return new SavedData.Factory<>(
-                AnimatableIdCache::new,
-                AnimatableIdCache::new,
-                null
+            AnimatableIdCache::new,
+            AnimatableIdCache::new,
+            null
         );
     }
 

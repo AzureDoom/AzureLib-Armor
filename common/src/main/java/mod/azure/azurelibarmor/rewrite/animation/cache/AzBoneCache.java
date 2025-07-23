@@ -1,14 +1,15 @@
 package mod.azure.azurelibarmor.rewrite.animation.cache;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+
+import java.util.Map;
+import java.util.Objects;
+
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimationContext;
 import mod.azure.azurelibarmor.rewrite.animation.AzCachedBoneUpdateUtil;
 import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.model.AzBoneSnapshot;
-
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * The AzBoneCache class is responsible for managing the state and cache of bones in a baked model. It provides

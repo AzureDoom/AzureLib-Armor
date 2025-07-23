@@ -1,9 +1,9 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command;
 
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
 
 public abstract class AzCommandBuilder {
 

@@ -1,14 +1,15 @@
 package mod.azure.azurelibarmor.rewrite.render.item;
 
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
+
 import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.render.AzLayerRenderer;
 import mod.azure.azurelibarmor.rewrite.render.AzModelRenderer;
 import mod.azure.azurelibarmor.rewrite.render.AzPhasedRenderer;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
 
 /**
  * AzItemModelRenderer is a specialized implementation of {@link AzModelRenderer} for rendering {@link ItemStack}

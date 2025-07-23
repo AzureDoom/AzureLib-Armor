@@ -4,6 +4,14 @@ import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import org.apache.commons.lang3.math.NumberUtils;
+
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
+
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.util.JsonUtil;
 import mod.azure.azurelibarmor.core.keyframe.BoneAnimation;
@@ -23,13 +31,6 @@ import mod.azure.azurelibarmor.rewrite.animation.primitive.AzBakedAnimation;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzBakedAnimations;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzKeyframes;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzLoopType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import org.apache.commons.lang3.math.NumberUtils;
-
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
 
 /**
  * {@link Gson} {@link JsonDeserializer} for {@link AzBakedAnimations}.<br>
@@ -78,7 +79,7 @@ public class AzBakedAnimationsAdapter implements JsonDeserializer<AzBakedAnimati
 
                 if (timestamp == 0 && !list.isEmpty())
                     throw new JsonParseException(
-                            "Invalid keyframe data - multiple starting keyframes?" + entry.getKey()
+                        "Invalid keyframe data - multiple starting keyframes?" + entry.getKey()
                     );
 
                 if (entry.getValue() instanceof JsonObject entryObj && !entryObj.has("vector")) {
@@ -97,9 +98,9 @@ public class AzBakedAnimationsAdapter implements JsonDeserializer<AzBakedAnimati
     }
 
     private static void addBedrockKeyframes(
-            double timestamp,
-            JsonObject keyframe,
-            List<Pair<String, JsonElement>> keyframes
+        double timestamp,
+        JsonObject keyframe,
+        List<Pair<String, JsonElement>> keyframes
     ) {
         boolean addedFrame = false;
 
@@ -108,20 +109,20 @@ public class AzBakedAnimationsAdapter implements JsonDeserializer<AzBakedAnimati
             addedFrame = true;
 
             keyframes.add(
-                    Pair.of(
-                            String.valueOf(timestamp == 0 ? timestamp : timestamp - 0.001d),
-                            pre.isJsonArray()
-                                    ? pre.getAsJsonArray()
-                                    : GsonHelper.getAsJsonArray(pre.getAsJsonObject(), "vector")
-                    )
+                Pair.of(
+                    String.valueOf(timestamp == 0 ? timestamp : timestamp - 0.001d),
+                    pre.isJsonArray()
+                        ? pre.getAsJsonArray()
+                        : GsonHelper.getAsJsonArray(pre.getAsJsonObject(), "vector")
+                )
             );
         }
 
         if (keyframe.has("post")) {
             JsonElement post = keyframe.get("post");
             JsonArray values = post.isJsonArray()
-                    ? post.getAsJsonArray()
-                    : GsonHelper.getAsJsonArray(post.getAsJsonObject(), "vector");
+                ? post.getAsJsonArray()
+                : GsonHelper.getAsJsonArray(post.getAsJsonObject(), "vector");
 
             if (keyframe.has("lerp_mode")) {
                 var keyframeObj = new JsonObject();
@@ -274,15 +275,15 @@ public class AzBakedAnimationsAdapter implements JsonDeserializer<AzBakedAnimati
         for (Map.Entry<String, JsonElement> entry : bonesObj.entrySet()) {
             JsonObject entryObj = entry.getValue().getAsJsonObject();
             AzKeyframeStack<AzKeyframe<IValue>> scaleFrames = buildKeyframeStack(
-                    getKeyframes(entryObj.get("scale")),
+                getKeyframes(entryObj.get("scale")),
                 false
             );
             AzKeyframeStack<AzKeyframe<IValue>> positionFrames = buildKeyframeStack(
-                    getKeyframes(entryObj.get("position")),
+                getKeyframes(entryObj.get("position")),
                 false
             );
             AzKeyframeStack<AzKeyframe<IValue>> rotationFrames = buildKeyframeStack(
-                    getKeyframes(entryObj.get("rotation")),
+                getKeyframes(entryObj.get("rotation")),
                 true
             );
 

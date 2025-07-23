@@ -1,15 +1,16 @@
 package mod.azure.azurelibarmor.rewrite.render.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.azure.azurelibarmor.rewrite.animation.impl.AzItemAnimator;
-import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
-import mod.azure.azurelibarmor.rewrite.render.AzProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import mod.azure.azurelibarmor.rewrite.animation.impl.AzItemAnimator;
+import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
+import mod.azure.azurelibarmor.rewrite.render.AzProvider;
 
 /**
  * AzItemRenderer is an abstract base class for rendering custom animated items in a game framework. It provides

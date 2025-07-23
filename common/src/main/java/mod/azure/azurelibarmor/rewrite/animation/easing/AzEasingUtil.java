@@ -1,6 +1,7 @@
 package mod.azure.azurelibarmor.rewrite.animation.easing;
 
 import it.unimi.dsi.fastutil.doubles.Double2DoubleFunction;
+
 import mod.azure.azurelibarmor.rewrite.animation.controller.keyframe.AzAnimationPoint;
 
 public class AzEasingUtil {
@@ -25,8 +26,8 @@ public class AzEasingUtil {
      */
     public static double catmullRom(double delta, double p0, double p1, double p2, double p3) {
         return 0.5d * (2d * p1 + (p2 - p0) * delta +
-                (2d * p0 - 5d * p1 + 4d * p2 - p3) * delta * delta +
-                (3d * p1 - p0 - 3d * p2 + p3) * delta * delta * delta);
+            (2d * p0 - 5d * p1 + 4d * p2 - p3) * delta * delta +
+            (3d * p1 - p0 - 3d * p2 + p3) * delta * delta * delta);
     }
 
     /**

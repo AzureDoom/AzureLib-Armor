@@ -1,11 +1,15 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.internal.common.animatable;
+
+import net.minecraft.world.entity.Entity;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import mod.azure.azurelibarmor.common.internal.client.RenderProvider;
 import mod.azure.azurelibarmor.common.internal.common.network.SerializableDataTicket;
@@ -18,11 +22,6 @@ import mod.azure.azurelibarmor.core.animatable.instance.AnimatableInstanceCache;
 import mod.azure.azurelibarmor.core.animatable.instance.SingletonAnimatableInstanceCache;
 import mod.azure.azurelibarmor.core.animation.AnimatableManager;
 import mod.azure.azurelibarmor.core.animation.AnimationController;
-import net.minecraft.world.entity.Entity;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 /**
  * The {@link GeoAnimatable} interface specific to singleton objects. This primarily applies to armor and items
@@ -80,8 +79,8 @@ public interface SingletonGeoAnimatable extends GeoAnimatable {
      */
     default <D> void syncAnimData(long instanceId, SerializableDataTicket<D> dataTicket, D data, Entity entityToTrack) {
         Services.NETWORK.sendToTrackingEntityAndSelf(
-                new AnimDataSyncPacket<>(getClass().toString(), instanceId, dataTicket, data),
-                entityToTrack
+            new AnimDataSyncPacket<>(getClass().toString(), instanceId, dataTicket, data),
+            entityToTrack
         );
     }
 
@@ -103,8 +102,8 @@ public interface SingletonGeoAnimatable extends GeoAnimatable {
             getAnimatableInstanceCache().getManagerForId(instanceId).tryTriggerAnimation(controllerName, animName);
         } else {
             Services.NETWORK.sendToTrackingEntityAndSelf(
-                    new AnimTriggerPacket(getClass().toString(), instanceId, controllerName, animName),
-                    relatedEntity
+                new AnimTriggerPacket(getClass().toString(), instanceId, controllerName, animName),
+                relatedEntity
             );
         }
     }
@@ -123,14 +122,14 @@ public interface SingletonGeoAnimatable extends GeoAnimatable {
      * @param packetCallback The packet callback. Used to call a custom network code
      */
     default void triggerAnim(
-            long instanceId,
-            @Nullable String controllerName,
-            String animName,
-            AzureLibNetwork.IPacketCallback packetCallback
+        long instanceId,
+        @Nullable String controllerName,
+        String animName,
+        AzureLibNetwork.IPacketCallback packetCallback
     ) {
         AzureLibNetwork.sendWithCallback(
-                new AnimTriggerPacket(getClass().toString(), instanceId, controllerName, animName),
-                packetCallback
+            new AnimTriggerPacket(getClass().toString(), instanceId, controllerName, animName),
+            packetCallback
         );
     }
 
@@ -150,12 +149,12 @@ public interface SingletonGeoAnimatable extends GeoAnimatable {
      *
      * <pre>
      * {@code
-     * @Override
+     * &#64;Override
      * public void createRenderer(Consumer<RenderProvider> consumer) {
      * 	consumer.accept(new RenderProvider() {
      * 		private final GeoArmorRenderer<?> renderer = new MyArmorRenderer();
      *
-     *        @Override
+     *        &#64;Override
      *        GeoArmorRenderer<?> getRenderer(GeoArmor armor) {
      * 			return this.renderer;
      *        }

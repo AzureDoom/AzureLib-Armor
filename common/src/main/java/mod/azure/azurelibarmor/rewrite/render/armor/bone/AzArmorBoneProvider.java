@@ -1,8 +1,9 @@
 package mod.azure.azurelibarmor.rewrite.render.armor.bone;
 
+import org.jetbrains.annotations.Nullable;
+
 import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
-import org.jetbrains.annotations.Nullable;
 
 public interface AzArmorBoneProvider {
 

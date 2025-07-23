@@ -1,14 +1,5 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.internal.common.network.packet.AzItemStackDispatchCommandPacket;
-import mod.azure.azurelibarmor.common.platform.Services;
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
-import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
-import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehavior;
-import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehaviors;
-import mod.azure.azurelibarmor.rewrite.util.codec.AzListStreamCodec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +9,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.internal.common.network.packet.AzItemStackDispatchCommandPacket;
+import mod.azure.azurelibarmor.common.platform.Services;
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
+import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehavior;
+import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehaviors;
+import mod.azure.azurelibarmor.rewrite.util.codec.AzListStreamCodec;
 
 /**
  * Represents a command structure used to dispatch a sequence of actions in the animation system. This class primarily

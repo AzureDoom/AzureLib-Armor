@@ -1,10 +1,10 @@
 package mod.azure.azurelibarmor.rewrite.animation;
 
+import java.util.Map;
+
 import mod.azure.azurelibarmor.core.utils.Interpolations;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.model.AzBoneSnapshot;
-
-import java.util.Map;
 
 public class AzCachedBoneUpdateUtil {
 

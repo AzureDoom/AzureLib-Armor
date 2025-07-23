@@ -6,12 +6,13 @@
 package mod.azure.azurelibarmor.rewrite.animation.controller.keyframe;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import mod.azure.azurelibarmor.core.math.IValue;
-import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
-import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypes;
 
 import java.util.List;
 import java.util.Objects;
+
+import mod.azure.azurelibarmor.core.math.IValue;
+import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
+import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypes;
 
 /**
  * Animation keyframe data

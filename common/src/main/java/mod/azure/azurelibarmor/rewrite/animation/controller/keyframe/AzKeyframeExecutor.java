@@ -1,5 +1,9 @@
 package mod.azure.azurelibarmor.rewrite.animation.controller.keyframe;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.NoSuchElementException;
+
 import mod.azure.azurelibarmor.core.math.IValue;
 import mod.azure.azurelibarmor.core.molang.MolangParser;
 import mod.azure.azurelibarmor.core.molang.MolangQueries;
@@ -7,9 +11,6 @@ import mod.azure.azurelibarmor.core.object.Axis;
 import mod.azure.azurelibarmor.rewrite.animation.controller.AzAnimationController;
 import mod.azure.azurelibarmor.rewrite.animation.controller.AzBoneAnimationQueueCache;
 import mod.azure.azurelibarmor.rewrite.animation.primitive.AzQueuedAnimation;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.NoSuchElementException;
 
 /**
  * AzKeyframeExecutor is a specialized implementation of {@link AzAbstractKeyframeExecutor}, designed to handle

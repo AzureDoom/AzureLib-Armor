@@ -1,7 +1,8 @@
 package mod.azure.azurelibarmor.rewrite.model;
 
-import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Bone;
 import org.jetbrains.annotations.Nullable;
+
+import mod.azure.azurelibarmor.common.internal.common.loading.json.raw.Bone;
 
 /**
  * AzBoneMetadata is a record class representing metadata about a 3D model bone. This metadata provides information such

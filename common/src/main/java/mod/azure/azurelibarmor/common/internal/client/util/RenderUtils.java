@@ -6,14 +6,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import it.unimi.dsi.fastutil.ints.IntIntPair;
-import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
-import mod.azure.azurelibarmor.common.api.client.renderer.GeoArmorRenderer;
-import mod.azure.azurelibarmor.common.internal.client.RenderProvider;
-import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoCube;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
-import mod.azure.azurelibarmor.core.animatable.model.CoreGeoBone;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -32,6 +24,15 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+
+import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
+import mod.azure.azurelibarmor.common.api.client.renderer.GeoArmorRenderer;
+import mod.azure.azurelibarmor.common.internal.client.RenderProvider;
+import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoCube;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
+import mod.azure.azurelibarmor.core.animatable.model.CoreGeoBone;
 
 /**
  * Helper class for various methods and functions useful while rendering
@@ -143,8 +144,8 @@ public record RenderUtils() {
 
         try {
             image = originalTexture instanceof DynamicTexture dynamicTexture
-                    ? dynamicTexture.getPixels()
-                    : NativeImage.read(mc.getResourceManager().getResource(texture).get().open());
+                ? dynamicTexture.getPixels()
+                : NativeImage.read(mc.getResourceManager().getResource(texture).get().open());
         } catch (Exception e) {
             AzureLib.LOGGER.error("Failed to read image for id {}", texture);
             e.printStackTrace();
@@ -222,8 +223,8 @@ public record RenderUtils() {
 
     /**
      * Gets a {@link GeoModel} instance from a given {@link EntityType}.<br>
-     * This only works if you're calling this method for an EntityType known to be using a {@link GeoRenderer azurelibarmor
-     * Renderer}.<br>
+     * This only works if you're calling this method for an EntityType known to be using a {@link GeoRenderer
+     * azurelibarmor Renderer}.<br>
      * Generally speaking you probably shouldn't be calling this method at all.
      *
      * @param entityType The {@code EntityType} to retrieve the GeoModel for
@@ -274,8 +275,8 @@ public record RenderUtils() {
 
     /**
      * Gets a {@link GeoModel} instance from a given {@link BlockEntity}.<br>
-     * This only works if you're calling this method for a BlockEntity known to be using a {@link GeoRenderer azurelibarmor
-     * Renderer}.<br>
+     * This only works if you're calling this method for a BlockEntity known to be using a {@link GeoRenderer
+     * azurelibarmor Renderer}.<br>
      * Generally speaking you probably shouldn't be calling this method at all.
      *
      * @param blockEntity The {@code BlockEntity} to retrieve the GeoModel for
@@ -285,8 +286,8 @@ public record RenderUtils() {
     @Deprecated(forRemoval = true)
     public static GeoModel<?> getGeoModelForBlock(BlockEntity blockEntity) {
         BlockEntityRenderer<?> renderer = Minecraft.getInstance()
-                .getBlockEntityRenderDispatcher()
-                .getRenderer(blockEntity);
+            .getBlockEntityRenderDispatcher()
+            .getRenderer(blockEntity);
 
         return renderer instanceof GeoRenderer<?> geoRenderer ? geoRenderer.getGeoModel() : null;
     }
@@ -304,8 +305,8 @@ public record RenderUtils() {
     @Deprecated(forRemoval = true)
     public static GeoModel<?> getGeoModelForArmor(ItemStack stack) {
         if (
-                RenderProvider.of(stack)
-                        .getHumanoidArmorModel(null, stack, null, null) instanceof GeoArmorRenderer<?> armorRenderer
+            RenderProvider.of(stack)
+                .getHumanoidArmorModel(null, stack, null, null) instanceof GeoArmorRenderer<?> armorRenderer
         )
             return armorRenderer.getGeoModel();
 

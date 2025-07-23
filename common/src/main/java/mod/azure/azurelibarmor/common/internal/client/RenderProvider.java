@@ -1,7 +1,5 @@
 package mod.azure.azurelibarmor.common.internal.client;
 
-import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
-import mod.azure.azurelibarmor.common.internal.mixins.ItemRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
@@ -11,6 +9,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
+import mod.azure.azurelibarmor.common.internal.mixins.ItemRendererAccessor;
+
 /**
  * Internal interface for safely providing a custom renderer instances at runtime.<br>
  * This can be safely instantiated as a new anonymous class inside your {@link Item} class
@@ -18,8 +19,7 @@ import net.minecraft.world.item.ItemStack;
 @Deprecated(forRemoval = true)
 public interface RenderProvider {
 
-    RenderProvider DEFAULT = new RenderProvider() {
-    };
+    RenderProvider DEFAULT = new RenderProvider() {};
 
     static RenderProvider of(ItemStack itemStack) {
         return of(itemStack.getItem());
@@ -38,16 +38,16 @@ public interface RenderProvider {
     }
 
     default Model getGenericArmorModel(
-            LivingEntity livingEntity,
-            ItemStack itemStack,
-            EquipmentSlot equipmentSlot,
-            HumanoidModel<LivingEntity> original
+        LivingEntity livingEntity,
+        ItemStack itemStack,
+        EquipmentSlot equipmentSlot,
+        HumanoidModel<LivingEntity> original
     ) {
         HumanoidModel<LivingEntity> replacement = getHumanoidArmorModel(
-                livingEntity,
-                itemStack,
-                equipmentSlot,
-                original
+            livingEntity,
+            itemStack,
+            equipmentSlot,
+            original
         );
 
         if (replacement != original) {
@@ -59,10 +59,10 @@ public interface RenderProvider {
     }
 
     default HumanoidModel<LivingEntity> getHumanoidArmorModel(
-            LivingEntity livingEntity,
-            ItemStack itemStack,
-            EquipmentSlot equipmentSlot,
-            HumanoidModel<LivingEntity> original
+        LivingEntity livingEntity,
+        ItemStack itemStack,
+        EquipmentSlot equipmentSlot,
+        HumanoidModel<LivingEntity> original
     ) {
         return original;
     }

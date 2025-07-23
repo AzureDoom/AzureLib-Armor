@@ -1,8 +1,8 @@
 package mod.azure.azurelibarmor.core.animatable.model;
 
-import mod.azure.azurelibarmor.core.state.BoneSnapshot;
-
 import java.util.List;
+
+import mod.azure.azurelibarmor.core.state.BoneSnapshot;
 
 /**
  * Base class for azurelibarmor {@link CoreGeoModel model} bones.<br>

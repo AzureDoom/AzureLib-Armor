@@ -23,26 +23,26 @@ public record CommonUtils() {
      * @param effectTime How long the effect should be applied for?
      */
     public static void summonAoE(
-            LivingEntity entity,
-            ParticleOptions particle,
-            int yOffset,
-            int duration,
-            float radius,
-            boolean hasEffect,
-            @Nullable Holder<MobEffect> effect,
-            int effectTime
+        LivingEntity entity,
+        ParticleOptions particle,
+        int yOffset,
+        int duration,
+        float radius,
+        boolean hasEffect,
+        @Nullable Holder<MobEffect> effect,
+        int effectTime
     ) {
         var areaEffectCloudEntity = new AreaEffectCloud(
-                entity.level(),
-                entity.getX(),
-                entity.getY() + yOffset,
-                entity.getZ()
+            entity.level(),
+            entity.getX(),
+            entity.getY() + yOffset,
+            entity.getZ()
         );
         areaEffectCloudEntity.setRadius(radius);
         areaEffectCloudEntity.setDuration(duration);
         areaEffectCloudEntity.setParticle(particle);
         areaEffectCloudEntity.setRadiusPerTick(
-                -areaEffectCloudEntity.getRadius() / areaEffectCloudEntity.getDuration()
+            -areaEffectCloudEntity.getRadius() / areaEffectCloudEntity.getDuration()
         );
         if (hasEffect && effect != null && !entity.hasEffect(effect))
             areaEffectCloudEntity.addEffect(new MobEffectInstance(effect, effectTime, 0));

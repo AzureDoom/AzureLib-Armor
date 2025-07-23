@@ -1,8 +1,6 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.core.animation;
@@ -10,13 +8,14 @@ package mod.azure.azurelibarmor.core.animation;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import it.unimi.dsi.fastutil.doubles.Double2DoubleFunction;
-import mod.azure.azurelibarmor.core.keyframe.AnimationPoint;
-import mod.azure.azurelibarmor.core.keyframe.Keyframe;
-import mod.azure.azurelibarmor.core.utils.Interpolations;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import mod.azure.azurelibarmor.core.keyframe.AnimationPoint;
+import mod.azure.azurelibarmor.core.keyframe.Keyframe;
+import mod.azure.azurelibarmor.core.utils.Interpolations;
 
 /**
  * Functional interface defining an easing function.<br>
@@ -109,7 +108,8 @@ public interface EasingType {
     /**
      * Register an {@code EasingType} with azurelibarmor for handling animation transitions and value curves.<br>
      * <b><u>MUST be called during mod construct</u></b><br>
-     * It is recommended you don't call this directly, and instead call it via {@code azurelibarmorUtil#addCustomEasingType}
+     * It is recommended you don't call this directly, and instead call it via
+     * {@code azurelibarmorUtil#addCustomEasingType}
      *
      * @param name       The name of the easing type
      * @param easingType The {@code EasingType} to associate with the given name
@@ -158,8 +158,8 @@ public interface EasingType {
      */
     static double catmullRom(double n) {
         return (0.5f * (2.0f * (n + 1) + ((n + 2) - n) * 1
-                + (2.0f * n - 5.0f * (n + 1) + 4.0f * (n + 2) - (n + 3)) * 1
-                + (3.0f * (n + 1) - n - 3.0f * (n + 2) + (n + 3)) * 1));
+            + (2.0f * n - 5.0f * (n + 1) + 4.0f * (n + 2) - (n + 3)) * 1
+            + (3.0f * (n + 1) - n - 3.0f * (n + 2) + (n + 3)) * 1));
     }
 
     /**
@@ -393,9 +393,9 @@ public interface EasingType {
             return (float) animationPoint.animationEndValue();
 
         return Interpolations.lerp(
-                animationPoint.animationStartValue(),
-                animationPoint.animationEndValue(),
-                buildTransformer(easingValue).apply(lerpValue)
+            animationPoint.animationStartValue(),
+            animationPoint.animationEndValue(),
+            buildTransformer(easingValue).apply(lerpValue)
         );
     }
 }

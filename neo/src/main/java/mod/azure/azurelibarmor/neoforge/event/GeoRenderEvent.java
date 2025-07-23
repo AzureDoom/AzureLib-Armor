@@ -1,12 +1,6 @@
 package mod.azure.azurelibarmor.neoforge.event;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.azure.azurelibarmor.common.api.client.renderer.GeoArmorRenderer;
-import mod.azure.azurelibarmor.common.api.client.renderer.GeoItemRenderer;
-import mod.azure.azurelibarmor.common.api.client.renderer.layer.GeoRenderLayer;
-import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
-import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -14,8 +8,16 @@ import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
 import org.jetbrains.annotations.Nullable;
 
+import mod.azure.azurelibarmor.common.api.client.renderer.GeoArmorRenderer;
+import mod.azure.azurelibarmor.common.api.client.renderer.GeoItemRenderer;
+import mod.azure.azurelibarmor.common.api.client.renderer.layer.GeoRenderLayer;
+import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
+import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
+
 @Deprecated(forRemoval = true)
 public interface GeoRenderEvent {
+
     /**
      * Returns the renderer for this event
      *
@@ -28,6 +30,7 @@ public interface GeoRenderEvent {
      * Renderer events for armor pieces being rendered by {@link GeoArmorRenderer}
      */
     abstract class Armor extends Event implements GeoRenderEvent {
+
         private final GeoArmorRenderer<?> renderer;
 
         public Armor(GeoArmorRenderer<?> renderer) {
@@ -72,16 +75,29 @@ public interface GeoRenderEvent {
          * This event is called before rendering, but after {@link GeoRenderer#preRender}
          * <p>
          * This event is Cancelable<br>
-         * If the event is cancelled, the armor piece will not be rendered and the corresponding {@link Post} event will not be fired.
+         * If the event is cancelled, the armor piece will not be rendered and the corresponding {@link Post} event will
+         * not be fired.
          */
         public static class Pre extends Armor implements ICancellableEvent {
+
             private final PoseStack poseStack;
+
             private final BakedGeoModel model;
+
             private final MultiBufferSource bufferSource;
+
             private final float partialTick;
+
             private final int packedLight;
 
-            public Pre(GeoArmorRenderer<?> renderer, PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
+            public Pre(
+                GeoArmorRenderer<?> renderer,
+                PoseStack poseStack,
+                BakedGeoModel model,
+                MultiBufferSource bufferSource,
+                float partialTick,
+                int packedLight
+            ) {
                 super(renderer);
 
                 this.poseStack = poseStack;
@@ -117,13 +133,25 @@ public interface GeoRenderEvent {
          * This event is called after {@link GeoRenderer#postRender}
          */
         public static class Post extends Armor {
+
             private final PoseStack poseStack;
+
             private final BakedGeoModel model;
+
             private final MultiBufferSource bufferSource;
+
             private final float partialTick;
+
             private final int packedLight;
 
-            public Post(GeoArmorRenderer<?> renderer, PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
+            public Post(
+                GeoArmorRenderer<?> renderer,
+                PoseStack poseStack,
+                BakedGeoModel model,
+                MultiBufferSource bufferSource,
+                float partialTick,
+                int packedLight
+            ) {
                 super(renderer);
 
                 this.poseStack = poseStack;
@@ -160,6 +188,7 @@ public interface GeoRenderEvent {
          * Use this event to add render layers to the renderer as needed
          */
         public static class CompileRenderLayers extends Armor {
+
             public CompileRenderLayers(GeoArmorRenderer<?> renderer) {
                 super(renderer);
             }
@@ -167,7 +196,8 @@ public interface GeoRenderEvent {
             /**
              * Adds a {@link GeoRenderLayer} to the renderer
              * <p>
-             * Type-safety is not checked here, so ensure that your layer is compatible with this animatable and renderer
+             * Type-safety is not checked here, so ensure that your layer is compatible with this animatable and
+             * renderer
              */
             public void addLayer(GeoRenderLayer renderLayer) {
                 getRenderer().addRenderLayer(renderLayer);
@@ -179,6 +209,7 @@ public interface GeoRenderEvent {
      * Renderer events for {@link ItemStack Items} being rendered by {@link GeoItemRenderer}
      */
     abstract class Item extends Event implements GeoRenderEvent {
+
         private final GeoItemRenderer<?> renderer;
 
         public Item(GeoItemRenderer<?> renderer) {
@@ -206,16 +237,29 @@ public interface GeoRenderEvent {
          * This event is called before rendering, but after {@link GeoRenderer#preRender}
          * <p>
          * This event is Cancelable<br>
-         * If the event is cancelled, the ItemStack will not be rendered and the corresponding {@link Post} event will not be fired.
+         * If the event is cancelled, the ItemStack will not be rendered and the corresponding {@link Post} event will
+         * not be fired.
          */
         public static class Pre extends Item implements ICancellableEvent {
+
             private final PoseStack poseStack;
+
             private final BakedGeoModel model;
+
             private final MultiBufferSource bufferSource;
+
             private final float partialTick;
+
             private final int packedLight;
 
-            public Pre(GeoItemRenderer<?> renderer, PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
+            public Pre(
+                GeoItemRenderer<?> renderer,
+                PoseStack poseStack,
+                BakedGeoModel model,
+                MultiBufferSource bufferSource,
+                float partialTick,
+                int packedLight
+            ) {
                 super(renderer);
 
                 this.poseStack = poseStack;
@@ -252,13 +296,25 @@ public interface GeoRenderEvent {
          * This event is called after {@link GeoRenderer#postRender}
          */
         public static class Post extends Item {
+
             private final PoseStack poseStack;
+
             private final BakedGeoModel model;
+
             private final MultiBufferSource bufferSource;
+
             private final float partialTick;
+
             private final int packedLight;
 
-            public Post(GeoItemRenderer<?> renderer, PoseStack poseStack, BakedGeoModel model, MultiBufferSource bufferSource, float partialTick, int packedLight) {
+            public Post(
+                GeoItemRenderer<?> renderer,
+                PoseStack poseStack,
+                BakedGeoModel model,
+                MultiBufferSource bufferSource,
+                float partialTick,
+                int packedLight
+            ) {
                 super(renderer);
 
                 this.poseStack = poseStack;
@@ -295,6 +351,7 @@ public interface GeoRenderEvent {
          * Use this event to add render layers to the renderer as needed
          */
         public static class CompileRenderLayers extends Item {
+
             public CompileRenderLayers(GeoItemRenderer<?> renderer) {
                 super(renderer);
             }
@@ -302,7 +359,8 @@ public interface GeoRenderEvent {
             /**
              * Adds a {@link GeoRenderLayer} to the renderer
              * <p>
-             * Type-safety is not checked here, so ensure that your layer is compatible with this animatable and renderer
+             * Type-safety is not checked here, so ensure that your layer is compatible with this animatable and
+             * renderer
              */
             public void addLayer(GeoRenderLayer renderLayer) {
                 getRenderer().addRenderLayer(renderLayer);

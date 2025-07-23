@@ -1,9 +1,5 @@
 package mod.azure.azurelibarmor.rewrite.render.item;
 
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
-import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -12,6 +8,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
+import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
 
 /**
  * Configuration class for rendering items using customized settings in an animation framework. Extends
@@ -25,30 +26,30 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
     private final boolean useNewOffset;
 
     private AzItemRendererConfig(
-            Supplier<AzAnimator<ItemStack>> animatorProvider,
-            Function<ItemStack, ResourceLocation> modelLocationProvider,
-            Function<ItemStack, RenderType> renderTypeProvider,
-            List<AzRenderLayer<ItemStack>> renderLayers,
-            Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry,
-            Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> postRenderEntry,
-            Function<ItemStack, ResourceLocation> textureLocationProvider,
-            Function<ItemStack, Float> alphaFunction,
-            Function<ItemStack, Float> scaleHeight,
-            Function<ItemStack, Float> scaleWidth,
-            boolean useEntityGuiLighting,
-            boolean useNewOffset
+        Supplier<AzAnimator<ItemStack>> animatorProvider,
+        Function<ItemStack, ResourceLocation> modelLocationProvider,
+        Function<ItemStack, RenderType> renderTypeProvider,
+        List<AzRenderLayer<ItemStack>> renderLayers,
+        Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry,
+        Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> postRenderEntry,
+        Function<ItemStack, ResourceLocation> textureLocationProvider,
+        Function<ItemStack, Float> alphaFunction,
+        Function<ItemStack, Float> scaleHeight,
+        Function<ItemStack, Float> scaleWidth,
+        boolean useEntityGuiLighting,
+        boolean useNewOffset
     ) {
         super(
-                animatorProvider,
-                modelLocationProvider,
-                renderTypeProvider,
-                renderLayers,
-                preRenderEntry,
-                postRenderEntry,
-                textureLocationProvider,
-                alphaFunction,
-                scaleHeight,
-                scaleWidth
+            animatorProvider,
+            modelLocationProvider,
+            renderTypeProvider,
+            renderLayers,
+            preRenderEntry,
+            postRenderEntry,
+            textureLocationProvider,
+            alphaFunction,
+            scaleHeight,
+            scaleWidth
         );
         this.useEntityGuiLighting = useEntityGuiLighting;
         this.useNewOffset = useNewOffset;
@@ -63,15 +64,15 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
     }
 
     public static Builder builder(
-            ResourceLocation modelLocation,
-            ResourceLocation textureLocation
+        ResourceLocation modelLocation,
+        ResourceLocation textureLocation
     ) {
         return new Builder($ -> modelLocation, $ -> textureLocation);
     }
 
     public static Builder builder(
-            Function<ItemStack, ResourceLocation> modelLocationProvider,
-            Function<ItemStack, ResourceLocation> textureLocationProvider
+        Function<ItemStack, ResourceLocation> modelLocationProvider,
+        Function<ItemStack, ResourceLocation> textureLocationProvider
     ) {
         return new Builder(modelLocationProvider, textureLocationProvider);
     }
@@ -83,8 +84,8 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
         private boolean useNewOffset;
 
         protected Builder(
-                Function<ItemStack, ResourceLocation> modelLocationProvider,
-                Function<ItemStack, ResourceLocation> textureLocationProvider
+            Function<ItemStack, ResourceLocation> modelLocationProvider,
+            Function<ItemStack, ResourceLocation> textureLocationProvider
         ) {
             super(modelLocationProvider, textureLocationProvider);
             this.renderTypeProvider = $ -> RenderType.itemEntityTranslucentCull(textureLocationProvider.apply($));
@@ -109,14 +110,14 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
 
         @Override
         public Builder setPrerenderEntry(
-                Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
+            Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
         ) {
             return (Builder) super.setPrerenderEntry(preRenderEntry);
         }
 
         @Override
         public Builder setPostRenderEntry(
-                Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
+            Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
         ) {
             return (Builder) super.setPostRenderEntry(preRenderEntry);
         }
@@ -156,7 +157,10 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
         }
 
         @Override
-        public Builder setScale(Function<ItemStack, Float> scaleHeightFunction, Function<ItemStack, Float> scaleWidthFunction) {
+        public Builder setScale(
+            Function<ItemStack, Float> scaleHeightFunction,
+            Function<ItemStack, Float> scaleWidthFunction
+        ) {
             return (AzItemRendererConfig.Builder) super.setScale(scaleHeightFunction, scaleWidthFunction);
         }
 
@@ -175,18 +179,18 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
             var baseConfig = super.build();
 
             return new AzItemRendererConfig(
-                    baseConfig::createAnimator,
-                    baseConfig::modelLocation,
-                    baseConfig::getRenderType,
-                    baseConfig.renderLayers(),
-                    baseConfig::preRenderEntry,
-                    baseConfig::postRenderEntry,
-                    baseConfig::textureLocation,
-                    baseConfig::alpha,
-                    baseConfig::scaleHeight,
-                    baseConfig::scaleWidth,
-                    useEntityGuiLighting,
-                    useNewOffset
+                baseConfig::createAnimator,
+                baseConfig::modelLocation,
+                baseConfig::getRenderType,
+                baseConfig.renderLayers(),
+                baseConfig::preRenderEntry,
+                baseConfig::postRenderEntry,
+                baseConfig::textureLocation,
+                baseConfig::alpha,
+                baseConfig::scaleHeight,
+                baseConfig::scaleWidth,
+                useEntityGuiLighting,
+                useNewOffset
             );
         }
     }

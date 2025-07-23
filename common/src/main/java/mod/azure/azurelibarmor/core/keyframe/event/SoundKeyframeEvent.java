@@ -1,8 +1,6 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 /*
@@ -30,10 +28,10 @@ public class SoundKeyframeEvent<T extends GeoAnimatable> extends KeyFrameEvent<T
      * @param controller    the controller
      */
     public SoundKeyframeEvent(
-            T entity,
-            double animationTick,
-            AnimationController<T> controller,
-            SoundKeyframeData keyFrameData
+        T entity,
+        double animationTick,
+        AnimationController<T> controller,
+        SoundKeyframeData keyFrameData
     ) {
         super(entity, animationTick, controller, keyFrameData);
     }

@@ -1,13 +1,14 @@
 package mod.azure.azurelibarmor.rewrite.animation.property.codec;
 
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.NotNull;
+
 import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypeRegistry;
 import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypes;
 import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehaviorRegistry;
 import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehaviors;
 import mod.azure.azurelibarmor.rewrite.animation.property.AzAnimationStageProperties;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import org.jetbrains.annotations.NotNull;
 
 public class AzAnimationStagePropertiesCodec implements StreamCodec<FriendlyByteBuf, AzAnimationStageProperties> {
 

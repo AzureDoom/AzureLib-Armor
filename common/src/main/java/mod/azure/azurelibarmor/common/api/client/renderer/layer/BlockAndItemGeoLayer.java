@@ -1,18 +1,12 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.api.client.renderer.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
-import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoBone;
-import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -24,6 +18,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.BiFunction;
+
+import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
+import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoBone;
+import mod.azure.azurelibarmor.core.animatable.GeoAnimatable;
 
 /**
  * {@link GeoRenderLayer} for rendering {@link net.minecraft.world.level.block.state.BlockState BlockStates} or
@@ -41,9 +40,9 @@ public class BlockAndItemGeoLayer<T extends GeoAnimatable> extends GeoRenderLaye
     }
 
     public BlockAndItemGeoLayer(
-            GeoRenderer<T> renderer,
-            BiFunction<GeoBone, T, ItemStack> stackForBone,
-            BiFunction<GeoBone, T, BlockState> blockForBone
+        GeoRenderer<T> renderer,
+        BiFunction<GeoBone, T, ItemStack> stackForBone,
+        BiFunction<GeoBone, T, BlockState> blockForBone
     ) {
         super(renderer);
 
@@ -88,15 +87,15 @@ public class BlockAndItemGeoLayer<T extends GeoAnimatable> extends GeoRenderLaye
      */
     @Override
     public void renderForBone(
-            PoseStack poseStack,
-            T animatable,
-            GeoBone bone,
-            RenderType renderType,
-            MultiBufferSource bufferSource,
-            VertexConsumer buffer,
-            float partialTick,
-            int packedLight,
-            int packedOverlay
+        PoseStack poseStack,
+        T animatable,
+        GeoBone bone,
+        RenderType renderType,
+        MultiBufferSource bufferSource,
+        VertexConsumer buffer,
+        float partialTick,
+        int packedLight,
+        int packedOverlay
     ) {
         ItemStack stack = getStackForBone(bone, animatable);
         BlockState blockState = getBlockForBone(bone, animatable);
@@ -109,26 +108,26 @@ public class BlockAndItemGeoLayer<T extends GeoAnimatable> extends GeoRenderLaye
 
         if (stack != null)
             renderStackForBone(
-                    poseStack,
-                    bone,
-                    stack,
-                    animatable,
-                    bufferSource,
-                    partialTick,
-                    packedLight,
-                    packedOverlay
+                poseStack,
+                bone,
+                stack,
+                animatable,
+                bufferSource,
+                partialTick,
+                packedLight,
+                packedOverlay
             );
 
         if (blockState != null)
             renderBlockForBone(
-                    poseStack,
-                    bone,
-                    blockState,
-                    animatable,
-                    bufferSource,
-                    partialTick,
-                    packedLight,
-                    packedOverlay
+                poseStack,
+                bone,
+                blockState,
+                animatable,
+                bufferSource,
+                partialTick,
+                packedLight,
+                packedOverlay
             );
 
         poseStack.popPose();
@@ -138,43 +137,43 @@ public class BlockAndItemGeoLayer<T extends GeoAnimatable> extends GeoRenderLaye
      * Render the given {@link ItemStack} for the provided {@link GeoBone}.
      */
     protected void renderStackForBone(
-            PoseStack poseStack,
-            GeoBone bone,
-            ItemStack stack,
-            T animatable,
-            MultiBufferSource bufferSource,
-            float partialTick,
-            int packedLight,
-            int packedOverlay
+        PoseStack poseStack,
+        GeoBone bone,
+        ItemStack stack,
+        T animatable,
+        MultiBufferSource bufferSource,
+        float partialTick,
+        int packedLight,
+        int packedOverlay
     ) {
         if (animatable instanceof LivingEntity livingEntity) {
             Minecraft.getInstance()
-                    .getItemRenderer()
-                    .renderStatic(
-                            livingEntity,
-                            stack,
-                            getTransformTypeForStack(bone, stack, animatable),
-                            false,
-                            poseStack,
-                            bufferSource,
-                            livingEntity.level(),
-                            packedLight,
-                            packedOverlay,
-                            livingEntity.getId()
-                    );
+                .getItemRenderer()
+                .renderStatic(
+                    livingEntity,
+                    stack,
+                    getTransformTypeForStack(bone, stack, animatable),
+                    false,
+                    poseStack,
+                    bufferSource,
+                    livingEntity.level(),
+                    packedLight,
+                    packedOverlay,
+                    livingEntity.getId()
+                );
         } else {
             Minecraft.getInstance()
-                    .getItemRenderer()
-                    .renderStatic(
-                            stack,
-                            getTransformTypeForStack(bone, stack, animatable),
-                            packedLight,
-                            packedOverlay,
-                            poseStack,
-                            bufferSource,
-                            Minecraft.getInstance().level,
-                            (int) this.renderer.getInstanceId(animatable)
-                    );
+                .getItemRenderer()
+                .renderStatic(
+                    stack,
+                    getTransformTypeForStack(bone, stack, animatable),
+                    packedLight,
+                    packedOverlay,
+                    poseStack,
+                    bufferSource,
+                    Minecraft.getInstance().level,
+                    (int) this.renderer.getInstanceId(animatable)
+                );
         }
     }
 
@@ -182,21 +181,21 @@ public class BlockAndItemGeoLayer<T extends GeoAnimatable> extends GeoRenderLaye
      * Render the given {@link BlockState} for the provided {@link GeoBone}.
      */
     protected void renderBlockForBone(
-            PoseStack poseStack,
-            GeoBone bone,
-            BlockState state,
-            T animatable,
-            MultiBufferSource bufferSource,
-            float partialTick,
-            int packedLight,
-            int packedOverlay
+        PoseStack poseStack,
+        GeoBone bone,
+        BlockState state,
+        T animatable,
+        MultiBufferSource bufferSource,
+        float partialTick,
+        int packedLight,
+        int packedOverlay
     ) {
         poseStack.pushPose();
         poseStack.translate(-0.25f, -0.25f, -0.25f);
         poseStack.scale(0.5f, 0.5f, 0.5f);
         Minecraft.getInstance()
-                .getBlockRenderer()
-                .renderSingleBlock(state, poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+            .getBlockRenderer()
+            .renderSingleBlock(state, poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
         poseStack.popPose();
     }
 }

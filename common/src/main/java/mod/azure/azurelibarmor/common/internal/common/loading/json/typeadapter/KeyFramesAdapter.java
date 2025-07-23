@@ -1,23 +1,22 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.internal.common.loading.json.typeadapter;
 
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.util.GsonHelper;
+
+import java.lang.reflect.Type;
+import java.util.Map;
+
 import mod.azure.azurelibarmor.common.internal.common.util.JsonUtil;
 import mod.azure.azurelibarmor.core.animation.Animation;
 import mod.azure.azurelibarmor.core.keyframe.event.data.CustomInstructionKeyframeData;
 import mod.azure.azurelibarmor.core.keyframe.event.data.ParticleKeyframeData;
 import mod.azure.azurelibarmor.core.keyframe.event.data.SoundKeyframeData;
-import net.minecraft.util.GsonHelper;
-
-import java.lang.reflect.Type;
-import java.util.Map;
 
 /**
  * {@link Gson} {@link JsonDeserializer} for {@link Animation.Keyframes}.<br>
@@ -33,8 +32,8 @@ public class KeyFramesAdapter implements JsonDeserializer<Animation.Keyframes> {
 
         for (Map.Entry<String, JsonElement> entry : soundsObj.entrySet()) {
             sounds[index] = new SoundKeyframeData(
-                    Double.parseDouble(entry.getKey()) * 20d,
-                    GsonHelper.getAsString(entry.getValue().getAsJsonObject(), "effect")
+                Double.parseDouble(entry.getKey()) * 20d,
+                GsonHelper.getAsString(entry.getValue().getAsJsonObject(), "effect")
             );
             index++;
         }
@@ -54,10 +53,10 @@ public class KeyFramesAdapter implements JsonDeserializer<Animation.Keyframes> {
             String script = GsonHelper.getAsString(obj, "pre_effect_script", "");
 
             particles[index] = new ParticleKeyframeData(
-                    Double.parseDouble(entry.getKey()) * 20d,
-                    effect,
-                    locator,
-                    script
+                Double.parseDouble(entry.getKey()) * 20d,
+                effect,
+                locator,
+                script
             );
             index++;
         }
@@ -68,7 +67,7 @@ public class KeyFramesAdapter implements JsonDeserializer<Animation.Keyframes> {
     private static CustomInstructionKeyframeData[] buildCustomFrameData(JsonObject rootObj) {
         JsonObject customInstructionsObj = GsonHelper.getAsJsonObject(rootObj, "timeline", new JsonObject());
         CustomInstructionKeyframeData[] customInstructions = new CustomInstructionKeyframeData[customInstructionsObj
-                .size()];
+            .size()];
         int index = 0;
 
         for (Map.Entry<String, JsonElement> entry : customInstructionsObj.entrySet()) {
@@ -81,8 +80,8 @@ public class KeyFramesAdapter implements JsonDeserializer<Animation.Keyframes> {
             }
 
             customInstructions[index] = new CustomInstructionKeyframeData(
-                    Double.parseDouble(entry.getKey()) * 20d,
-                    instructions
+                Double.parseDouble(entry.getKey()) * 20d,
+                instructions
             );
             index++;
         }
@@ -92,9 +91,9 @@ public class KeyFramesAdapter implements JsonDeserializer<Animation.Keyframes> {
 
     @Override
     public Animation.Keyframes deserialize(
-            JsonElement json,
-            Type type,
-            JsonDeserializationContext context
+        JsonElement json,
+        Type type,
+        JsonDeserializationContext context
     ) throws JsonParseException {
         JsonObject obj = json.getAsJsonObject();
         SoundKeyframeData[] sounds = buildSoundFrameData(obj);

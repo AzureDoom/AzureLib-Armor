@@ -2,8 +2,6 @@ package mod.azure.azurelibarmor.rewrite.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.azure.azurelibarmor.core.object.Color;
-import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -12,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+
+import mod.azure.azurelibarmor.core.object.Color;
+import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
 
 /**
  * An abstract base class representing the rendering context for a custom rendering pipeline. This class provides

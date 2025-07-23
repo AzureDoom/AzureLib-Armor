@@ -1,8 +1,6 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 package mod.azure.azurelibarmor.common.api.client.renderer;
@@ -10,11 +8,6 @@ package mod.azure.azurelibarmor.common.api.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
-import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
-import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoBone;
-import mod.azure.azurelibarmor.core.object.Color;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +16,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Set;
 
+import mod.azure.azurelibarmor.common.api.client.model.GeoModel;
+import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.BakedGeoModel;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoBone;
+import mod.azure.azurelibarmor.core.object.Color;
+
 /**
  * A dyeable armour renderer for azurelibarmor armor models.
  */
@@ -30,6 +29,7 @@ import java.util.Set;
 public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends GeoArmorRenderer<T> {
 
     protected final Set<GeoBone> dyeableBones = new ObjectArraySet<>();
+
     protected BakedGeoModel lastModel = null;
 
     protected DyeableGeoArmorRenderer(GeoModel<T> model) {
@@ -38,34 +38,34 @@ public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends 
 
     @Override
     public void preRender(
-            PoseStack poseStack,
-            T animatable,
-            BakedGeoModel model,
-            @Nullable MultiBufferSource bufferSource,
-            @Nullable VertexConsumer buffer,
-            boolean isReRender,
-            float partialTick,
-            int packedLight,
-            int packedOverlay,
-            float red,
-            float green,
-            float blue,
-            float alpha
+        PoseStack poseStack,
+        T animatable,
+        BakedGeoModel model,
+        @Nullable MultiBufferSource bufferSource,
+        @Nullable VertexConsumer buffer,
+        boolean isReRender,
+        float partialTick,
+        int packedLight,
+        int packedOverlay,
+        float red,
+        float green,
+        float blue,
+        float alpha
     ) {
         super.preRender(
-                poseStack,
-                animatable,
-                model,
-                bufferSource,
-                buffer,
-                isReRender,
-                partialTick,
-                packedLight,
-                packedOverlay,
-                red,
-                green,
-                blue,
-                alpha
+            poseStack,
+            animatable,
+            model,
+            bufferSource,
+            buffer,
+            isReRender,
+            partialTick,
+            packedLight,
+            packedOverlay,
+            red,
+            green,
+            blue,
+            alpha
         );
 
         if (!isReRender)
@@ -74,15 +74,15 @@ public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends 
 
     @Override
     public void renderCubesOfBone(
-            PoseStack poseStack,
-            GeoBone bone,
-            VertexConsumer buffer,
-            int packedLight,
-            int packedOverlay,
-            float red,
-            float green,
-            float blue,
-            float alpha
+        PoseStack poseStack,
+        GeoBone bone,
+        VertexConsumer buffer,
+        int packedLight,
+        int packedOverlay,
+        float red,
+        float green,
+        float blue,
+        float alpha
     ) {
         if (this.dyeableBones.contains(bone)) {
             final Color color = getColorForBone(bone);
@@ -92,10 +92,17 @@ public abstract class DyeableGeoArmorRenderer<T extends Item & GeoItem> extends 
             blue *= color.getBlueFloat();
             alpha *= color.getAlphaFloat();
         }
-        super.renderCubesOfBone(poseStack, bone, buffer, packedLight, packedOverlay, red,
-                green,
-                blue,
-                alpha);
+        super.renderCubesOfBone(
+            poseStack,
+            bone,
+            buffer,
+            packedLight,
+            packedOverlay,
+            red,
+            green,
+            blue,
+            alpha
+        );
     }
 
     /**

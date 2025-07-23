@@ -1,8 +1,8 @@
 package mod.azure.azurelibarmor.core.molang;
 
-import mod.azure.azurelibarmor.core.math.Variable;
-
 import java.util.function.DoubleSupplier;
+
+import mod.azure.azurelibarmor.core.math.Variable;
 
 /**
  * Lazy override of Variable, to allow for deferred value calculation. <br>

@@ -1,10 +1,11 @@
 package mod.azure.azurelibarmor.rewrite.render.layer;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
+
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipeline;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
-import net.minecraft.client.renderer.MultiBufferSource;
 
 /**
  * Render layer base class for rendering additional layers of effects or textures over an existing model at runtime.<br>

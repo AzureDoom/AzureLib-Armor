@@ -1,14 +1,15 @@
 package mod.azure.azurelibarmor.rewrite.render.armor;
 
-import mod.azure.azurelibarmor.rewrite.animation.impl.AzItemAnimator;
-import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
-import mod.azure.azurelibarmor.rewrite.render.AzProvider;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
+
+import mod.azure.azurelibarmor.rewrite.animation.impl.AzItemAnimator;
+import mod.azure.azurelibarmor.rewrite.model.AzBakedModel;
+import mod.azure.azurelibarmor.rewrite.render.AzProvider;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
 
 public class AzArmorRenderer {
 

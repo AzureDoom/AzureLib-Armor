@@ -1,8 +1,6 @@
 /**
- * This class is a fork of the matching class found in the Geckolib repository.
- * Original source: https://github.com/bernie-g/geckolib
- * Copyright © 2024 Bernie-G.
- * Licensed under the MIT License.
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
  * https://github.com/bernie-g/geckolib/blob/main/LICENSE
  */
 /*
@@ -10,12 +8,13 @@
  */
 package mod.azure.azurelibarmor.core.animatable;
 
+import org.jetbrains.annotations.Nullable;
+
 import mod.azure.azurelibarmor.core.animatable.instance.AnimatableInstanceCache;
 import mod.azure.azurelibarmor.core.animatable.model.CoreGeoBone;
 import mod.azure.azurelibarmor.core.animation.AnimatableManager;
 import mod.azure.azurelibarmor.core.animation.AnimationController;
 import mod.azure.azurelibarmor.core.animation.AnimationProcessor;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * This is the root interface for all animatable objects in azurelibarmor. Generally speaking you should use one of the
@@ -47,8 +46,8 @@ public interface GeoAnimatable {
     /**
      * Each instance of a {@code GeoAnimatable} must return an instance of an {@link AnimatableInstanceCache}, which
      * handles instance-specific animation info. Generally speaking, you should create your cache using
-     * {@code azurelibarmorUtil#createCache} and store it in your animatable instance, returning that cached instance when
-     * called.
+     * {@code azurelibarmorUtil#createCache} and store it in your animatable instance, returning that cached instance
+     * when called.
      *
      * @return A cached instance of an {@code AnimatableInstanceCache}
      */

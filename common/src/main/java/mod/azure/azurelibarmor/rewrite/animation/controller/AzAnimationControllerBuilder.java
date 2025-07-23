@@ -1,12 +1,13 @@
 package mod.azure.azurelibarmor.rewrite.animation.controller;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.animation.controller.keyframe.AzKeyframeCallbacks;
 import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
 import mod.azure.azurelibarmor.rewrite.animation.property.AzAnimationProperties;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 /**
  * A builder class to construct {@link AzAnimationController} instances for managing animations in {@link AzAnimator}.

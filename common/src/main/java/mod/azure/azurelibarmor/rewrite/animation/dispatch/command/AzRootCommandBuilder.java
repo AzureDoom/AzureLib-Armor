@@ -1,10 +1,10 @@
 package mod.azure.azurelibarmor.rewrite.animation.dispatch.command;
 
+import java.util.function.UnaryOperator;
+
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.impl.root.*;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.sequence.AzAnimationSequenceBuilder;
 import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
-
-import java.util.function.UnaryOperator;
 
 public class AzRootCommandBuilder extends AzCommandBuilder {
 

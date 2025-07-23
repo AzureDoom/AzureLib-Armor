@@ -1,14 +1,15 @@
 package mod.azure.azurelibarmor.rewrite.render;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+
 import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoCube;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoVertex;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 /**
  * AzModelRenderer provides a generic and extensible base class for rendering models by processing hierarchical bone

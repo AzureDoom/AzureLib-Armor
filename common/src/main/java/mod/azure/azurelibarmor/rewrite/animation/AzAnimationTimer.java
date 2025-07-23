@@ -1,7 +1,8 @@
 package mod.azure.azurelibarmor.rewrite.animation;
 
-import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import net.minecraft.client.Minecraft;
+
+import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 
 /**
  * AzAnimationTimer is responsible for managing animation progression based on game events and time deltas. It keeps

@@ -1,8 +1,5 @@
 package mod.azure.azurelibarmor.common.internal.mixins;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.internal.common.util.AzureLibUtil;
-import mod.azure.azurelibarmor.rewrite.animation.cache.AzIdentityRegistry;
 import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -12,6 +9,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
+
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.common.internal.common.util.AzureLibUtil;
+import mod.azure.azurelibarmor.rewrite.animation.cache.AzIdentityRegistry;
 
 /**
  * A mixin class for modifying the initialization behavior of the {@link ItemStack} class. This mixin specifically
