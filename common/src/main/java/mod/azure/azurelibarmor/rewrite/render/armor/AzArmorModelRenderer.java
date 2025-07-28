@@ -13,7 +13,7 @@ import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
 
 public class AzArmorModelRenderer extends AzModelRenderer<ItemStack> {
 
-    private final AzArmorRendererPipeline armorRendererPipeline;
+    protected final AzArmorRendererPipeline armorRendererPipeline;
 
     public AzArmorModelRenderer(
         AzArmorRendererPipeline armorRendererPipeline,
