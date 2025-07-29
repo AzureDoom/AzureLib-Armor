@@ -2,18 +2,19 @@ package mod.azure.azurelibarmor.rewrite.render.armor;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import it.unimi.dsi.fastutil.ints.IntIntPair;
-import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
-import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoVertex;
-import mod.azure.azurelibarmor.rewrite.model.AzBone;
-import mod.azure.azurelibarmor.rewrite.render.AzLayerRenderer;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+
+import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
+import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoVertex;
+import mod.azure.azurelibarmor.rewrite.model.AzBone;
+import mod.azure.azurelibarmor.rewrite.render.AzLayerRenderer;
+import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
 
 /**
  * The AzDynamicArmorModelRenderer class represents an abstract implementation of a dynamic armor model renderer. It is

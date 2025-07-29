@@ -1,7 +1,5 @@
 package mod.azure.azurelibarmor.rewrite.render.armor;
 
-import mod.azure.azurelibarmor.rewrite.model.AzBone;
-import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneContext;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -9,7 +7,9 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 
 import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
+import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.render.*;
+import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneContext;
 import mod.azure.azurelibarmor.rewrite.render.armor.compat.ShoulderSurfingCompat;
 
 public class AzArmorRendererPipeline extends AzRendererPipeline<ItemStack> {
