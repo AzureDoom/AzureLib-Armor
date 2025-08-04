@@ -41,6 +41,7 @@ public class AzActionRegistry {
         register(AzRootSetAnimationSpeedAction.RESOURCE_LOCATION, AzRootSetAnimationSpeedAction.CODEC);
         register(AzRootSetEasingTypeAction.RESOURCE_LOCATION, AzRootSetEasingTypeAction.CODEC);
         register(AzRootSetTransitionSpeedAction.RESOURCE_LOCATION, AzRootSetTransitionSpeedAction.CODEC);
+        register(AzRootSetStartTickOffsetAction.RESOURCE_LOCATION, AzRootSetStartTickOffsetAction.CODEC);
 
         // Controller actions
         // TODO:

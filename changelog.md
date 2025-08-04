@@ -1,12 +1,8 @@
-v3.0.16
+v3.0.17
 
 ### Changes
-- **Added New Easing Types**:
-    - **Bezier Easing**: Implements smooth transitions using cubic Bézier curves for precise animation control. Adapted from base code by ZigyTheBird.
-    - **Bezier After Easing**: A variation of Bezier easing, applied to animations after a specified point in time.
+- Added an AzCommand create option for setting speed is now easier.
+- Added an AzCommand create option that allows you to set how many ticks you'd like to start within the animation. (Ex: I want to start from the 2 second mark so 40 ticks instead of the start of the animation).
 
 ### Fixes
-- Fixed an issue where armor did not properly scale to match the scaling of model parts.
-
-### Credits
-- Special thanks to ZigyTheBird for contributing the foundational concepts and code for Bézier easing.
+- Fixed an issue where setting animation speed via AzCommand would not take effect.
