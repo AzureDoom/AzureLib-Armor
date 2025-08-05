@@ -13,7 +13,7 @@ public class AzAnimationPropertiesCodec implements StreamCodec<FriendlyByteBuf, 
     @Override
     public @NotNull AzAnimationProperties decode(FriendlyByteBuf buf) {
         var propertyLength = buf.readByte();
-        var properties = new AzAnimationProperties(1D, null, null, 1D);
+        var properties = AzAnimationProperties.EMPTY;
 
         for (int i = 0; i < propertyLength; i++) {
             var code = buf.readByte();
