@@ -14,6 +14,7 @@ import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoCube;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoVertex;
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 
 /**
@@ -231,5 +232,9 @@ public class AzModelRenderer<T> {
     @Nullable
     public ResourceLocation getTextureOverrideForBone(AzBone bone, T animatable, float partialTick) {
         return null;
+    }
+
+    public void handleAnimation(AzAnimator<T> animator, T animatable, float partialTick) {
+        animator.animate(animatable, partialTick);
     }
 }
