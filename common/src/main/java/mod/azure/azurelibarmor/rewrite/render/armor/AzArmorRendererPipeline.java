@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 
 import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.render.*;
 import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneContext;
@@ -77,8 +76,7 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<ItemStack> {
         scaleModelForRender(context, scaleWidth, scaleHeight, isReRender);
         scaleBoneWithModelPart(armorContext, boneContext, isReRender);
 
-        if (AzAnimatorAccessor.getOrNull(context().currentEntity()) == null)
-            boneContext.applyBoneVisibilityBySlot(currentSlot);
+        boneContext.applyBoneVisibilityBySlot(currentSlot);
 
         var alphaValue = config.alpha(context.animatable());
         if (ShoulderSurfingCompat.isLoaded() && ShoulderSurfingCompat.getAlpha(armorContext.currentEntity()) < 1) {
