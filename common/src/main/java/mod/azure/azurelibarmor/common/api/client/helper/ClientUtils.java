@@ -2,11 +2,6 @@ package mod.azure.azurelibarmor.common.api.client.helper;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
-import mod.azure.azurelibarmor.rewrite.animation.controller.AzAnimationController;
-import mod.azure.azurelibarmor.rewrite.animation.primitive.AzQueuedAnimation;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +9,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import mod.azure.azurelibarmor.common.internal.client.renderer.GeoRenderer;
+import mod.azure.azurelibarmor.common.internal.common.AzureLib;
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
+import mod.azure.azurelibarmor.rewrite.animation.controller.AzAnimationController;
+import mod.azure.azurelibarmor.rewrite.animation.primitive.AzQueuedAnimation;
 
 /**
  * Helper class for segregating client-side code

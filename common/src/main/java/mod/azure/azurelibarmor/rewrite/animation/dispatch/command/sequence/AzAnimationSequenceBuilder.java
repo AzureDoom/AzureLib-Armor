@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.stage.AzAnimationStage;
-import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingTypes;
-import mod.azure.azurelibarmor.rewrite.animation.play_behavior.AzPlayBehaviors;
 import mod.azure.azurelibarmor.rewrite.animation.property.AzAnimationStageProperties;
 
 public class AzAnimationSequenceBuilder {
