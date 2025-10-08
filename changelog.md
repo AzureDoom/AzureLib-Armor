@@ -1,3 +1,10 @@
+v3.0.19
+
+### Changes
+- Added `AzArmorTrimLayer` for rendering armor trims
+     - Supports single trim-pattern texture
+     - Supports per pattern textures (like vanilla)
+
 v3.0.18
 
 ### Changes
