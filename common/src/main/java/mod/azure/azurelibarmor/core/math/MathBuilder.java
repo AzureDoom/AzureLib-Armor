@@ -10,6 +10,36 @@ import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.AzureLibException;
 import mod.azure.azurelibarmor.core.math.functions.Function;
 import mod.azure.azurelibarmor.core.math.functions.classic.*;
+import mod.azure.azurelibarmor.core.math.functions.easing.back.EaseInBack;
+import mod.azure.azurelibarmor.core.math.functions.easing.back.EaseInOutBack;
+import mod.azure.azurelibarmor.core.math.functions.easing.back.EaseOutBack;
+import mod.azure.azurelibarmor.core.math.functions.easing.bounce.EaseInBounce;
+import mod.azure.azurelibarmor.core.math.functions.easing.bounce.EaseInOutBounce;
+import mod.azure.azurelibarmor.core.math.functions.easing.bounce.EaseOutBounce;
+import mod.azure.azurelibarmor.core.math.functions.easing.circ.EaseInCirc;
+import mod.azure.azurelibarmor.core.math.functions.easing.circ.EaseInOutCirc;
+import mod.azure.azurelibarmor.core.math.functions.easing.circ.EaseOutCirc;
+import mod.azure.azurelibarmor.core.math.functions.easing.cubic.EaseInCubic;
+import mod.azure.azurelibarmor.core.math.functions.easing.cubic.EaseInOutCubic;
+import mod.azure.azurelibarmor.core.math.functions.easing.cubic.EaseOutCubic;
+import mod.azure.azurelibarmor.core.math.functions.easing.elastic.EaseInElastic;
+import mod.azure.azurelibarmor.core.math.functions.easing.elastic.EaseInOutElastic;
+import mod.azure.azurelibarmor.core.math.functions.easing.elastic.EaseOutElastic;
+import mod.azure.azurelibarmor.core.math.functions.easing.expo.EaseInExpo;
+import mod.azure.azurelibarmor.core.math.functions.easing.expo.EaseInOutExpo;
+import mod.azure.azurelibarmor.core.math.functions.easing.expo.EaseOutExpo;
+import mod.azure.azurelibarmor.core.math.functions.easing.quad.EaseInOutQuad;
+import mod.azure.azurelibarmor.core.math.functions.easing.quad.EaseInQuad;
+import mod.azure.azurelibarmor.core.math.functions.easing.quad.EaseOutQuad;
+import mod.azure.azurelibarmor.core.math.functions.easing.quart.EaseInOutQuart;
+import mod.azure.azurelibarmor.core.math.functions.easing.quart.EaseInQuart;
+import mod.azure.azurelibarmor.core.math.functions.easing.quart.EaseOutQuart;
+import mod.azure.azurelibarmor.core.math.functions.easing.quint.EaseInOutQuint;
+import mod.azure.azurelibarmor.core.math.functions.easing.quint.EaseInQuint;
+import mod.azure.azurelibarmor.core.math.functions.easing.quint.EaseOutQuint;
+import mod.azure.azurelibarmor.core.math.functions.easing.sine.EaseInOutSine;
+import mod.azure.azurelibarmor.core.math.functions.easing.sine.EaseInSine;
+import mod.azure.azurelibarmor.core.math.functions.easing.sine.EaseOutSine;
 import mod.azure.azurelibarmor.core.math.functions.limit.Clamp;
 import mod.azure.azurelibarmor.core.math.functions.limit.Max;
 import mod.azure.azurelibarmor.core.math.functions.limit.Min;
@@ -76,6 +106,59 @@ public class MathBuilder {
         this.functions.put("die_roll_integer", DieRollInteger.class);
         this.functions.put("random", Random.class);
         this.functions.put("random_integer", RandomInteger.class);
+	    this.functions.put("copy_sign", CopySign.class);
+	    this.functions.put("sign", Sign.class);
+	    this.functions.put("inverse_lerp", InverseLerp.class);
+
+	    /* Quadratic easing functions */
+	    this.functions.put("ease_in_quad", EaseInQuad.class);
+	    this.functions.put("ease_out_quad", EaseOutQuad.class);
+	    this.functions.put("ease_in_out_quad", EaseInOutQuad.class);
+
+	    /* Cubic easing functions */
+	    this.functions.put("ease_in_cubic", EaseInCubic.class);
+	    this.functions.put("ease_out_cubic", EaseOutCubic.class);
+	    this.functions.put("ease_in_out_cubic", EaseInOutCubic.class);
+
+	    /* Quartic easing functions */
+	    this.functions.put("ease_in_quart", EaseInQuart.class);
+	    this.functions.put("ease_out_quart", EaseOutQuart.class);
+	    this.functions.put("ease_in_out_quart", EaseInOutQuart.class);
+
+	    /* Quintic easing functions */
+	    this.functions.put("ease_in_quint", EaseInQuint.class);
+	    this.functions.put("ease_out_quint", EaseOutQuint.class);
+	    this.functions.put("ease_in_out_quint", EaseInOutQuint.class);
+
+	    /* Sine easing functions */
+	    this.functions.put("ease_in_sine", EaseInSine.class);
+	    this.functions.put("ease_out_sine", EaseOutSine.class);
+	    this.functions.put("ease_in_out_sine", EaseInOutSine.class);
+
+	    /* Exponential easing functions */
+	    this.functions.put("ease_in_expo", EaseInExpo.class);
+	    this.functions.put("ease_out_expo", EaseOutExpo.class);
+	    this.functions.put("ease_in_out_expo", EaseInOutExpo.class);
+
+	    /* Circular easing functions */
+	    this.functions.put("ease_in_circ", EaseInCirc.class);
+	    this.functions.put("ease_out_circ", EaseOutCirc.class);
+	    this.functions.put("ease_in_out_circ", EaseInOutCirc.class);
+
+	    /* Back easing functions */
+	    this.functions.put("ease_in_back", EaseInBack.class);
+	    this.functions.put("ease_out_back", EaseOutBack.class);
+	    this.functions.put("ease_in_out_back", EaseInOutBack.class);
+
+	    /* Elastic easing functions */
+	    this.functions.put("ease_in_elastic", EaseInElastic.class);
+	    this.functions.put("ease_out_elastic", EaseOutElastic.class);
+	    this.functions.put("ease_in_out_elastic", EaseInOutElastic.class);
+
+	    /* Bounce easing functions */
+	    this.functions.put("ease_in_bounce", EaseInBounce.class);
+	    this.functions.put("ease_out_bounce", EaseOutBounce.class);
+	    this.functions.put("ease_in_out_bounce", EaseInOutBounce.class);
     }
 
     /**
