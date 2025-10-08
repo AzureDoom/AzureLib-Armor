@@ -10,22 +10,17 @@ import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
 
-/**
- * Represents an action used to set the start tick offset for animations in the AzureLib animation system. This action
- * is dispatched to modify the animation properties of all controllers within an animator, specifically updating their
- * start tick offset based on the provided value.
- */
-public record AzRootSetStartTickOffsetAction(
-    double startTickOffset
+public record AzRootSetRepeatTimesAction(
+    double repeatXTimes
 ) implements AzAction {
 
-    public static final StreamCodec<FriendlyByteBuf, AzRootSetStartTickOffsetAction> CODEC = StreamCodec.composite(
+    public static final StreamCodec<FriendlyByteBuf, AzRootSetRepeatTimesAction> CODEC = StreamCodec.composite(
         ByteBufCodecs.DOUBLE,
-        AzRootSetStartTickOffsetAction::startTickOffset,
-        AzRootSetStartTickOffsetAction::new
+        AzRootSetRepeatTimesAction::repeatXTimes,
+        AzRootSetRepeatTimesAction::new
     );
 
-    public static final ResourceLocation RESOURCE_LOCATION = AzureLib.modResource("root/set_start_tick_offset");
+    public static final ResourceLocation RESOURCE_LOCATION = AzureLib.modResource("root/set_repeat_times_tick_offset");
 
     @Override
     public void handle(AzDispatchSide originSide, AzAnimator<?> animator) {
@@ -33,7 +28,7 @@ public record AzRootSetStartTickOffsetAction(
             .getAll()
             .forEach(
                 controller -> controller.setAnimationProperties(
-                    controller.animationProperties().withStartTickOffset(startTickOffset)
+                    controller.animationProperties().withRepeatXTimes(repeatXTimes)
                 )
             );
     }

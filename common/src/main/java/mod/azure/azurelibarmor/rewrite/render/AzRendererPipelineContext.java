@@ -8,11 +8,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
-import java.util.Objects;
 
 import mod.azure.azurelibarmor.common.internal.client.util.RenderUtils;
 import mod.azure.azurelibarmor.core.object.Color;
@@ -96,12 +94,16 @@ public abstract class AzRendererPipelineContext<T> {
 
         if (renderType == null) {
             var textureLocation = rendererPipeline.config().textureLocation(animatable);
-            this.renderType = getDefaultRenderType(animatable, textureLocation, multiBufferSource, partialTick);
+            this.renderType = getDefaultRenderType(
+                animatable,
+                textureLocation,
+                multiBufferSource,
+                partialTick,
+                rendererPipeline.config().getRenderType(animatable)
+            );
         }
 
-        Objects.requireNonNull(this.renderType);
-
-        if (vertexConsumer == null) {
+        if (vertexConsumer == null && this.renderType != null) {
             this.vertexConsumer = multiBufferSource.getBuffer(this.renderType);
         }
     }
@@ -111,11 +113,12 @@ public abstract class AzRendererPipelineContext<T> {
      * Uses the {@link RenderType#entityCutoutNoCull} {@code RenderType} by default.<br>
      * Override this to change the way a model will render (such as translucent models, etc)
      */
-    public abstract @NotNull RenderType getDefaultRenderType(
+    public abstract RenderType getDefaultRenderType(
         T animatable,
         ResourceLocation texture,
         @Nullable MultiBufferSource bufferSource,
-        float partialTick
+        float partialTick,
+        RenderType defaultRenderType
     );
 
     /**

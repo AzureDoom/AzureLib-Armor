@@ -19,6 +19,7 @@ import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoQuad;
 import mod.azure.azurelibarmor.common.internal.common.cache.object.GeoVertex;
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.model.AzBone;
+import mod.azure.azurelibarmor.rewrite.render.item.AzItemRendererPipelineContext;
 
 /**
  * AzModelRenderer provides a generic and extensible base class for rendering models by processing hierarchical bone
@@ -67,6 +68,9 @@ public class AzModelRenderer<T> {
 
         poseStack.pushPose();
         RenderUtils.prepMatrixForBone(poseStack, bone);
+
+        context.setVertexConsumer(getOrRefreshRenderBuffer(isReRender, context, bone));
+
         renderCubesOfBone(context, bone);
 
         if (!isReRender) {
@@ -156,8 +160,7 @@ public class AzModelRenderer<T> {
 
         for (var vertex : quad.vertices()) {
             var position = vertex.position();
-            poseStateTransformCache.set(position.x(), position.y(), position.z(), 1.0f);
-            var vector4f = poseState.transform(poseStateTransformCache);
+            var vector4f = poseState.transform(new Vector4f(position.x(), position.y(), position.z(), 1.0f));
 
             buffer.addVertex(
                 vector4f.x(),
@@ -242,6 +245,41 @@ public class AzModelRenderer<T> {
 
     public void handleAnimation(AzAnimator<T> animator, T animatable, float partialTick) {
         animator.animate(animatable, partialTick);
+    }
+
+    /**
+     * Retrieves or refreshes the {@link VertexConsumer} for rendering based on the current buffer state and rendering
+     * context. Depending on the type and state of the current {@link VertexConsumer}, this method determines whether to
+     * reuse the existing buffer or obtain a fresh one from the {@link MultiBufferSource}.
+     *
+     * @param context    The rendering context containing information about the current buffer, the buffer source, and
+     *                   rendering pipeline data.
+     * @param bone       The {@link AzBone} being rendered, which may influence the behavior or context of the buffer
+     *                   retrieval.
+     * @param renderType The {@link RenderType} specifying the desired render characteristics or pipeline for rendering.
+     * @return The appropriate {@link VertexConsumer} for rendering, either the existing buffer or a refreshed/new one.
+     */
+    public VertexConsumer getOrRefreshBufferRenderType(
+        AzItemRendererPipelineContext context,
+        AzBone bone,
+        RenderType renderType
+    ) {
+        var currentBuffer = context.multiBufferSource().getBuffer(renderType);
+        var bufferSource = context.multiBufferSource();
+
+        return switch (currentBuffer) {
+            case BufferBuilder builder when isBufferInactive(builder) -> bufferSource.getBuffer(renderType);
+            case OutlineBufferSource.EntityOutlineGenerator outline when needsBufferRefresh(outline.delegate()) ->
+                new OutlineBufferSource.EntityOutlineGenerator(bufferSource.getBuffer(renderType), outline.color());
+            case VertexMultiConsumer.Double pair when needsBufferRefresh(pair.first) || needsBufferRefresh(
+                pair.second
+            ) ->
+                new VertexMultiConsumer.Double(
+                    needsBufferRefresh(pair.first) ? bufferSource.getBuffer(renderType) : pair.first,
+                    needsBufferRefresh(pair.second) ? bufferSource.getBuffer(renderType) : pair.second
+                );
+            default -> currentBuffer;
+        };
     }
 
     /**

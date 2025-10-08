@@ -10,6 +10,10 @@ import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
 import mod.azure.azurelibarmor.rewrite.animation.easing.AzEasingType;
 
+/**
+ * The AzRootSetEasingTypeAction class represents an action within the AzureLib animation system that modifies the
+ * easing type used in the animation properties for all animation controllers within an {@link AzAnimator}.
+ */
 public record AzRootSetEasingTypeAction(
     AzEasingType easingType
 ) implements AzAction {

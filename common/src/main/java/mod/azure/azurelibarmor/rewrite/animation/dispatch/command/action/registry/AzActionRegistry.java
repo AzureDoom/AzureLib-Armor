@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
+import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.impl.controller.*;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.impl.root.*;
 
 /**
@@ -35,19 +36,29 @@ public class AzActionRegistry {
 
     static {
         // Root actions
-        register(AzRootCancelAction.RESOURCE_LOCATION, AzRootCancelAction.CODEC);
         register(AzRootCancelAllAction.RESOURCE_LOCATION, AzRootCancelAllAction.CODEC);
         register(AzRootPlayAnimationSequenceAction.RESOURCE_LOCATION, AzRootPlayAnimationSequenceAction.CODEC);
         register(AzRootSetAnimationSpeedAction.RESOURCE_LOCATION, AzRootSetAnimationSpeedAction.CODEC);
         register(AzRootSetEasingTypeAction.RESOURCE_LOCATION, AzRootSetEasingTypeAction.CODEC);
         register(AzRootSetTransitionSpeedAction.RESOURCE_LOCATION, AzRootSetTransitionSpeedAction.CODEC);
         register(AzRootSetStartTickOffsetAction.RESOURCE_LOCATION, AzRootSetStartTickOffsetAction.CODEC);
+        register(AzRootSetFreezeTickAction.RESOURCE_LOCATION, AzRootSetFreezeTickAction.CODEC);
+        register(AzRootSetRepeatTimesAction.RESOURCE_LOCATION, AzRootSetRepeatTimesAction.CODEC);
+        register(AzRootSetReverseAction.RESOURCE_LOCATION, AzRootSetReverseAction.CODEC);
 
         // Controller actions
-        // TODO:
-
-        // Animation actions
-        // TODO:
+        register(AzControllerCancelAction.RESOURCE_LOCATION, AzControllerCancelAction.CODEC);
+        register(
+            AzControllerPlayAnimationSequenceAction.RESOURCE_LOCATION,
+            AzControllerPlayAnimationSequenceAction.CODEC
+        );
+        register(AzControllerSetAnimationSpeedAction.RESOURCE_LOCATION, AzControllerSetAnimationSpeedAction.CODEC);
+        register(AzControllerSetEasingTypeAction.RESOURCE_LOCATION, AzControllerSetEasingTypeAction.CODEC);
+        register(AzControllerSetTransitionSpeedAction.RESOURCE_LOCATION, AzControllerSetTransitionSpeedAction.CODEC);
+        register(AzControllerSetStartTickOffsetAction.RESOURCE_LOCATION, AzControllerSetStartTickOffsetAction.CODEC);
+        register(AzControllerSetFreezeTickAction.RESOURCE_LOCATION, AzControllerSetFreezeTickAction.CODEC);
+        register(AzControllerSetRepeatTimesAction.RESOURCE_LOCATION, AzControllerSetRepeatTimesAction.CODEC);
+        register(AzControllerSetReverseAction.RESOURCE_LOCATION, AzControllerSetReverseAction.CODEC);
     }
 
     public static @Nullable <A, T extends StreamCodec<FriendlyByteBuf, A>> T getCodecOrNull(

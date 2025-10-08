@@ -3,8 +3,8 @@ package mod.azure.azurelibarmor.rewrite.render.item;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.azurelibarmor.rewrite.render.AzRendererPipeline;
@@ -21,8 +21,18 @@ public class AzItemRendererPipelineContext extends AzRendererPipelineContext<Ite
 
     private boolean translucent = false;
 
+    private ItemDisplayContext transformType;
+
     public AzItemRendererPipelineContext(AzRendererPipeline<ItemStack> rendererPipeline) {
         super(rendererPipeline);
+    }
+
+    public ItemDisplayContext getTransformType() {
+        return transformType;
+    }
+
+    public void setTransformType(ItemDisplayContext transformType) {
+        this.transformType = transformType;
     }
 
     /**
@@ -37,14 +47,15 @@ public class AzItemRendererPipelineContext extends AzRendererPipelineContext<Ite
     }
 
     @Override
-    public @NotNull RenderType getDefaultRenderType(
+    public RenderType getDefaultRenderType(
         ItemStack animatable,
         ResourceLocation texture,
         @Nullable MultiBufferSource bufferSource,
-        float partialTick
+        float partialTick,
+        RenderType defaultRenderType
     ) {
         return translucent
             ? RenderType.itemEntityTranslucentCull(texture)
-            : RenderType.entityCutoutNoCull(texture);
+            : defaultRenderType;
     }
 }

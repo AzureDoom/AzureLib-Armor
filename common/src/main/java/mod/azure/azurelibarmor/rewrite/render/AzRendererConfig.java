@@ -7,10 +7,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
+import mod.azure.azurelibarmor.rewrite.model.AzBone;
 import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
 
 /**
@@ -25,6 +27,10 @@ public class AzRendererConfig<T> {
     private final Supplier<@Nullable AzAnimator<T>> animatorProvider;
 
     private final Function<T, ResourceLocation> modelLocationProvider;
+
+    private final BiFunction<AzRendererPipeline<T>, AzLayerRenderer<T>, AzModelRenderer<T>> modelRendererProvider;
+
+    private final Function<AzRendererPipeline<T>, AzRendererPipelineContext<T>> pipelineContextFunction;
 
     private final Function<T, RenderType> renderTypeFunction;
 
@@ -44,9 +50,15 @@ public class AzRendererConfig<T> {
 
     private final Function<T, Float> scaleWidth;
 
+    private final @Nullable Function<AzBone, ResourceLocation> boneTextureOverrideProvider;
+
+    private final @Nullable Function<AzBone, RenderType> boneRenderTypeOverrideProvider;
+
     public AzRendererConfig(
         Supplier<AzAnimator<T>> animatorProvider,
         Function<T, ResourceLocation> modelLocationProvider,
+        BiFunction<AzRendererPipeline<T>, AzLayerRenderer<T>, AzModelRenderer<T>> modelRendererProvider,
+        Function<AzRendererPipeline<T>, AzRendererPipelineContext<T>> pipelineContextFunction,
         Function<T, RenderType> renderTypeFunction,
         List<AzRenderLayer<T>> renderLayers,
         Function<AzRendererPipelineContext<T>, AzRendererPipelineContext<T>> preRenderEntry,
@@ -55,10 +67,14 @@ public class AzRendererConfig<T> {
         Function<T, ResourceLocation> textureLocationProvider,
         Function<T, Float> alphaFunction,
         Function<T, Float> scaleHeight,
-        Function<T, Float> scaleWidth
+        Function<T, Float> scaleWidth,
+        Function<AzBone, ResourceLocation> boneTextureOverrideProvider,
+        Function<AzBone, RenderType> boneRenderTypeOverrideProvider
     ) {
         this.animatorProvider = animatorProvider;
         this.modelLocationProvider = modelLocationProvider;
+        this.modelRendererProvider = modelRendererProvider;
+        this.pipelineContextFunction = pipelineContextFunction;
         this.renderTypeFunction = renderTypeFunction;
         this.renderLayers = Collections.unmodifiableList(renderLayers);
         this.preRenderEntry = preRenderEntry;
@@ -68,6 +84,8 @@ public class AzRendererConfig<T> {
         this.alphaFunction = alphaFunction;
         this.scaleHeight = scaleHeight;
         this.scaleWidth = scaleWidth;
+        this.boneTextureOverrideProvider = boneTextureOverrideProvider;
+        this.boneRenderTypeOverrideProvider = boneRenderTypeOverrideProvider;
     }
 
     public @Nullable AzAnimator<T> createAnimator() {
@@ -78,8 +96,16 @@ public class AzRendererConfig<T> {
         return modelLocationProvider.apply(animatable);
     }
 
+    public AzRendererPipelineContext<T> pipelineContext(AzRendererPipeline<T> pipeline) {
+        return pipelineContextFunction.apply(pipeline);
+    }
+
     public ResourceLocation textureLocation(T animatable) {
         return textureLocationProvider.apply(animatable);
+    }
+
+    public AzModelRenderer<T> modelRendererProvider(AzRendererPipeline<T> pipeline, AzLayerRenderer<T> layerRenderer) {
+        return modelRendererProvider.apply(pipeline, layerRenderer);
     }
 
     public RenderType getRenderType(T entity) {
@@ -114,9 +140,21 @@ public class AzRendererConfig<T> {
         return scaleWidth.apply(entity);
     }
 
+    public @Nullable ResourceLocation boneTextureOverrideProvider(AzBone bone) {
+        return boneTextureOverrideProvider.apply(bone);
+    }
+
+    public @Nullable RenderType boneRenderTypeOverrideProvider(AzBone bone) {
+        return boneRenderTypeOverrideProvider.apply(bone);
+    }
+
     public static class Builder<T> {
 
         private final Function<T, ResourceLocation> modelLocationProvider;
+
+        protected BiFunction<AzRendererPipeline<T>, AzLayerRenderer<T>, AzModelRenderer<T>> modelRendererProvider;
+
+        protected Function<AzRendererPipeline<T>, AzRendererPipelineContext<T>> pipelineContextFunction;
 
         protected Function<T, RenderType> renderTypeProvider;
 
@@ -138,12 +176,18 @@ public class AzRendererConfig<T> {
 
         protected Function<T, Float> scaleWidth;
 
+        private @Nullable Function<AzBone, ResourceLocation> boneTextureOverrideProvider;
+
+        private @Nullable Function<AzBone, RenderType> boneRenderTypeOverrideProvider;
+
         protected Builder(
             Function<T, ResourceLocation> modelLocationProvider,
             Function<T, ResourceLocation> textureLocationProvider
         ) {
             this.animatorProvider = () -> null;
             this.modelLocationProvider = modelLocationProvider;
+            this.modelRendererProvider = AzModelRenderer::new;
+            this.pipelineContextFunction = null;
             this.renderTypeProvider = $ -> RenderType.entityCutoutNoCull(textureLocationProvider.apply($));
             this.renderLayers = new ObjectArrayList<>();
             this.preRenderEntry = $ -> $;
@@ -153,6 +197,36 @@ public class AzRendererConfig<T> {
             this.alphaFunction = $ -> 1.0F;
             this.scaleHeight = $ -> 1.0F;
             this.scaleWidth = $ -> 1.0F;
+            this.boneTextureOverrideProvider = $ -> null;
+            this.boneRenderTypeOverrideProvider = $ -> null;
+        }
+
+        public Builder<T> setBoneTextureOverrideProvider(
+            Function<AzBone, ResourceLocation> boneTextureOverrideProvider
+        ) {
+            this.boneTextureOverrideProvider = boneTextureOverrideProvider;
+            return this;
+        }
+
+        public Builder<T> setBoneRenderTypeOverrideProvider(
+            Function<AzBone, RenderType> boneRenderTypeOverrideProvider
+        ) {
+            this.boneRenderTypeOverrideProvider = boneRenderTypeOverrideProvider;
+            return this;
+        }
+
+        public Builder<T> setModelRenderer(
+            BiFunction<AzRendererPipeline<T>, AzLayerRenderer<T>, AzModelRenderer<T>> modelRendererProvider
+        ) {
+            this.modelRendererProvider = modelRendererProvider;
+            return this;
+        }
+
+        public Builder<T> setPipelineContext(
+            Function<AzRendererPipeline<T>, AzRendererPipelineContext<T>> pipelineContextFunction
+        ) {
+            this.pipelineContextFunction = pipelineContextFunction;
+            return this;
         }
 
         public Builder<T> setPrerenderEntry(
@@ -287,6 +361,8 @@ public class AzRendererConfig<T> {
             return new AzRendererConfig<>(
                 animatorProvider,
                 modelLocationProvider,
+                modelRendererProvider,
+                pipelineContextFunction,
                 renderTypeProvider,
                 renderLayers,
                 preRenderEntry,
@@ -295,7 +371,9 @@ public class AzRendererConfig<T> {
                 textureLocationProvider,
                 alphaFunction,
                 scaleHeight,
-                scaleWidth
+                scaleWidth,
+                boneTextureOverrideProvider,
+                boneRenderTypeOverrideProvider
             );
         }
     }

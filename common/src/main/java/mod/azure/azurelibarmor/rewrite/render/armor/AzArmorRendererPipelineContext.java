@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import mod.azure.azurelibarmor.core.object.Color;
@@ -41,15 +40,16 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<It
     }
 
     @Override
-    public @NotNull RenderType getDefaultRenderType(
+    public RenderType getDefaultRenderType(
         ItemStack animatable,
         ResourceLocation texture,
         @Nullable MultiBufferSource bufferSource,
-        float partialTick
+        float partialTick,
+        RenderType defaultRenderType
     ) {
         return translucent
             ? RenderType.itemEntityTranslucentCull(texture)
-            : RenderType.armorCutoutNoCull(texture);
+            : defaultRenderType;
     }
 
     public void prepare(

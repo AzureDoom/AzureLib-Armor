@@ -6,12 +6,13 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
-import mod.azure.azurelibarmor.rewrite.render.AzRendererPipelineContext;
+import mod.azure.azurelibarmor.rewrite.model.AzBone;
+import mod.azure.azurelibarmor.rewrite.render.*;
 import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzArmorBoneProvider;
 import mod.azure.azurelibarmor.rewrite.render.armor.bone.AzDefaultArmorBoneProvider;
 import mod.azure.azurelibarmor.rewrite.render.layer.AzRenderLayer;
@@ -32,11 +33,17 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
         Function<ItemStack, ResourceLocation> textureLocationProvider,
         Function<ItemStack, Float> alphaFunction,
         Function<ItemStack, Float> scaleHeight,
-        Function<ItemStack, Float> scaleWidth
+        Function<ItemStack, Float> scaleWidth,
+        BiFunction<AzRendererPipeline<ItemStack>, AzLayerRenderer<ItemStack>, AzModelRenderer<ItemStack>> modelRendererProvider,
+        Function<AzRendererPipeline<ItemStack>, AzRendererPipelineContext<ItemStack>> pipelineContextFunction,
+        Function<AzBone, ResourceLocation> boneTextureOverrideProvider,
+        Function<AzBone, RenderType> boneRenderTypeOverrideProvider
     ) {
         super(
             animatorProvider,
             modelLocationProvider,
+            modelRendererProvider,
+            pipelineContextFunction,
             renderTypeProvider,
             renderLayers,
             preRenderEntry,
@@ -45,7 +52,9 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
             textureLocationProvider,
             alphaFunction,
             scaleHeight,
-            scaleWidth
+            scaleWidth,
+            boneTextureOverrideProvider,
+            boneRenderTypeOverrideProvider
         );
         this.boneProvider = boneProvider;
     }
@@ -78,7 +87,36 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
         ) {
             super(modelLocationProvider, textureLocationProvider);
             this.boneProvider = new AzDefaultArmorBoneProvider();
-            this.renderTypeProvider = $ -> RenderType.entityTranslucentCull(textureLocationProvider.apply($));
+            this.modelRendererProvider = (entityRendererPipeline, layer) -> new AzArmorModelRenderer(
+                (AzArmorRendererPipeline) entityRendererPipeline,
+                layer
+            );
+            this.pipelineContextFunction = AzArmorRendererPipelineContext::new;
+            this.renderTypeProvider = $ -> RenderType.armorCutoutNoCull(textureLocationProvider.apply($));
+        }
+
+        @Override
+        public Builder setBoneRenderTypeOverrideProvider(Function<AzBone, RenderType> boneRenderTypeOverrideProvider) {
+            return (Builder) super.setBoneRenderTypeOverrideProvider(boneRenderTypeOverrideProvider);
+        }
+
+        @Override
+        public Builder setBoneTextureOverrideProvider(Function<AzBone, ResourceLocation> boneTextureOverrideProvider) {
+            return (Builder) super.setBoneTextureOverrideProvider(boneTextureOverrideProvider);
+        }
+
+        @Override
+        public Builder setModelRenderer(
+            BiFunction<AzRendererPipeline<ItemStack>, AzLayerRenderer<ItemStack>, AzModelRenderer<ItemStack>> modelRendererProvider
+        ) {
+            return (Builder) super.setModelRenderer(modelRendererProvider);
+        }
+
+        @Override
+        public Builder setPipelineContext(
+            Function<AzRendererPipeline<ItemStack>, AzRendererPipelineContext<ItemStack>> azRendererPipelineAzRendererPipelineContextFunction
+        ) {
+            return (Builder) super.setPipelineContext(azRendererPipelineAzRendererPipelineContextFunction);
         }
 
         @Override
@@ -100,21 +138,21 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
         public Builder setPrerenderEntry(
             Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
         ) {
-            return (Builder) super.setPrerenderEntry(preRenderEntry);
+            return (AzArmorRendererConfig.Builder) super.setPrerenderEntry(preRenderEntry);
         }
 
         @Override
         public Builder setRenderEntry(
             Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> renderEntry
         ) {
-            return (Builder) super.setRenderEntry(renderEntry);
+            return (AzArmorRendererConfig.Builder) super.setRenderEntry(renderEntry);
         }
 
         @Override
         public Builder setPostRenderEntry(
             Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> preRenderEntry
         ) {
-            return (Builder) super.setPostRenderEntry(preRenderEntry);
+            return (AzArmorRendererConfig.Builder) super.setPostRenderEntry(preRenderEntry);
         }
 
         @Override
@@ -176,7 +214,11 @@ public class AzArmorRendererConfig extends AzRendererConfig<ItemStack> {
                 baseConfig::textureLocation,
                 baseConfig::alpha,
                 baseConfig::scaleHeight,
-                baseConfig::scaleWidth
+                baseConfig::scaleWidth,
+                baseConfig::modelRendererProvider,
+                baseConfig::pipelineContext,
+                baseConfig::boneTextureOverrideProvider,
+                baseConfig::boneRenderTypeOverrideProvider
             );
         }
     }

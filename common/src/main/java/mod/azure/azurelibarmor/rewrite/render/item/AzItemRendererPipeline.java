@@ -5,6 +5,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix4f;
 
+import java.util.stream.Stream;
+
 import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelibarmor.rewrite.render.AzLayerRenderer;
 import mod.azure.azurelibarmor.rewrite.render.AzRendererConfig;
@@ -31,12 +33,12 @@ public class AzItemRendererPipeline extends AzRendererPipeline<ItemStack> {
 
     @Override
     protected AzRendererPipelineContext<ItemStack> createContext(AzRendererPipeline<ItemStack> rendererPipeline) {
-        return new AzItemRendererPipelineContext(rendererPipeline);
+        return config.pipelineContext(this);
     }
 
     @Override
     protected AzItemModelRenderer createModelRenderer(AzLayerRenderer<ItemStack> layerRenderer) {
-        return new AzItemModelRenderer(this, layerRenderer);
+        return (AzItemModelRenderer) config.modelRendererProvider(this, layerRenderer);
     }
 
     @Override
@@ -64,6 +66,19 @@ public class AzItemRendererPipeline extends AzRendererPipeline<ItemStack> {
             var useNewOffset = config.useNewOffset();
             poseStack.translate(0.5f, useNewOffset ? 0.0f : 0.51f, 0.5f);
         }
+
+        // If the item model has the leftArm or rightArm bone, hide them.
+        Stream.of("leftArm", "rightArm")
+            .forEach(
+                boneName -> context
+                    .bakedModel()
+                    .getBone(boneName)
+                    .ifPresent(bone -> {
+                        bone.setHidden(true);
+                        bone.setChildrenHidden(false);
+                    })
+            );
+
         if (config.alpha(context.animatable()) < 1) {
             var alpha = (int) (config.alpha(context.animatable()) * 0xFF) << 24;
             var color = (itemContext.renderColor() & 0xFFFFFF) | alpha;

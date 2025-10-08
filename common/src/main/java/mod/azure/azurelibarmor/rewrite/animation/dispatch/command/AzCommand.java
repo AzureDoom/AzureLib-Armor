@@ -13,6 +13,7 @@ import java.util.List;
 import mod.azure.azurelibarmor.common.internal.common.AzureLib;
 import mod.azure.azurelibarmor.common.internal.common.network.packet.AzItemStackDispatchCommandPacket;
 import mod.azure.azurelibarmor.common.platform.Services;
+import mod.azure.azurelibarmor.rewrite.animation.AzAnimator;
 import mod.azure.azurelibarmor.rewrite.animation.AzAnimatorAccessor;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.AzDispatchSide;
 import mod.azure.azurelibarmor.rewrite.animation.dispatch.command.action.AzAction;
@@ -35,8 +36,12 @@ public record AzCommand(List<AzAction> actions) {
         AzCommand::new
     );
 
-    public static AzRootCommandBuilder builder() {
+    public static AzRootCommandBuilder rootBuilder() {
         return new AzRootCommandBuilder();
+    }
+
+    public static AzControllerCommandBuilder controllerBuilder() {
+        return new AzControllerCommandBuilder();
     }
 
     public static AzCommand compose(Collection<AzCommand> commands) {
@@ -72,33 +77,7 @@ public record AzCommand(List<AzAction> actions) {
      * @return an AzCommand instance encapsulating the animation command for the specified controller and animation
      */
     public static AzCommand create(String controllerName, String animationName) {
-        return create(controllerName, animationName, AzPlayBehaviors.PLAY_ONCE, 0F, 1F);
-    }
-
-    /**
-     * Creates an animation command for a specific controller and animation, using the default play behavior of
-     * PLAY_ONCE and allowing a starting tick offset to be specified.
-     *
-     * @param controllerName  the name of the animation controller to target
-     * @param animationName   the name of the animation to be played
-     * @param startTickOffset the starting tick offset for the animation
-     * @return an AzCommand instance encapsulating the animation command for the specified controller and animation
-     */
-    public static AzCommand create(String controllerName, String animationName, float startTickOffset) {
-        return create(controllerName, animationName, AzPlayBehaviors.PLAY_ONCE, startTickOffset, 1F);
-    }
-
-    /**
-     * Creates an AzCommand instance to run an animation with a specified speed for a given controller and animation,
-     * using the default play behavior of PLAY_ONCE.
-     *
-     * @param controllerName the name of the animation controller to target
-     * @param animationName  the name of the animation to be played
-     * @param animationSpeed the speed at which the animation should play
-     * @return an AzCommand instance configured for the specified controller, animation, and speed
-     */
-    public static AzCommand createSpeed(String controllerName, String animationName, float animationSpeed) {
-        return create(controllerName, animationName, AzPlayBehaviors.PLAY_ONCE, 0F, 1F);
+        return create(controllerName, animationName, AzPlayBehaviors.PLAY_ONCE, 0F, 1F, 0F, 0F, 0F, false);
     }
 
     /**
@@ -111,64 +90,21 @@ public record AzCommand(List<AzAction> actions) {
      * @return an AzCommand instance that encapsulates the animation command for the specified controller and animation
      */
     public static AzCommand create(String controllerName, String animationName, AzPlayBehavior playBehavior) {
-        return create(controllerName, animationName, playBehavior, 0F, 1F);
+        return create(controllerName, animationName, playBehavior, 0F, 1F, 0F, 0F, 0F, false);
     }
 
-    /**
-     * Creates an animation command for a specific controller and animation, with the ability to customize the play
-     * behavior and specify a starting tick offset.
-     *
-     * @param controllerName the name of the animation controller to target.
-     * @param animationName  the name of the animation to be played
-     */
-    public static AzCommand create(
-        String controllerName,
-        String animationName,
-        AzPlayBehavior playBehavior,
-        float startTickOffset
-    ) {
-        return create(controllerName, animationName, playBehavior, startTickOffset, 1F);
-    }
-
-    /**
-     * Creates an animation command for controlling the playback speed of a specific animation and controller with the
-     * specified play behavior.
-     *
-     * @param controllerName the name of the animation controller to target
-     * @param animationName  the name of the animation to be played
-     * @param playBehavior   the play behavior for the animation, defining how it should handle playback
-     * @param animationSpeed the speed at which the animation should play
-     * @return an AzCommand instance configured for the specified controller, animation, play behavior, and speed
-     */
-    public static AzCommand createSpeed(
-        String controllerName,
-        String animationName,
-        AzPlayBehavior playBehavior,
-        float animationSpeed
-    ) {
-        return create(controllerName, animationName, playBehavior, 0F, animationSpeed);
-    }
-
-    /**
-     * Creates an animation command for a specified controller and animation, with the ability to customize the play
-     * behavior, starting tick offset, and animation speed.
-     *
-     * @param controllerName  the name of the animation controller to target
-     * @param animationName   the name of the animation to be played
-     * @param playBehavior    the play behavior for the animation, defining how it should handle playback
-     * @param startTickOffset the start tick offset for the animation
-     * @param animationSpeed  the speed at which the animation should play
-     * @return an AzCommand instance configured for the specified controller, animation, play behavior, start tick
-     *         offset, and speed
-     */
     public static AzCommand create(
         String controllerName,
         String animationName,
         AzPlayBehavior playBehavior,
         float startTickOffset,
-        float animationSpeed
+        float animationSpeed,
+        float transitionLength,
+        float freezeTickOffset,
+        float repeatXTimes,
+        boolean isReversing
     ) {
-        return builder()
+        return controllerBuilder()
             .playSequence(
                 controllerName,
                 sequenceBuilder -> sequenceBuilder.queue(
@@ -176,8 +112,47 @@ public record AzCommand(List<AzAction> actions) {
                     props -> props.withPlayBehavior(playBehavior)
                 )
             )
+            .setFreezeTickOffset(controllerName, freezeTickOffset)
+            .setStartTickOffset(controllerName, startTickOffset)
+            .setSpeed(controllerName, animationSpeed)
+            .setRepeatAmount(controllerName, repeatXTimes)
+            .setReverseAnimation(controllerName, isReversing)
+            .build();
+    }
+
+    /**
+     * Creates a root-level (all controllers) animation command with specified parameters for animation name, play
+     * behavior, start tick offset, and animation speed.
+     *
+     * @param animationName   the name of the animation to be played
+     * @param playBehavior    the play behavior for the animation, defining how it should handle playback
+     * @param startTickOffset the starting tick offset for the animation
+     * @param animationSpeed  the speed at which the animation should play
+     * @return an AzCommand instance configured with the specified animation settings
+     */
+    public static AzCommand createRoot(
+        String animationName,
+        AzPlayBehavior playBehavior,
+        float startTickOffset,
+        float animationSpeed,
+        float transitionLength,
+        float freezeTickOffset,
+        float repeatXTimes,
+        boolean isReversing
+    ) {
+        return rootBuilder()
+            .playSequence(
+                sequenceBuilder -> sequenceBuilder.queue(
+                    animationName,
+                    props -> props.withPlayBehavior(playBehavior)
+                )
+            )
+            .setFreezeTickOffset(freezeTickOffset)
+            .setTransitionSpeed(transitionLength)
             .setStartTickOffset(startTickOffset)
             .setSpeed(animationSpeed)
+            .setRepeatAmount(repeatXTimes)
+            .setReverseAnimation(isReversing)
             .build();
     }
 
@@ -209,6 +184,14 @@ public record AzCommand(List<AzAction> actions) {
         }
     }
 
+    /**
+     * Dispatches animation commands from the client side for the provided animatable object. This method retrieves an
+     * {@link AzAnimator} instance associated with the animatable object and applies all configured actions to it using
+     * the {@code CLIENT} dispatch side.
+     *
+     * @param <T>        the type of the animatable object
+     * @param animatable the animatable object for which the animation commands are dispatched
+     */
     private <T> void dispatchFromClient(T animatable) {
         var animator = AzAnimatorAccessor.getOrNull(animatable);
 
