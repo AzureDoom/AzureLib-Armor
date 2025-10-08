@@ -1,20 +1,9 @@
-v3.0.20
-
-### Fixes
-- Fixed a crash with context on armors.
-
-v3.0.19
+v3.0.21
 
 ### Changes
-- Added logger to AutoGlowingTexture if its glow mask doesn't match the base texture size.
-- Changes to AzAnimator to add support for stopping the animation timer
-- Introduced setRenderEntry in AzRendererConfig.Builder to allow custom rendering logic during the render stage.
-- Ported all AzArmor and Item Render related changes/fixes from the main source.
-- Removed the need for AzIdentityRegistry#register to be called.
-- Added `AzArmorTrimLayer` for rendering armor trims (Credit to ZsoltMolnarrr)
-    - Supports single trim-pattern texture
-    - Supports per pattern textures (like vanilla)
-- Added alpha value to getDefaultRenderType
+- Removed Dynamic renderers as they are broken and no longer needed.
+- Add an optional Waist Bone for armors. (Credit to cleannrooster)
+- Added all missing Math functions, currently matching: https://bedrock.dev/docs/1.21.0.0/1.21.120.22/Molang#Math%20Functions now
 
 ### Fixes
-- Fixed an issue where broken JSON files would cause the game to fail to load properly, these are now auto-skipped and logged.
+- Fixes when an invalid animation name is used, the controller/state machine will become stuck and no longer update
