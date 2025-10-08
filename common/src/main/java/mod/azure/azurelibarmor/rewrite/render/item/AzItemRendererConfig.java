@@ -46,7 +46,7 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
             renderTypeProvider,
             renderLayers,
             preRenderEntry,
-			renderEntry,
+            renderEntry,
             postRenderEntry,
             textureLocationProvider,
             alphaFunction,
@@ -117,12 +117,12 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
             return (Builder) super.setPrerenderEntry(preRenderEntry);
         }
 
-	    @Override
-	    public Builder setRenderEntry(
-		    Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> renderEntry
-	    ) {
-		    return (Builder) super.setRenderEntry(renderEntry);
-	    }
+        @Override
+        public Builder setRenderEntry(
+            Function<AzRendererPipelineContext<ItemStack>, AzRendererPipelineContext<ItemStack>> renderEntry
+        ) {
+            return (Builder) super.setRenderEntry(renderEntry);
+        }
 
         @Override
         public Builder setPostRenderEntry(
@@ -193,7 +193,7 @@ public class AzItemRendererConfig extends AzRendererConfig<ItemStack> {
                 baseConfig::getRenderType,
                 baseConfig.renderLayers(),
                 baseConfig::preRenderEntry,
-				baseConfig::renderEntry,
+                baseConfig::renderEntry,
                 baseConfig::postRenderEntry,
                 baseConfig::textureLocation,
                 baseConfig::alpha,

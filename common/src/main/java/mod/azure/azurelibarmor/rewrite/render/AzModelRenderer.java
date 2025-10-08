@@ -1,8 +1,11 @@
 package mod.azure.azurelibarmor.rewrite.render;
 
+import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexMultiConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.OutlineBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -239,5 +242,95 @@ public class AzModelRenderer<T> {
 
     public void handleAnimation(AzAnimator<T> animator, T animatable, float partialTick) {
         animator.animate(animatable, partialTick);
+    }
+
+    /**
+     * Retrieves the appropriate {@link VertexConsumer} for rendering, or refreshes the render buffer if needed.
+     * Depending on the rendering context and state of the current buffer, this method determines whether to reuse the
+     * existing buffer or acquire a new one.
+     *
+     * @param isReRender Indicates whether this is a re-render operation. If true, the current buffer is reused.
+     * @param context    The rendering context containing relevant information like the current buffer, buffer source,
+     *                   and render type.
+     * @return The {@link VertexConsumer} that should be used for rendering, potentially refreshed based on the buffer's
+     *         state and the given render context.
+     */
+    public VertexConsumer getOrRefreshRenderBuffer(
+        boolean isReRender,
+        AzRendererPipelineContext<T> context,
+        AzBone bone
+    ) {
+        var config = rendererPipeline.config();
+        var currentBuffer = context.vertexConsumer();
+        var bufferSource = context.multiBufferSource();
+        var renderType = context.renderType();
+
+        if (config.boneTextureOverrideProvider(bone) != null) {
+            context.setTextureOverride(config.boneTextureOverrideProvider(bone));
+        }
+
+        var texture = config.boneTextureOverrideProvider(bone);
+
+        var renderTypeOverride = config.boneRenderTypeOverrideProvider(bone);
+
+        if (texture != null && renderTypeOverride == null) {
+            renderTypeOverride = context.getDefaultRenderType(
+                context.animatable(),
+                texture,
+                bufferSource,
+                context.partialTick(),
+                config.getRenderType(context.animatable())
+            );
+        }
+
+        if (renderTypeOverride != null) {
+            currentBuffer = context.multiBufferSource().getBuffer(renderTypeOverride);
+        }
+
+        if (isReRender) {
+            return currentBuffer;
+        }
+
+        return switch (currentBuffer) {
+            case BufferBuilder builder when isBufferInactive(builder) -> bufferSource.getBuffer(renderType);
+            case OutlineBufferSource.EntityOutlineGenerator outline when needsBufferRefresh(outline.delegate()) ->
+                new OutlineBufferSource.EntityOutlineGenerator(bufferSource.getBuffer(renderType), outline.color());
+            case VertexMultiConsumer.Double pair when needsBufferRefresh(pair.first) || needsBufferRefresh(
+                pair.second
+            ) ->
+                new VertexMultiConsumer.Double(
+                    needsBufferRefresh(pair.first) ? bufferSource.getBuffer(renderType) : pair.first,
+                    needsBufferRefresh(pair.second) ? bufferSource.getBuffer(renderType) : pair.second
+                );
+            default -> currentBuffer;
+        };
+    }
+
+    /**
+     * Determines whether the given {@link VertexConsumer} requires a buffer refresh. This involves checking the
+     * specific type of the {@link VertexConsumer} and applying appropriate logic to evaluate its state.
+     *
+     * @param buffer The {@link VertexConsumer} instance to evaluate.
+     * @return {@code true} if the buffer needs to be refreshed; {@code false} otherwise.
+     */
+    protected boolean needsBufferRefresh(VertexConsumer buffer) {
+        return switch (buffer) {
+            case BufferBuilder builder -> isBufferInactive(builder);
+            case OutlineBufferSource.EntityOutlineGenerator outline -> needsBufferRefresh(outline.delegate());
+            case VertexMultiConsumer.Double pair ->
+                needsBufferRefresh(pair.first) || needsBufferRefresh(pair.second);
+            default -> false;
+        };
+    }
+
+    /**
+     * Determines if the given {@link BufferBuilder} is inactive. A buffer is considered inactive if it is not currently
+     * in the process of building.
+     *
+     * @param builder The {@link BufferBuilder} instance to check.
+     * @return {@code true} if the buffer is inactive (not building); {@code false} otherwise.
+     */
+    protected boolean isBufferInactive(BufferBuilder builder) {
+        return !builder.building;
     }
 }

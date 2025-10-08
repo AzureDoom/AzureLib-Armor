@@ -290,7 +290,7 @@ public class AzRendererConfig<T> {
                 renderTypeProvider,
                 renderLayers,
                 preRenderEntry,
-				renderEntry,
+                renderEntry,
                 postRenderEntry,
                 textureLocationProvider,
                 alphaFunction,
