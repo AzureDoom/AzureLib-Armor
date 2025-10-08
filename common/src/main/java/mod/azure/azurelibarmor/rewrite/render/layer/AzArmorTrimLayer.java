@@ -23,15 +23,15 @@ public class AzArmorTrimLayer<T> implements AzRenderLayer<T> {
 
     public AzArmorTrimLayer(ResourceLocation baseTexture, boolean supportPatterns) {
         this(baseTexture, supportPatterns
-                        ? (trim) -> {
+                ? (trim) -> {
                     var pattern = trim.pattern().value();
                     var material = trim.material().value();
                     var patternName = pattern.assetId().getPath();
                     return ResourceLocation.fromNamespaceAndPath(baseTexture.getNamespace(), baseTexture.getPath() + "_" + patternName + "_" + material.assetName());
                 }
-                        : (trim) -> {
+                : (trim) -> {
                     var material = trim.material().value();
-                    return ResourceLocation.fromNamespaceAndPath(baseTexture.getNamespace(), baseTexture.getPath() + "_trim_" + material.assetName());
+                    return ResourceLocation.fromNamespaceAndPath(baseTexture.getNamespace(), baseTexture.getPath() + "_" + material.assetName());
                 }
         );
     }
