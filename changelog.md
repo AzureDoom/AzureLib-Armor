@@ -9,6 +9,7 @@ v3.0.19
 - Added `AzArmorTrimLayer` for rendering armor trims (Credit to ZsoltMolnarrr)
     - Supports single trim-pattern texture
     - Supports per pattern textures (like vanilla)
+- Added alpha value to getDefaultRenderType
 
 ### Fixes
 - Fixed an issue where broken JSON files would cause the game to fail to load properly, these are now auto-skipped and logged.
