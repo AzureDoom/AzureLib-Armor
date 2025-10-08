@@ -1,3 +1,8 @@
+v3.0.20
+
+### Fixes
+- Fixed a crash with context on armors.
+
 v3.0.19
 
 ### Changes
