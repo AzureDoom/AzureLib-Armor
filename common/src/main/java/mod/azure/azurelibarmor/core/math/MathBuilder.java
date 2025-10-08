@@ -106,59 +106,59 @@ public class MathBuilder {
         this.functions.put("die_roll_integer", DieRollInteger.class);
         this.functions.put("random", Random.class);
         this.functions.put("random_integer", RandomInteger.class);
-	    this.functions.put("copy_sign", CopySign.class);
-	    this.functions.put("sign", Sign.class);
-	    this.functions.put("inverse_lerp", InverseLerp.class);
+        this.functions.put("copy_sign", CopySign.class);
+        this.functions.put("sign", Sign.class);
+        this.functions.put("inverse_lerp", InverseLerp.class);
 
-	    /* Quadratic easing functions */
-	    this.functions.put("ease_in_quad", EaseInQuad.class);
-	    this.functions.put("ease_out_quad", EaseOutQuad.class);
-	    this.functions.put("ease_in_out_quad", EaseInOutQuad.class);
+        /* Quadratic easing functions */
+        this.functions.put("ease_in_quad", EaseInQuad.class);
+        this.functions.put("ease_out_quad", EaseOutQuad.class);
+        this.functions.put("ease_in_out_quad", EaseInOutQuad.class);
 
-	    /* Cubic easing functions */
-	    this.functions.put("ease_in_cubic", EaseInCubic.class);
-	    this.functions.put("ease_out_cubic", EaseOutCubic.class);
-	    this.functions.put("ease_in_out_cubic", EaseInOutCubic.class);
+        /* Cubic easing functions */
+        this.functions.put("ease_in_cubic", EaseInCubic.class);
+        this.functions.put("ease_out_cubic", EaseOutCubic.class);
+        this.functions.put("ease_in_out_cubic", EaseInOutCubic.class);
 
-	    /* Quartic easing functions */
-	    this.functions.put("ease_in_quart", EaseInQuart.class);
-	    this.functions.put("ease_out_quart", EaseOutQuart.class);
-	    this.functions.put("ease_in_out_quart", EaseInOutQuart.class);
+        /* Quartic easing functions */
+        this.functions.put("ease_in_quart", EaseInQuart.class);
+        this.functions.put("ease_out_quart", EaseOutQuart.class);
+        this.functions.put("ease_in_out_quart", EaseInOutQuart.class);
 
-	    /* Quintic easing functions */
-	    this.functions.put("ease_in_quint", EaseInQuint.class);
-	    this.functions.put("ease_out_quint", EaseOutQuint.class);
-	    this.functions.put("ease_in_out_quint", EaseInOutQuint.class);
+        /* Quintic easing functions */
+        this.functions.put("ease_in_quint", EaseInQuint.class);
+        this.functions.put("ease_out_quint", EaseOutQuint.class);
+        this.functions.put("ease_in_out_quint", EaseInOutQuint.class);
 
-	    /* Sine easing functions */
-	    this.functions.put("ease_in_sine", EaseInSine.class);
-	    this.functions.put("ease_out_sine", EaseOutSine.class);
-	    this.functions.put("ease_in_out_sine", EaseInOutSine.class);
+        /* Sine easing functions */
+        this.functions.put("ease_in_sine", EaseInSine.class);
+        this.functions.put("ease_out_sine", EaseOutSine.class);
+        this.functions.put("ease_in_out_sine", EaseInOutSine.class);
 
-	    /* Exponential easing functions */
-	    this.functions.put("ease_in_expo", EaseInExpo.class);
-	    this.functions.put("ease_out_expo", EaseOutExpo.class);
-	    this.functions.put("ease_in_out_expo", EaseInOutExpo.class);
+        /* Exponential easing functions */
+        this.functions.put("ease_in_expo", EaseInExpo.class);
+        this.functions.put("ease_out_expo", EaseOutExpo.class);
+        this.functions.put("ease_in_out_expo", EaseInOutExpo.class);
 
-	    /* Circular easing functions */
-	    this.functions.put("ease_in_circ", EaseInCirc.class);
-	    this.functions.put("ease_out_circ", EaseOutCirc.class);
-	    this.functions.put("ease_in_out_circ", EaseInOutCirc.class);
+        /* Circular easing functions */
+        this.functions.put("ease_in_circ", EaseInCirc.class);
+        this.functions.put("ease_out_circ", EaseOutCirc.class);
+        this.functions.put("ease_in_out_circ", EaseInOutCirc.class);
 
-	    /* Back easing functions */
-	    this.functions.put("ease_in_back", EaseInBack.class);
-	    this.functions.put("ease_out_back", EaseOutBack.class);
-	    this.functions.put("ease_in_out_back", EaseInOutBack.class);
+        /* Back easing functions */
+        this.functions.put("ease_in_back", EaseInBack.class);
+        this.functions.put("ease_out_back", EaseOutBack.class);
+        this.functions.put("ease_in_out_back", EaseInOutBack.class);
 
-	    /* Elastic easing functions */
-	    this.functions.put("ease_in_elastic", EaseInElastic.class);
-	    this.functions.put("ease_out_elastic", EaseOutElastic.class);
-	    this.functions.put("ease_in_out_elastic", EaseInOutElastic.class);
+        /* Elastic easing functions */
+        this.functions.put("ease_in_elastic", EaseInElastic.class);
+        this.functions.put("ease_out_elastic", EaseOutElastic.class);
+        this.functions.put("ease_in_out_elastic", EaseInOutElastic.class);
 
-	    /* Bounce easing functions */
-	    this.functions.put("ease_in_bounce", EaseInBounce.class);
-	    this.functions.put("ease_out_bounce", EaseOutBounce.class);
-	    this.functions.put("ease_in_out_bounce", EaseInOutBounce.class);
+        /* Bounce easing functions */
+        this.functions.put("ease_in_bounce", EaseInBounce.class);
+        this.functions.put("ease_out_bounce", EaseOutBounce.class);
+        this.functions.put("ease_in_out_bounce", EaseInOutBounce.class);
     }
 
     /**

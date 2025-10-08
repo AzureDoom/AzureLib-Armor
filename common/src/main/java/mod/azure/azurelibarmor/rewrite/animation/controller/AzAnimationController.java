@@ -160,7 +160,9 @@ public class AzAnimationController<T> extends AzAbstractAnimationController {
                 return;
             }
 
-            stateMachine.stop();
+            animationQueue.clear();
+            this.currentSequence = null;
+            stateMachine.transition();
         }
     }
 
