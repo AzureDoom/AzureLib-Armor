@@ -318,7 +318,7 @@ public class AzModelRenderer<T> {
                 bufferSource,
                 context.partialTick(),
                 config.getRenderType(context.animatable()),
-	            config.alpha(context.animatable())
+                config.alpha(context.animatable())
             );
         }
 

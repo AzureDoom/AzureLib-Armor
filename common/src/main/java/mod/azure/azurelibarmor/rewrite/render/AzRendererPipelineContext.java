@@ -100,7 +100,7 @@ public abstract class AzRendererPipelineContext<T> {
                 multiBufferSource,
                 partialTick,
                 rendererPipeline.config().getRenderType(animatable),
-	            rendererPipeline.config().alpha(animatable)
+                rendererPipeline.config().alpha(animatable)
             );
         }
 
