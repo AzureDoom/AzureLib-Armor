@@ -1,3 +1,8 @@
+/**
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
+ * https://github.com/bernie-g/geckolib/blob/main/LICENSE
+ */
 package mod.azure.azurelibarmor.common.internal.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,12 +16,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import mod.azure.azurelibarmor.common.api.common.animatable.GeoItem;
-import mod.azure.azurelibarmor.common.internal.client.RenderProvider;
-import mod.azure.azurelibarmor.rewrite.render.item.AzItemRendererRegistry;
+import mod.azure.azurelibarmor.common.render.item.AzItemRendererRegistry;
 
 /**
- * Render hook to inject azurelibarmor's ISTER rendering callback
+ * Render hook to inject AzureLib's ISTER rendering callback
  */
 @Mixin(ItemRenderer.class)
 public class MixinItemRenderer {
@@ -38,19 +41,13 @@ public class MixinItemRenderer {
         BakedModel bakedModel,
         CallbackInfo ci
     ) {
-        if (itemStack.getItem() instanceof GeoItem) {
-            RenderProvider.of(itemStack)
-                .getCustomRenderer()
-                .renderByItem(itemStack, transformType, poseStack, multiBufferSource, i, j);
-        }
-
         var item = itemStack.getItem();
         var renderer = AzItemRendererRegistry.getOrNull(item);
 
         if (renderer != null) {
             switch (transformType) {
-                case GUI -> renderer.renderByGui(itemStack, poseStack, multiBufferSource, i);
-                default -> renderer.renderByItem(itemStack, poseStack, multiBufferSource, i);
+                case GUI -> renderer.renderByGui(itemStack, transformType, poseStack, multiBufferSource, i);
+                default -> renderer.renderByItem(itemStack, transformType, poseStack, multiBufferSource, i);
             }
         }
     }

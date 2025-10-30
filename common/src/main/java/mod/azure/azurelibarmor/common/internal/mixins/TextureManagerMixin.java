@@ -17,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-import mod.azure.azurelibarmor.common.internal.common.cache.texture.AnimatableTexture;
+import mod.azure.azurelibarmor.common.cache.texture.AnimatableTexture;
 
-@Mixin(TextureManager.class)
+@Mixin(value = TextureManager.class, priority = 900)
 public abstract class TextureManagerMixin {
 
     @Shadow

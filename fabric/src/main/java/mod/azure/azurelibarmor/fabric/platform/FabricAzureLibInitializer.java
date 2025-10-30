@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.internal.common.cache.AzureLibCache;
+import mod.azure.azurelibarmor.AzureLib;
+import mod.azure.azurelibarmor.common.cache.AzureLibCache;
 import mod.azure.azurelibarmor.common.platform.services.AzureLibInitializer;
 
 public class FabricAzureLibInitializer implements AzureLibInitializer {

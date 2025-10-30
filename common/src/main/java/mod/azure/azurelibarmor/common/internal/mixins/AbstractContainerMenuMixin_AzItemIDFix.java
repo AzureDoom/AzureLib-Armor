@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.rewrite.animation.cache.AzIdentityRegistry;
+import mod.azure.azurelibarmor.AzureLib;
+import mod.azure.azurelibarmor.common.animation.cache.AzIdentityRegistry;
 
 /**
  * A Mixin extension for the `AbstractContainerMenu` class that introduces support for AzureLib-specific ItemStack
@@ -36,11 +36,7 @@ public class AbstractContainerMenuMixin_AzItemIDFix {
             ordinal = 1
         )
     )
-    public ItemStack azurelibArmor$syncAzureIDWithRemote(
-        ItemStack itemStack,
-        int count,
-        Operation<ItemStack> original
-    ) {
+    public ItemStack azurelib$syncAzureIDWithRemote(ItemStack itemStack, int count, Operation<ItemStack> original) {
         var copyStack = original.call(itemStack, count);
 
         if (AzIdentityRegistry.hasIdentity(itemStack.getItem()) && copyStack.has(AzureLib.AZ_ID.get())) {
@@ -62,12 +58,12 @@ public class AbstractContainerMenuMixin_AzItemIDFix {
             target = "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"
         )
     )
-    public boolean azurelibArmor$syncAzureIDWithRemote(
+    public boolean azurelib$syncAzureIDWithRemote(
         ItemStack itemStack,
         ItemStack comparisonItemStack,
         Operation<Boolean> original
     ) {
-        return azurelibArmor$compareStacksWithAzureID(itemStack, comparisonItemStack, original);
+        return azurelib$compareStacksWithAzureID(itemStack, comparisonItemStack, original);
     }
 
     /**
@@ -82,12 +78,12 @@ public class AbstractContainerMenuMixin_AzItemIDFix {
             target = "Lnet/minecraft/world/item/ItemStack;matches(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z"
         )
     )
-    public boolean azurelibArmor$detectSlotChangeWithAzureID(
+    public boolean azurelib$detectSlotChangeWithAzureID(
         ItemStack itemStack,
         ItemStack comparisonItemStack,
         Operation<Boolean> original
     ) {
-        return azurelibArmor$compareStacksWithAzureID(itemStack, comparisonItemStack, original);
+        return azurelib$compareStacksWithAzureID(itemStack, comparisonItemStack, original);
     }
 
     /**
@@ -99,13 +95,13 @@ public class AbstractContainerMenuMixin_AzItemIDFix {
      * @return True if the base comparison is true and the Az IDs (if present) match; false otherwise.
      */
     @Unique
-    private boolean azurelibArmor$compareStacksWithAzureID(
+    private boolean azurelib$compareStacksWithAzureID(
         ItemStack itemStack,
         ItemStack comparisonItemStack,
         Operation<Boolean> original
     ) {
         if (AzIdentityRegistry.hasIdentity(itemStack.getItem())) {
-            return original.call(itemStack, comparisonItemStack) && azurelibArmor$stacksHaveMatchingAzID(
+            return original.call(itemStack, comparisonItemStack) && azurelib$stacksHaveMatchingAzID(
                 itemStack,
                 comparisonItemStack
             );
@@ -121,7 +117,7 @@ public class AbstractContainerMenuMixin_AzItemIDFix {
      * @return True if the Az IDs match, false otherwise.
      */
     @Unique
-    private boolean azurelibArmor$stacksHaveMatchingAzID(ItemStack itemStack, ItemStack comparisonItemStack) {
+    private boolean azurelib$stacksHaveMatchingAzID(ItemStack itemStack, ItemStack comparisonItemStack) {
         return itemStack.getOrDefault(AzureLib.AZ_ID.get(), DEFAULT_AZ_ID)
             .equals(comparisonItemStack.getOrDefault(AzureLib.AZ_ID.get(), DEFAULT_AZ_ID));
     }

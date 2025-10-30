@@ -10,7 +10,7 @@ package mod.azure.azurelibarmor.core.math;
  */
 public class Group implements IValue {
 
-    private final IValue value;
+    private IValue value;
 
     public Group(IValue value) {
         this.value = value;

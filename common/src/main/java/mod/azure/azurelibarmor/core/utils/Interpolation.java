@@ -1,3 +1,8 @@
+/**
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
+ * https://github.com/bernie-g/geckolib/blob/main/LICENSE
+ */
 package mod.azure.azurelibarmor.core.utils;
 
 public enum Interpolation {
@@ -80,6 +85,16 @@ public enum Interpolation {
             return a + (b - a) * (float) (-Math.pow(2, -10 * x) + 1);
         }
     },
+    CATMULLROM("catmullrom") {
+
+        @Override
+        public float interpolate(float a, float b, float x) {
+            return 0.5f * ((2 * a) +
+                (-(a - (b - a)) + b) * x +
+                (2 * (a - (b - a)) - 5 * a + 4 * b - (b + (b - a))) * (x * x) +
+                (-(a - (b - a)) + 3 * a - 3 * b + (b + (b - a))) * (x * x * x));
+        }
+    },
     EXP_INOUT("exp_inout") {
 
         @Override
@@ -102,7 +117,7 @@ public enum Interpolation {
 
     public final String key;
 
-    Interpolation(String key) {
+    private Interpolation(String key) {
         this.key = key;
     }
 

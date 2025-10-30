@@ -2,14 +2,9 @@ package mod.azure.azurelibarmor.common.platform;
 
 import java.util.ServiceLoader;
 
-import mod.azure.azurelibarmor.common.platform.services.AzureEvents;
-import mod.azure.azurelibarmor.common.platform.services.AzureLibInitializer;
-import mod.azure.azurelibarmor.common.platform.services.AzureLibNetwork;
-import mod.azure.azurelibarmor.common.platform.services.IPlatformHelper;
+import mod.azure.azurelibarmor.common.platform.services.*;
 
 public final class Services {
-
-    public static final AzureEvents GEO_RENDER_PHASE_EVENT_FACTORY = load(AzureEvents.class);
 
     public static final AzureLibInitializer INITIALIZER = load(AzureLibInitializer.class);
 

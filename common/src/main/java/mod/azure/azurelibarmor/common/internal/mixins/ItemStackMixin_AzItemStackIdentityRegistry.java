@@ -10,19 +10,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.UUID;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.internal.common.util.AzureLibUtil;
-import mod.azure.azurelibarmor.rewrite.animation.cache.AzIdentityRegistry;
+import mod.azure.azurelibarmor.AzureLib;
+import mod.azure.azurelibarmor.common.animation.cache.AzIdentityRegistry;
+import mod.azure.azurelibarmor.common.util.AzureLibUtil;
 
 /**
- * A mixin class for modifying the initialization behavior of the {@link ItemStack} class. This mixin specifically
- * ensures that a unique identity component is added to an {@link ItemStack} upon creation, provided that the associated
- * item has been registered in the {@link AzIdentityRegistry}. When an {@link ItemStack} is instantiated, the mixin
- * checks if: - The item has an identity registered in {@link AzIdentityRegistry}. - The provided
- * {@link PatchedDataComponentMap} does not already contain an `az_id` component. If both conditions are met, the mixin
- * assigns a universally unique identifier (UUID) as the `az_id` component to the associated
- * {@link PatchedDataComponentMap}. This mechanism enables unique identification and tracking of specific item stacks in
- * the game.
+ * This mixin modifies the {@link ItemStack} class to inject functionality for managing a unique identifier as part of
+ * the ItemStack's data components. The added identifier is used in conjunction with the animation registry provided by
+ * AzureLib.
+ * <p>
+ * When an {@code ItemStack} is instantiated and is associated with an animatable item, this mixin ensures that it
+ * includes a unique identifier in its data components. If the item is animatable and the required data component is not
+ * yet present, it assigns a newly generated {@link UUID} to the component.
  */
 @Mixin(ItemStack.class)
 public class ItemStackMixin_AzItemStackIdentityRegistry {
@@ -33,6 +32,7 @@ public class ItemStackMixin_AzItemStackIdentityRegistry {
     )
     public void az_addIdentityComponent(ItemLike item, int count, PatchedDataComponentMap components, CallbackInfo ci) {
         var self = AzureLibUtil.<ItemStack>self(this);
+
         if (AzIdentityRegistry.hasIdentity(self.getItem()) && !components.has(AzureLib.AZ_ID.get())) {
             components.set(AzureLib.AZ_ID.get(), UUID.randomUUID());
         }

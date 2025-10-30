@@ -12,7 +12,7 @@ package mod.azure.azurelibarmor.core.math;
  */
 public class Variable implements IValue {
 
-    private final String name;
+    private String name;
 
     private double value;
 

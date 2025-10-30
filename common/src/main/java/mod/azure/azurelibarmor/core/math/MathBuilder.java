@@ -1,3 +1,8 @@
+/**
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
+ * https://github.com/bernie-g/geckolib/blob/main/LICENSE
+ */
 package mod.azure.azurelibarmor.core.math;
 
 import java.lang.reflect.Constructor;
@@ -6,8 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import mod.azure.azurelibarmor.common.internal.common.AzureLib;
-import mod.azure.azurelibarmor.common.internal.common.AzureLibException;
+import mod.azure.azurelibarmor.AzureLib;
+import mod.azure.azurelibarmor.common.util.AzureLibException;
 import mod.azure.azurelibarmor.core.math.functions.Function;
 import mod.azure.azurelibarmor.core.math.functions.classic.*;
 import mod.azure.azurelibarmor.core.math.functions.easing.back.EaseInBack;
@@ -176,10 +181,10 @@ public class MathBuilder {
     }
 
     /**
-     * Breakdown an expression
+     * Break down an expression
      */
     public String[] breakdown(String expression) throws AzureLibException {
-        /* If given string have illegal characters, then it can't be parsed */
+        /* If given string has illegal characters, then it can't be parsed */
         if (!expression.matches("^[\\w\\d\\s_+-/*%^&|<>=!?:.,()]+$")) {
             throw new AzureLibException("Given expression '" + expression + "' contains illegal characters!");
         }

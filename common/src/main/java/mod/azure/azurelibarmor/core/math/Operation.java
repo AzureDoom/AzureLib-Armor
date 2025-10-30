@@ -1,3 +1,8 @@
+/**
+ * This class is a fork of the matching class found in the Geckolib repository. Original source:
+ * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
+ * https://github.com/bernie-g/geckolib/blob/main/LICENSE
+ */
 package mod.azure.azurelibarmor.core.math;
 
 import java.util.HashSet;
@@ -128,7 +133,7 @@ public enum Operation {
      */
     public final int value;
 
-    Operation(String sign, int value) {
+    private Operation(String sign, int value) {
         this.sign = sign;
         this.value = value;
     }

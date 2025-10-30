@@ -10,7 +10,6 @@
     "ItemStackMixin_AzItemStackIdentityRegistry"
   ],
   "client": [
-    "ItemRendererAccessor",
     "MixinHumanoidArmorLayer",
     "MixinItemRenderer",
     "ItemStackMixin_AzItemAnimatorCache",
