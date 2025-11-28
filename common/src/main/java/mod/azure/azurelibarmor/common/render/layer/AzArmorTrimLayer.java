@@ -88,7 +88,9 @@ public class AzArmorTrimLayer implements AzRenderLayer<UUID, ItemStack> {
 
         var sprite = armorTrimsAtlas.getSprite(trimLocation);
         var renderType = Sheets.armorTrimsSheet(pattern.decal());
-	    var vertexConsumer = sprite.wrap(ItemRenderer.getArmorFoilBuffer(context.multiBufferSource(), renderType, itemstack.hasFoil()));
+        var vertexConsumer = sprite.wrap(
+            ItemRenderer.getArmorFoilBuffer(context.multiBufferSource(), renderType, itemstack.hasFoil())
+        );
 
         if (context.renderType() != null) {
             context.setRenderType(renderType);

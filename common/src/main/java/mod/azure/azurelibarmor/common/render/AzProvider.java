@@ -1,9 +1,5 @@
 package mod.azure.azurelibarmor.common.render;
 
-import mod.azure.azurelibarmor.common.animation.AzAnimator;
-import mod.azure.azurelibarmor.common.animation.AzAnimatorAccessor;
-import mod.azure.azurelibarmor.common.model.AzBakedModel;
-import mod.azure.azurelibarmor.common.model.cache.AzBakedModelCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +8,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import mod.azure.azurelibarmor.common.animation.AzAnimator;
+import mod.azure.azurelibarmor.common.animation.AzAnimatorAccessor;
+import mod.azure.azurelibarmor.common.model.AzBakedModel;
+import mod.azure.azurelibarmor.common.model.cache.AzBakedModelCache;
 
 /**
  * The {@code AzProvider} class serves as a utility for providing animation-related resources, such as baked models and
@@ -55,8 +56,8 @@ public class AzProvider<K, T> {
             return AzBakedModel.getDefault();
 
         var animator = AzAnimatorAccessor.getOrNull(animatable);
-		if (animator == null)
-			return shared;
+        if (animator == null)
+            return shared;
         var ctx = animator.context();
 
         var cache = ctx.boneCache();

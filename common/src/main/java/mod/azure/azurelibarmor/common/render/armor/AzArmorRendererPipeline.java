@@ -2,7 +2,6 @@ package mod.azure.azurelibarmor.common.render.armor;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -10,7 +9,6 @@ import org.joml.Matrix4f;
 
 import java.util.UUID;
 
-import mod.azure.azurelibarmor.common.animation.AzAnimatorAccessor;
 import mod.azure.azurelibarmor.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelibarmor.common.model.AzBone;
 import mod.azure.azurelibarmor.common.render.*;
@@ -170,9 +168,9 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<UUID, ItemStack>
      */
     public void scaleModelForBaby(AzArmorRendererPipelineContext context, boolean isReRender) {
         var currentEntity = context.currentEntity();
-	    if (!(currentEntity instanceof LivingEntity ageableMob && ageableMob.isBaby()) || isReRender) {
-		    return;
-	    }
+        if (!(currentEntity instanceof LivingEntity ageableMob && ageableMob.isBaby()) || isReRender) {
+            return;
+        }
 
         var baseModel = context.baseModel();
         var currentSlot = context.currentSlot();
