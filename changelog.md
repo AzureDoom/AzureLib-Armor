@@ -1,4 +1,3 @@
-v3.1.3
+v3.1.4
 
-### Fixes
-- Fixed mixin conflict with Gankolib animated textures.
+Code parity matches to Azurelib 3.1.8 base for fixes and improvements.
