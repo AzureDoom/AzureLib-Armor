@@ -1,5 +1,6 @@
 package mod.azure.azurelibarmor.common.render.armor;
 
+import mod.azure.azurelibarmor.common.animation.AzAnimatorAccessor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -80,7 +81,8 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<UUID, ItemStack>
         scaleModelForRender(context, scaleWidth, scaleHeight, isReRender);
         scaleBoneWithModelPart(armorContext, boneContext, isReRender);
 
-        boneContext.applyBoneVisibilityBySlot(currentSlot);
+        if (AzAnimatorAccessor.getOrNull(context().currentEntity()) == null)
+            boneContext.applyBoneVisibilityBySlot(currentSlot);
 
         var alphaValue = config.alpha(context.animatable());
         if (ShoulderSurfingCompat.isLoaded() && ShoulderSurfingCompat.getAlpha(armorContext.currentEntity()) < 1) {
